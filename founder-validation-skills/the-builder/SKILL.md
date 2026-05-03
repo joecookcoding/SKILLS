@@ -1,3 +1,8 @@
+---
+name: the-builder
+description: Build a focused, mobile-first, accessible, conversion-oriented one-page lead-magnet landing site from finalized copy — Next.js / Vite + Tailwind + shadcn/ui defaults, email capture wired to ConvertKit / Mailchimp / Resend / Supabase / HubSpot, deployed to Vercel / Netlify / Cloudflare. Use when the user says "build my landing page", "ship a one-pager for my lead magnet", "code the opt-in page", "make a fast prototype landing site", "mobile-first landing page", "freebie site", "newsletter landing page", "I have copy, build it", or has copy ready and needs the page. Step 4 of founder-validation — produces the live page that the-marketer drives traffic to. Trigger on any one-page lead-magnet site build even without the word "builder".
+---
+
 # Skill: The Builder
 
 ## Purpose

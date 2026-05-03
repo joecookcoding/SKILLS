@@ -1,3 +1,8 @@
+---
+name: the-strategist
+description: Turn validated customer pain into 5 ranked lead-magnet ideas (checklist, calculator, scorecard, quiz, swipe file, template, 7-day plan, audit, mini-course, decision tree, etc.) that feel worth $50–$100 but ship free, fast, and cheap to prove demand and capture qualified emails. Use when the user says "what lead magnet should I build", "free offer ideas", "opt-in idea", "what should I give away", "pick a lead magnet", "checklist or template or calculator", "fast validation asset", "freebie for my email list", or has validated pain and needs the next step. Step 2 of founder-validation — feeds the-copywriter. Always invoke when the user has pain points and is choosing what free asset to ship; do NOT invoke before pain is validated by the-researcher.
+---
+
 # Skill: The Strategist
 
 ## Purpose

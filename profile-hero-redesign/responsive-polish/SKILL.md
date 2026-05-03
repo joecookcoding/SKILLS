@@ -1,3 +1,8 @@
+---
+name: responsive-polish
+description: Final polish pass for a redesigned hero — desktop, tablet, mobile responsive guidance, typography scaling, spacing system, accessibility (contrast, touch targets, focus states, alt text, reduced motion), and code-agent implementation notes. Use when the user says "make my hero work on mobile", "polish the responsive behavior", "the mobile version looks generic / collapsed / cramped", "scale typography", "spacing is off on tablet", "accessibility check on hero", "ready to hand to a developer", "implementation notes for Lovable / Bolt / Cursor / Claude Code", or anytime a hero plan exists and needs finalization before shipping. Step 5 (final) of profile-hero-redesign. Always invoke before declaring a hero redesign done — the output is what gets handed to the frontend agent.
+---
+
 # Skill: Responsive Polish
 
 ## Purpose

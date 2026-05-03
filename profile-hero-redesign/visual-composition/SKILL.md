@@ -1,3 +1,8 @@
+---
+name: visual-composition
+description: Design the elevated visual composition for a profile or personal-brand hero — focal point, portrait integration, background depth (gradients, arcs, glows, shapes), typography contrast, scan path, and desktop+mobile layout. Use whenever the user says "redesign my hero layout", "make my hero more premium", "the portrait looks isolated / pasted in", "add depth to my hero", "make the hero feel modern / editorial / elevated", "split hero", "overlap portrait", "background shapes", "visual flow", "newsletter hero design", or asks for a hero that feels less generic and more conversion-driven. Step 3 of profile-hero-redesign — pairs final hero copy with a layout plan that cta-conversion and responsive-polish can execute. Trigger this aggressively any time hero VISUAL design (not just copy) is on the table.
+---
+
 # Skill: Visual Composition
 
 ## Purpose

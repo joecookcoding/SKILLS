@@ -1,3 +1,8 @@
+---
+name: the-researcher
+description: Validate that a target customer is already experiencing urgent, repeated, emotionally charged, paid-for problems before building anything — by mining Reddit, Amazon reviews, Facebook groups, YouTube comments, app/extension reviews, G2/Capterra/Trustpilot, niche forums, Quora, and search autocomplete for real complaints in customer language. Use when the user says "validate my idea", "is there a market for X", "find customer pain", "do customer research", "before I build", "voice-of-customer research", "find pain points for [audience]", "should I build this SaaS / course / coaching offer / productized service / lead magnet", "I have a startup idea", or any pre-build validation question. Step 1 of the founder-validation workflow — produces validated pains that feed the-strategist. Trigger this BEFORE any building, copywriting, or marketing work when the underlying problem hasn't been proven.
+---
+
 # Skill: The Researcher
 
 ## Purpose

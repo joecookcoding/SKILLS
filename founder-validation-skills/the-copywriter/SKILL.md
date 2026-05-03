@@ -1,3 +1,8 @@
+---
+name: the-copywriter
+description: Write conversion-focused landing-page copy for a chosen lead magnet in sequence — hook, benefit bullets, full one-page landing copy (eyebrow, headline, subheadline, what-you-get, email capture, reassurance), CTA button options, and optional follow-up email — all rooted in customer language, no buzzwords or hype. Use when the user says "write landing page copy", "headline for my opt-in", "benefit bullets", "CTA button text", "email subject line for the lead magnet", "rewrite this landing page", "hook for my newsletter", "copy for my freebie", "make my landing page convert". Step 3 of founder-validation — feeds the-builder. Trigger on any conversion-copy task tied to a lead magnet, opt-in, or one-page offer, even when "copywriter" isn't said.
+---
+
 # Skill: The Copywriter
 
 ## Purpose

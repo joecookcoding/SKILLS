@@ -1,3 +1,8 @@
+---
+name: the-marketer
+description: Build a measurable funnel and 30/60/90-day growth plan for a live lead magnet — funnel map (awareness → interest → capture → nurture → conversion → retention), weekly priorities, posting cadence, content pillars, sample posts, 5-email nurture sequence, conversion metrics, experiments, and stop-doing list, with thresholds tied to a real revenue goal. Use when the user says "growth plan", "funnel for my lead magnet", "how do I get traffic", "30/60/90 plan", "email nurture sequence", "content calendar for my newsletter", "marketing plan for my freebie", "drive signups", "scale my opt-in", or has a live landing page and needs distribution. Step 5 (final) of founder-validation — closes the loop by feeding real-world feedback back to the-researcher. Trigger on any post-launch growth/funnel/distribution task for a validated lead magnet.
+---
+
 # Skill: The Marketer
 
 ## Purpose

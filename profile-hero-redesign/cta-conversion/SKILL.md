@@ -1,3 +1,8 @@
+---
+name: cta-conversion
+description: Strengthen the CTA, email-capture form, button copy, microcopy, proof placement, and conversion path inside a profile / personal-brand / newsletter / lead-magnet hero so it actually converts. Use when the user says "my CTA is invisible / blends in", "improve my opt-in form", "the form feels disconnected", "what should my button say", "add proof near the CTA", "reduce form friction", "my hero looks fine but doesn't convert", "subscribe button copy", "newsletter signup design", "book-a-call CTA". Step 4 of profile-hero-redesign — assumes copy and layout exist and focuses on the conversion unit. Trigger on any CTA / form / opt-in / sign-up improvement on a hero or above-the-fold section, even when "CTA conversion" isn't named explicitly.
+---
+
 # Skill: CTA Conversion
 
 ## Purpose

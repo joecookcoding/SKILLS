@@ -1,3 +1,8 @@
+---
+name: message-hierarchy
+description: Rewrite the hero message hierarchy — eyebrow/role label, headline (with one emphasized word), subheadline, value copy, CTA, and proof — so visitors understand the offer in 3 seconds and feel guided to action. Use when the user says "rewrite my headline", "my hero copy is generic", "tighten my value prop", "make this hero clearer", "what should my headline say", "fix the hero copy", "I need 3 headline options", or after hero-diagnosis hands off priorities. Step 2 of profile-hero-redesign; produces the final hero copy block that visual-composition uses. Trigger on any hero/landing-page copy rewrite for coaches, creators, consultants, authors, speakers, counselors, or newsletter/lead-magnet pages — even if user doesn't say "hierarchy".
+---
+
 # Skill: Message Hierarchy
 
 ## Purpose

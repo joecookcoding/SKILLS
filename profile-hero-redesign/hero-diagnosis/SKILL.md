@@ -1,3 +1,8 @@
+---
+name: hero-diagnosis
+description: Diagnose a profile, personal-brand, coach, speaker, author, creator, consultant, counselor, or service-provider hero section to find why it feels generic, flat, forgettable, or low-converting before any redesign. Use whenever the user says "audit my hero", "review my landing page hero", "my hero feels generic / boring / flat / template-y", "headline is weak", "CTA is invisible", "portrait looks pasted in", "no focal point", "evaluate my above-the-fold", or shares a screenshot of a homepage hero and asks what's wrong. Step 1 of the profile-hero-redesign workflow — produces the diagnosis that feeds message-hierarchy. Always invoke this before jumping to layout or visual fixes when the user shows a hero they're unhappy with.
+---
+
 # Skill: Hero Diagnosis
 
 ## Purpose
