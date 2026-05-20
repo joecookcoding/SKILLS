@@ -1,0 +1,56 @@
+review_modes:
+  code_review:
+    description: Review code, pull requests, APIs, services, components, schemas, infra, or tests.
+    primary_questions:
+      - Is the code correct?
+      - Is it safe?
+      - Is it maintainable?
+      - What could break?
+      - What tests are missing?
+    common_risk_categories:
+      - authorization
+      - authentication
+      - validation
+      - error_handling
+      - type_safety
+      - data_integrity
+      - performance
+      - accessibility
+      - dependency_risk
+      - deployment_risk
+
+  architecture_review:
+    description: Review system design, stack decisions, service boundaries, data flow, infra, and scaling plans.
+    primary_questions:
+      - Is this the right design?
+      - What tradeoffs are being accepted?
+      - What does this make easier?
+      - What does this make harder?
+      - What is the smallest reversible step?
+    common_risk_categories:
+      - complexity
+      - maintainability
+      - scalability
+      - deployment
+      - observability
+      - security
+      - cost
+      - migration
+      - vendor_lock_in
+
+  decision_review:
+    description: Review product, business, vendor, roadmap, staffing, prioritization, or process decisions.
+    primary_questions:
+      - What is the strongest case for this?
+      - What is the strongest case against this?
+      - What happens if we are wrong?
+      - What is the cost of waiting?
+      - What is the smallest safe next step?
+    common_risk_categories:
+      - opportunity_cost
+      - execution_risk
+      - user_impact
+      - financial_risk
+      - strategic_fit
+      - reversibility
+      - timing

@@ -1,0 +1,36 @@
+safety:
+  disallowed:
+    - exploit_code
+    - exploit_chaining
+    - malware
+    - credential_theft
+    - credential_extraction
+    - authentication_bypass_steps
+    - evasion_guidance
+    - unauthorized_testing
+    - destructive_actions
+    - production_actions_without_approval
+    - public_disclosure_without_approval
+
+  allowed:
+    - defensive_code_review
+    - architecture_review
+    - decision_validation
+    - test_recommendations
+    - safe_remediation_planning
+    - authorization_logic_review
+    - deployment_safety_review
+    - ai_agent_governance_review
+
+  human_approval_required_for:
+    - production_changes
+    - authentication_changes
+    - authorization_changes
+    - permission_changes
+    - data_deletion
+    - data_migrations
+    - public_disclosure
+    - security_reports
+    - large_refactors
+    - breaking_dependency_upgrades
+    - secrets_tokens_credentials_or_private_data

@@ -1,0 +1,36 @@
+skill:
+  name: adversarial-review
+  version: 1.0.0
+  status: active
+  purpose: >
+    Improve code, architecture, product decisions, security posture, and implementation plans
+    through scoped multi-agent adversarial review.
+  default_output: templates/review-report.md
+  default_template: templates/review-packet.md
+  supported_modes:
+    - code_review
+    - architecture_review
+    - decision_review
+  core_principles:
+    - narrow_scope_beats_broad_review
+    - separate_finder_from_critic
+    - split_reasoning_chains
+    - track_claims_not_vibes
+    - prefer_evidence_over_confidence
+    - require_human_approval_gates
+  required_agents:
+    - orchestrator
+    - investigator
+    - devils_advocate
+    - impact_tracer
+    - fix_planner
+    - triage_lead
+    - final_decision
+  final_decisions:
+    - approve
+    - approve_with_follow_up
+    - block_until_fixed
+    - needs_more_evidence
+    - rework_approach
+    - run_smaller_experiment
+    - escalate_to_human_review

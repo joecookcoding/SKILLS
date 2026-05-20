@@ -1,0 +1,33 @@
+{
+  "skill_name": "adversarial-review",
+  "evals": [
+    {
+      "id": 0,
+      "name": "code-review-auth-route",
+      "prompt": "I'm about to merge this PR — it's a Next.js route handler for our user settings page. Can you do a thorough multi-agent review of it before I ship? I want concrete findings with evidence, the strongest counterargument to each finding, real-world impact analysis, and a final ship/no-ship recommendation. The file is at evals/files/users-route.ts. Expected behavior: a signed-in user can read and update their OWN account, and admins can read/update anyone. Out of scope: unrelated refactors, styling.",
+      "expected_output": "Structured Multi-Agent Review Report identifying the IDOR (missing ownership check on GET and PATCH), the PATCH mass-assignment risk, and the missing zod/schema validation. Each finding should be challenged by a devil's advocate, impact-traced, and end with a clear final decision (likely 'block until fixed').",
+      "files": ["evals/files/users-route.ts"]
+    },
+    {
+      "id": 1,
+      "name": "architecture-review-db-migration",
+      "prompt": "Our CTO is pushing for a big migration and I want a structured, adversarial review before we commit. Read evals/files/architecture-proposal.md and run a full multi-agent architecture review. I specifically want the strongest case FOR the migration, the strongest case AGAINST, the operational risks, and the smallest reversible next step we could take instead of a big-bang migration.",
+      "expected_output": "Structured Multi-Agent Review Report covering: team's lack of DynamoDB experience, single-table-design implications for the join-heavy analytics dashboard, cost-at-scale uncertainty, irreversibility, and an alternative incremental path (e.g. fix connection pool, add read replica, optimize analytics queries, evaluate Aurora). Should end with 'rework approach' or 'run a smaller experiment'.",
+      "files": ["evals/files/architecture-proposal.md"]
+    },
+    {
+      "id": 2,
+      "name": "decision-review-devrel-hire",
+      "prompt": "Help me make a decision. We're an 8-person startup with 11 months of runway considering hiring a $180K DevRel engineer. Full context is in evals/files/hiring-decision.md. Use a structured multi-agent devil's advocate review — I want the case for, the case against, the impact on our runway and roadmap, the smallest safe next step, and a clear final recommendation.",
+      "expected_output": "Structured Multi-Agent Review Report covering: runway impact (~10% of monthly burn), opportunity cost vs. open backend role, lack of fit-validation (no DevRel KPIs), incremental alternatives (contract writer, engineer rotation), and a final decision (likely 'run a smaller experiment' or 'rework approach' — e.g. start with contract writer or 90-day DevRel contract).",
+      "files": ["evals/files/hiring-decision.md"]
+    },
+    {
+      "id": 3,
+      "name": "ai-agent-workflow-review",
+      "prompt": "We're about to ship an autonomous AI agent that handles customer-support tickets — including issuing refunds and canceling subscriptions — with no human in the loop for 'low-risk' tickets. The CEO is excited. I have a bad feeling but want a structured adversarial review before I push back. The design doc is at evals/files/ai-agent-design.md. Run a multi-agent review focused on governance, blast radius, and what could go catastrophically wrong. End with a clear recommendation.",
+      "expected_output": "Structured Multi-Agent Review Report identifying: (1) the agent self-classifying 'low-risk' is a prompt-injection / jailbreak vector since tickets come from untrusted users, (2) $500/call refund tool with no daily cap means a single bad day could drain meaningful $, (3) cancel_subscription has no undo / no cooling-off, (4) no shadow-mode or canary period — straight to 100%, (5) no human-approval gate for any action. Expects 'block until fixed' or 'rework approach' with a phased rollout.",
+      "files": ["evals/files/ai-agent-design.md"]
+    }
+  ]
+}

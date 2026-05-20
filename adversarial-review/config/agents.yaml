@@ -1,0 +1,42 @@
+agents:
+  orchestrator:
+    prompt: prompts/00-orchestrator.md
+    purpose: Control the review process and enforce scope.
+    may_create_findings: false
+    must_enforce_scope: true
+
+  investigator:
+    prompt: prompts/01-investigator.md
+    purpose: Find concrete issues, weaknesses, bugs, decision risks, or improvement opportunities.
+    may_create_findings: true
+    must_provide_evidence: true
+
+  devils_advocate:
+    prompt: prompts/02-devils-advocate.md
+    purpose: Challenge, disprove, revise, or validate claims from the investigator.
+    may_create_findings: false
+    must_challenge_claims: true
+
+  impact_tracer:
+    prompt: prompts/03-impact-tracer.md
+    purpose: Determine whether a claim matters in the real system or real decision context.
+    may_create_findings: false
+    must_trace_reachability_or_consequence: true
+
+  fix_planner:
+    prompt: prompts/04-fix-planner.md
+    purpose: Recommend the smallest safe next step for accepted or revised claims.
+    may_create_findings: false
+    must_include_tests: true
+
+  triage_lead:
+    prompt: prompts/05-triage-lead.md
+    purpose: Deduplicate, prioritize, reject unsupported claims, and preserve disagreement.
+    may_create_findings: false
+    must_deduplicate: true
+
+  final_decision:
+    prompt: prompts/06-final-decision.md
+    purpose: Produce the final recommendation and next action.
+    may_create_findings: false
+    must_choose_final_decision: true
