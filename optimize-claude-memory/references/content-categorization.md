@@ -2,7 +2,7 @@
 
 How to decide where a given chunk of CLAUDE.md content should live after optimization. Apply this to each section, paragraph, and rule.
 
-## The four buckets
+## The five buckets
 
 ### 1. Always-true fact → stays in root CLAUDE.md
 
@@ -60,18 +60,36 @@ Content that describes patterns we no longer use, or references files that no lo
 
 **Signal:** Age, deleted-file references, words like "legacy" / "old" / "deprecated" without a migration path.
 
+### 5. Redundant — already stated elsewhere in the tree → collapse to a pointer
+
+Content that is accurate and useful but **already lives in another file (or another section of the same file)** — so a full second copy in root just doubles the maintenance surface and the per-turn token cost. Distinct from bucket 4 (dead): the content is *correct*, it's just duplicated. Examples seen in the wild:
+
+- A "Migration Guides" list in root `AGENTS.md` that the `docs/AGENTS.md` subdirectory map already catalogs.
+- A `kubectl apply -k k8s/` (or `docker compose up`) fenced command repeated in both a "Commands" section and a "Deployment" section of the same file.
+- An "ADR template / how to add an ADR" footer in root that the `docs/` ADR-discipline doc already covers.
+
+**Test:** Grep the rest of the tree for the same fact. If another `AGENTS.md` or a sibling section already states it, you have a duplicate.
+
+**What to do:** Replace the root copy with a one-line pointer to the canonical home, or delete it outright if a nearby section already implies it. On an *already-optimized* repo this bucket is usually where the largest line savings come from — not from rewording facts, but from removing second copies of them.
+
+**Caution — deliberate duplication:** some duplication is intentional and documented ("keep `adr/README.md` and root `AGENTS.md` in sync"). Don't collapse those silently — see the "Moving a block that's deliberately duplicated" anti-pattern in `SKILL.md`. Surface it to the user as a decision instead.
+
+**And don't "reclaim lines" by trimming a pinned table's row prose.** A table row is one line however long its text is, so shortening a pinned ADR/Decisions table's rows saves tokens but *not* lines — it can't get you under a line budget, and it quietly rewrites content a "keep in sync" convention may depend on. If a pinned table is the only big block left, the honest move is to find whole-line cuts elsewhere or tell the user the budget can't be met without dropping content.
+
 ## Decision tree
 
 ```
-Is this content a fact Claude needs in every session?
-├── YES → bucket 1 (root CLAUDE.md)
-└── NO → Is this describing how to do X or reference material for X?
-        ├── YES → Is X invoked by intent keywords?
-        │       ├── YES → bucket 2 (skill)
-        │       └── NO (only relevant in specific dirs) → bucket 3 (AGENTS.md)
-        └── NO → Is this still accurate about the current codebase?
-                ├── YES → keep somewhere relevant (maybe /docs/)
-                └── NO → bucket 4 (delete)
+Is this content already stated elsewhere in the tree (another AGENTS.md / a sibling section)?
+├── YES → bucket 5 (collapse to a pointer) — unless a documented "keep in sync" convention pins it
+└── NO → Is this content a fact Claude needs in every session?
+        ├── YES → bucket 1 (root CLAUDE.md)
+        └── NO → Is this describing how to do X or reference material for X?
+                ├── YES → Is X invoked by intent keywords?
+                │       ├── YES → bucket 2 (skill)
+                │       └── NO (only relevant in specific dirs) → bucket 3 (AGENTS.md)
+                └── NO → Is this still accurate about the current codebase?
+                        ├── YES → keep somewhere relevant (maybe /docs/)
+                        └── NO → bucket 4 (delete)
 ```
 
 ## Common miscategorizations

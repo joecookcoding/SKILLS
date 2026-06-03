@@ -1,0 +1,53 @@
+{
+  "skill_name": "codebase-exploration",
+  "evals": [
+    {
+      "id": 0,
+      "name": "trace-dispatch-chain",
+      "prompt": "I'm trying to understand how a bug-fix request flows from a CID-submitted bug-report through the system to the LLM-touching activity that actually localizes the bug. Walk me through the call chain — list the files in order from intake to LLM call, one line per file describing its role. Cite specific paths from the repo. Aim for ≤15 steps total.",
+      "expected_output": "An ordered list of files spanning agentic-ops-service intake → workflow dispatch → ai-service worker → LLM call.",
+      "files": [],
+      "assertions": [
+        {"text": "cites a file inside services/agentic-ops-service/", "kind": "content"},
+        {"text": "cites a Temporal workflow file under workflows/ for the bug-fix pipeline", "kind": "content"},
+        {"text": "cites services/ai-service/workers/bug_fix_localize.py or bug_fix_runners.py", "kind": "content"},
+        {"text": "names the localizer prompt file (bug_fix_localizer.md) as the LLM system prompt", "kind": "content"},
+        {"text": "mentions the GitHub webhook OR /v1/agent-gateway/bug-fix POST endpoint as the entry trigger", "kind": "content"},
+        {"text": "presents files in order matching the actual dispatch sequence, not arbitrary", "kind": "structural"},
+        {"text": "answer is <= 15 numbered steps as requested", "kind": "constraint"}
+      ]
+    },
+    {
+      "id": 1,
+      "name": "add-feature-sibling-exists",
+      "prompt": "I want to add a new built-in agent called 'transcripts-helper' to ai-service. (a) where the AgentRegistryConfig lands, (b) closest sibling agent to mirror, (c) tools the new agent should expose.",
+      "expected_output": "Identifies services/ai-service/agents/builtins.py BUILTIN_AGENTS list, names docs-helper as sibling, lists transcribe_media as the tool.",
+      "files": [],
+      "assertions": [
+        {"text": "identifies services/ai-service/agents/builtins.py as the BUILTIN_AGENTS file", "kind": "content"},
+        {"text": "identifies an existing built-in agent as the sibling (docs-helper, county-info, data-helper, or web-researcher)", "kind": "content"},
+        {"text": "names docs-helper specifically as the sibling pattern", "kind": "content"},
+        {"text": "lists transcribe_media as one of the tools", "kind": "content"},
+        {"text": "cites a specific line number for the insertion point, not just a file name", "kind": "specificity"},
+        {"text": "mentions the deployment-prerequisite pattern (CID ai_config.agent_ops flags) at least in passing", "kind": "content"},
+        {"text": "answer is structured with the three required sections (a) / (b) / (c)", "kind": "structural"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "root-cause-vs-symptom",
+      "prompt": "Bug-report submitted via CID, row stuck, no PR, no error. Top 3 root-cause locations ordered by likelihood with symptom signature.",
+      "expected_output": "Should cite documented silent-failure paths from pre-deploy-checklist.md.",
+      "files": [],
+      "assertions": [
+        {"text": "identifies at least one documented silent-failure path (cid_ai_config_unavailable, failed_workspace_mount, BadSearchAttributes, allowed_repos preflight)", "kind": "content"},
+        {"text": "cites docs/deploy/pre-deploy-checklist.md OR the FORBIDDEN-symptom callouts", "kind": "content"},
+        {"text": "identifies CID_API_KEY missing OR cid_ai_config_unavailable as one of the top three", "kind": "content"},
+        {"text": "identifies AGENT_OPS_WORKSPACE_ROOT parity OR failed_workspace_mount as one of the top three", "kind": "content"},
+        {"text": "each candidate has a concrete file path AND a symptom signature, not just a name", "kind": "structural"},
+        {"text": "candidates are ordered by likelihood with reasoning, not arbitrary", "kind": "structural"},
+        {"text": "does NOT propose a code fix (user explicitly asked not to)", "kind": "constraint"}
+      ]
+    }
+  ]
+}

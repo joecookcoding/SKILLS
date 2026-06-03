@@ -39,6 +39,7 @@ repo/
 - Duplicate task/todo files consolidated
 - Broken doc references fixed
 - Stale commands reconciled across CLAUDE.md / AGENTS.md / README.md (common: deprecated CLIs lingering in one but fixed in another)
+- **No per-directory file counts in navigation tables.** A count cell in a multi-row table drifts on every file add and is guaranteed to be wrong somewhere — strip the count column and steer navigation by a complexity/purpose label instead. At most, keep one count in an area doc's *header*, refreshed only on material drift. A precise count is a one-line command when someone actually needs it (`find <dir> \( -name '*.ts' -o -name '*.tsx' \) | wc -l`; PowerShell `(Get-ChildItem <dir> -Recurse -File -Include *.ts,*.tsx).Count`) — it does not belong baked into the docs.
 - Build, type-check, and lint still pass (if the repo has any — docs-only repos skip this)
 
 Expected savings: **~2,000–2,600 tokens per turn** from CLAUDE.md reduction; additional **~300–400 tokens** if MEMORY.md is trimmed. Accuracy improves because tight skill descriptions match intent better than a monolithic rules file.
@@ -53,6 +54,12 @@ Follow these phases in order. Phase 3 (plan approval) is the only mandatory user
 
 Goal: understand the current state before proposing changes, AND establish a baseline so post-change verification is unambiguous.
 
+**Triage first — migration or touch-up?** Before the detailed inventory, get a fast read on which case you're in: glob for `AGENTS.md` + sibling `CLAUDE.md` pairs and look at the root `CLAUDE.md`. Two very different starting points:
+- **Migration** — a monolithic root `CLAUDE.md`, few or no `AGENTS.md` files, no sibling pattern. The full workflow below applies.
+- **Touch-up** — the tree is already on the pattern (sibling `CLAUDE.md`/`AGENTS.md` pairs, root `CLAUDE.md` already an `@AGENTS.md` one-liner). Here the win is *deltas*, not a restructure: a root file a little over budget, a stale reference, one missing sibling, a block duplicated across two files. Run the audit to find those specific deltas and make the plan a **minimal diff**. State plainly in the plan that the repo is already on the pattern and this is a touch-up — otherwise a big-sounding six-phase workflow reads as alarming on a repo that's 95% done, and you risk manufacturing a restructure it doesn't need. Most steps below still apply; you'll just be confirming compliance rather than building from scratch.
+
+  When a touch-up's root file is over its line budget, remember that **line count only drops when you remove whole lines** — a redundant section (Bucket 5), a duplicated fenced command, a multi-line prose block. **Shortening the prose inside a markdown table row does not reduce the line count** — the row is still one line — so never propose "tightening" or "condensing" a table's rows to hit a line target (that saves tokens, not lines). If the only big block left to cut is one *pinned* by a "keep in sync" convention (anti-pattern #9), you usually can't reach the budget without either finding other whole-line cuts or dropping real content: say that to the user as a decision rather than quietly condensing the pinned block.
+
 1. **Baseline build/lint/type-check BEFORE editing anything (when there IS a root build).** Run the stack-appropriate commands and save their output — in Phase 5 you'll diff against these to distinguish pre-existing issues from regressions.
    ```
    npm run type-check 2>&1 | tee /tmp/baseline-typecheck.txt
@@ -60,7 +67,7 @@ Goal: understand the current state before proposing changes, AND establish a bas
    ```
    **Skip the baseline entirely when the repo has no root-level build/lint** (e.g., docker-compose monorepos where each service has its own tooling, or pure-docs repos). Markdown-only changes cannot regress a build that doesn't exist. Detect this by looking for a root `package.json` / `pyproject.toml` / `Cargo.toml` with runnable `lint`/`check`/`test` scripts. If all you find is `docker-compose.yml` and `k8s/` manifests, skip and say so in the plan.
 2. **Measure root `CLAUDE.md`:**
-   - `wc -l CLAUDE.md` (bash) or `(Get-Content CLAUDE.md | Measure-Object -Line).Lines` (PowerShell)
+   - `wc -l CLAUDE.md` (bash) or `(Get-Content CLAUDE.md).Count` (PowerShell). Avoid PowerShell `Measure-Object -Line` — it skips blank lines and undercounts the real total (see `references/verification.md`).
    - Note line count and identify section boundaries
 3. **Detect monorepo context.** If the repo sits inside a parent that has its own `CLAUDE.md` (e.g., `cid-main/cids-frontend/` with `cid-main/CLAUDE.md`):
    - Note that the parent `CLAUDE.md` auto-loads at startup too — it counts against the token budget
@@ -103,7 +110,7 @@ Goal: understand the current state before proposing changes, AND establish a bas
 
 ### Phase 2 — Categorize
 
-For each section of the root `CLAUDE.md`, bucket it into one of four destinations. See `references/content-categorization.md` for the full decision framework with examples. Quick version:
+For each section of the root `CLAUDE.md`, bucket it into one of five destinations. See `references/content-categorization.md` for the full decision framework with examples. Quick version:
 
 | Bucket | Stays in root CLAUDE.md? | Test |
 |---|---|---|
@@ -111,6 +118,7 @@ For each section of the root `CLAUDE.md`, bucket it into one of four destination
 | **Procedure / reference** | No → skill | "Is this steps-to-do-X, or a lookup table I only need for specific tasks?" |
 | **Area-specific rule** | No → nested AGENTS.md | "Does this only matter when editing files under `src/X/`?" |
 | **Dead / stale** | No → delete | "Is this describing a pattern we no longer use, or a file that no longer exists?" |
+| **Redundant** | No → pointer | "Is this already stated in another AGENTS.md / section? Collapse to a one-line pointer — unless a documented 'keep in sync' convention pins it." |
 
 Also inventory what nested `AGENTS.md` files are missing for directories that have substantive rules. Use the project's own convention if present — many repos use "AGENTS.md for 20+ file directories, README.md for 5–19, no doc for fewer."
 
@@ -222,7 +230,7 @@ Let the project's existing patterns guide you. If the repo already has a skill f
 
 Windows repos typically use PowerShell — never assume bash. Check CLAUDE.md for an explicit shell declaration first. Fall back to detecting from CI scripts (`*.ps1` vs `*.sh`). When running verification commands, use the correct syntax:
 
-- Line count: PowerShell `(Get-Content file | Measure-Object -Line).Lines` vs bash `wc -l file`
+- Line count: PowerShell `(Get-Content file).Count` vs bash `wc -l file` (avoid `Measure-Object -Line` — it skips blank lines)
 - Directory walk: PowerShell `Get-ChildItem -Recurse` vs bash `find`
 - Preferred: use the Glob, Grep, Read, Write, Edit tools which are cross-platform.
 
@@ -238,6 +246,8 @@ Windows repos typically use PowerShell — never assume bash. Check CLAUDE.md fo
 6. **Merging AGENTS.md and README.md.** They serve different audiences. AGENTS.md = agent-facing rules; README.md = human-facing overview. Respect the existing split if it's there.
 7. **Rewriting everything at once.** Work low-risk to high-risk: new AGENTS.md files first, then sibling CLAUDE.md redirects, then stale-command fixes. If something breaks mid-execute, you can stop without leaving the repo half-migrated.
 8. **Skipping the plan approval.** Plan mode is the user's safety net. Even if the plan seems obvious, write it and get approval.
+9. **Moving a block that's deliberately duplicated.** Some repos keep the same content in two places on purpose and document it — an index that says "keep `adr/README.md` and root `AGENTS.md` in sync," a table marked "canonical" or "source of truth." Before relocating or collapsing any block, grep the tree near that content for `keep .* in sync`, `source of truth`, `canonical`. If a documented convention pins it, it's load-bearing: surface it to the user as a decision (keep / slim / re-point the convention) rather than moving it unilaterally and silently breaking the rule. The win on an already-optimized repo comes from collapsing *un*-pinned duplication (Bucket 5 in `references/content-categorization.md`), not from fighting an intentional one.
+10. **Per-directory file counts baked into the docs.** A count cell in a multi-row navigation table is the worst possible home for a number that changes constantly — every file add invalidates a cell, so the table is always wrong somewhere, and nobody keeps dozens of cells current (they drift 50–250% in practice). Don't add them, and strip them when you find them. The complexity label (LOW/MEDIUM/HIGH) is what actually drives "should I read this first?" — the raw number was never doing that work. If a size signal genuinely helps, keep at most one approximate count in the area doc's *header*. A precise count is a one-line shell command (`find` / `Get-ChildItem`) when someone needs it. Also reconcile any "update the file count when you add a file" maintenance rule the repo documents — it mandates exactly the drift you're removing; reword it to "refresh the area header count only on material drift (≈25+ files)."
 
 ---
 

@@ -1,0 +1,38 @@
+{
+  "skill_name": "optimize-claude-memory",
+  "evals": [
+    {
+      "id": 0,
+      "name": "touchup-already-optimized",
+      "prompt": "Can you optimize the agent-memory setup (CLAUDE.md / AGENTS.md) for the repo at C:\\Users\\jcook\\.claude\\skills\\optimize-claude-memory-workspace\\fixtures\\fixture-touchup? It's our acme-platform backend. Audit it and give me the plan before you change anything.",
+      "expected_output": "Recognizes the repo is ALREADY on the AGENTS.md + sibling-CLAUDE.md pattern and calls this a touch-up / minimal diff (not a from-scratch migration). Flags the 'Migration Notes' section and the duplicated `docker compose up -d` fence as redundant (Bucket 5) and collapses them. Recognizes the 'Decisions' table is pinned by a documented 'keep in sync' convention and does NOT silently move or condense it. Does not try to cut line count by shortening table-row prose. Notes per-service docs are already complete.",
+      "files": ["fixtures/fixture-touchup"],
+      "assertions": [
+        {"text": "recognizes the repo is ALREADY on the AGENTS.md + sibling-CLAUDE.md pattern and frames the work as a touch-up / minimal diff rather than a from-scratch migration", "kind": "content"},
+        {"text": "does NOT propose building the sibling CLAUDE.md / AGENTS.md structure from scratch or a full multi-phase restructure", "kind": "constraint"},
+        {"text": "flags the 'Migration Notes' section as redundant with docs/ and proposes collapsing it to a pointer or removing it", "kind": "content"},
+        {"text": "flags the duplicated `docker compose up -d` command (appears in both Commands and Local Development) for dedupe", "kind": "content"},
+        {"text": "identifies the 'Decisions' table as pinned by a documented 'keep in sync' convention and does NOT silently move or delete it (leaves it or surfaces it as a user decision)", "kind": "content"},
+        {"text": "does NOT propose condensing/shortening the Decisions table ROW PROSE as a way to reduce line count (line-vs-token trap)", "kind": "constraint"},
+        {"text": "notes per-service docs for api and worker are already complete (AGENTS.md + CLAUDE.md + README.md) with no gaps to create", "kind": "content"},
+        {"text": "produces a plan and does not edit the fixture files", "kind": "structural"}
+      ]
+    },
+    {
+      "id": 1,
+      "name": "monolith-migration",
+      "prompt": "Our orderflow service has one giant CLAUDE.md at C:\\Users\\jcook\\.claude\\skills\\optimize-claude-memory-workspace\\fixtures\\fixture-monolith and it's getting unwieldy — Copilot and Cursor can't read it either. Can you optimize it and make it portable across agents? Show me the plan first.",
+      "expected_output": "Recognizes this as a genuine migration (monolithic CLAUDE.md, no AGENTS.md tree) — NOT a touch-up. Proposes root AGENTS.md + sibling CLAUDE.md (@AGENTS.md). Moves the API reference table and the 'how to add a route' procedure into skills. Moves the src/auth and src/billing rules into nested AGENTS.md files. Flags the COMPLETED callbacks->async/await block as dead/stale to delete.",
+      "files": ["fixtures/fixture-monolith"],
+      "assertions": [
+        {"text": "recognizes this as a migration (monolithic CLAUDE.md, no AGENTS.md tree) and does NOT mislabel it a touch-up", "kind": "content"},
+        {"text": "proposes a root AGENTS.md plus a sibling CLAUDE.md that contains only @AGENTS.md", "kind": "content"},
+        {"text": "moves the API reference table out of root into a skill (not kept inline in root)", "kind": "content"},
+        {"text": "moves the src/auth rules to src/auth/AGENTS.md AND the src/billing rules to src/billing/AGENTS.md (nested area rules)", "kind": "content"},
+        {"text": "flags the 'callbacks -> async/await (COMPLETED 2024-08)' block as dead/stale to delete", "kind": "content"},
+        {"text": "moves the 'How to add a new API route' procedure into a skill", "kind": "content"},
+        {"text": "produces a plan and does not edit the fixture files", "kind": "structural"}
+      ]
+    }
+  ]
+}

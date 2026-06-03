@@ -6,12 +6,16 @@ After executing the approved plan, run through this list before reporting succes
 
 | File | Target | How to check |
 |---|---|---|
-| Root `CLAUDE.md` | ≤ 200 lines (aim 120–150) | `wc -l CLAUDE.md` or `(Get-Content CLAUDE.md \| Measure-Object -Line).Lines` |
+| Root `CLAUDE.md` | ≤ 200 lines (aim 120–150) | bash `wc -l CLAUDE.md`; PowerShell `(Get-Content CLAUDE.md).Count` |
 | Root `AGENTS.md` (if deduped) | Depends on codebase size | — |
 | `MEMORY.md` (if trimmed) | ≤ 200 lines (loaded chunk) | — |
 | Each new skill `SKILL.md` | ≤ 500 lines (per skill-creator guidance) | — |
 
 If root CLAUDE.md is over 200 lines, find what else can move out — usually a "reference" section or an over-detailed rule.
+
+> **PowerShell gotcha:** `Measure-Object -Line` counts only **non-blank** lines, so on a file with many blank separators it reports a number well below the real total — a 197-line file can report 151, which looks alarmingly like you over-cut by 46 lines when you didn't. Use `(Get-Content file).Count` for the true total (the number that matters for the per-turn budget). Bash `wc -l` counts every line and is fine.
+
+> **Line count ≠ token count — they are different levers.** Removing whole lines (a redundant section, a duplicated fenced command, a multi-line prose block) lowers the *line* count. Tightening prose *inside* a line lowers *tokens* but not lines — and a markdown **table row is one line no matter how long its text is**, so you cannot shrink a table's line count by trimming row prose; you shrink it by removing rows or moving the whole table out. When the goal is "get under the line ceiling," target whole-line removals (especially Bucket-5 redundancy); when the goal is raw token reduction, prose density also counts.
 
 ## 2. Sibling-CLAUDE.md coverage
 
