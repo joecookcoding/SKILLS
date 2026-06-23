@@ -42,7 +42,7 @@ Why it fails: no one says that. Users say "what color should I use", "fix dark m
 ### Good
 
 ```yaml
-description: Apply the @volusia design system when choosing colors, dark mode tokens, atmospheres, typography, radius, squircles, hero backgrounds, tones, badges, buttons, or card styles. Use when writing or editing any JSX/TSX with visible UI, picking CSS classes, fixing dark mode contrast issues, reviewing against design standards, or asking "what color should I use for X?". Triggers on "color", "dark mode", "atmosphere", "token", "radius", "squircle", "hero", "badge", "button variant", "tone", "primary/info/accent", "--vc-*", "bg-*", "text-*", or when polishing a page.
+description: Apply the project design system when choosing colors, dark mode tokens, atmospheres, typography, radius, hero backgrounds, tones, badges, buttons, or card styles. Use when writing or editing any JSX/TSX with visible UI, picking CSS classes, fixing dark mode contrast issues, reviewing against design standards, or asking "what color should I use for X?". Triggers on "color", "dark mode", "atmosphere", "token", "radius", "hero", "badge", "button variant", "tone", "primary/info/accent", "--color-*", "bg-*", "text-*", or when polishing a page.
 ```
 
 Why it works:

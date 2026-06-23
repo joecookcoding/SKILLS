@@ -1,6 +1,6 @@
 ---
 name: codebase-exploration
-description: Use whenever the user asks to fix a bug, add a feature, refactor code, extend a system, implement something new, or change how an existing piece of code behaves — including "fix this bug", "add support for X", "refactor Y", "where should I put this", "extend the auth flow", "implement Z", "wire up the new endpoint", "modify how the worker handles N", "the API is returning the wrong thing, fix it", or any task that involves writing or changing more than a one-line edit. Also trigger on questions like "where does X get called", "what existing function does this", "is there already a helper for Y", "how does this dispatch work" — those are the moments when investigation saves the most rework. The skill teaches an investigate-before-mutate discipline adapted from NVIDIA's TensorRT-LLM exploration playbook: search for the concept not just the symbol, read callers before the called function, check for existing helpers and dispatchers before writing new code, mirror existing test style, and use a structured three-pass file budget with the Explore subagent and TodoList to prevent "I've read 30 files and still don't know what's going on" spirals. The single most common failure mode in coding tasks is writing parallel code that duplicates an existing helper because the existing helper was never found — this skill prevents that, and the cost of running the discipline (a few extra reads) is always less than the cost of writing then deleting the duplicate. Skip only for: trivial one-line edits, typos, removing a print, or tasks where the user has already named the exact file + symbol + change.
+description: Use whenever the user asks to fix a bug, add a feature, refactor code, extend a system, implement something new, or change how an existing piece of code behaves — including "fix this bug", "add support for X", "refactor Y", "where should I put this", "extend the auth flow", "implement Z", "wire up the new endpoint", "modify how the worker handles N", "the API is returning the wrong thing, fix it", or any task that involves writing or changing more than a one-line edit. Also trigger on questions like "where does X get called", "what existing function does this", "is there already a helper for Y", "how does this dispatch work" — the moments when investigation saves the most rework. Enforces investigate-before-mutate so new code never duplicates an existing helper. Skip only for: trivial one-line edits, typos, removing a print, or tasks where the user has already named the exact file + symbol + change.
 metadata:
   version: "1.0.0"
   tags: [code, investigation, bug-fix, refactor, multi-step]
@@ -74,6 +74,12 @@ This is the manual companion to harness-level context compaction. The signal tha
 
 For very long investigations (30+ reads), the Explore subagent is usually the right move from earlier: it does the wide read, you get a summary back, your context doesn't fill up.
 
+## Handoffs
+
+- **Bug investigation that ends Pass 3 without a confirmed cause** → superpowers:systematic-debugging takes over. These passes are its locate phase; reproduction and instrumentation pick up where reading stops.
+- **New-feature work** → superpowers:brainstorming settles intent before these passes settle mechanics.
+- **Multi-step changes** → Pass 3's output (candidate files + contract notes) is the input superpowers:writing-plans expects.
+
 ## Common exploration mistakes
 
 | Mistake | Consequence | Counter |
@@ -82,7 +88,7 @@ For very long investigations (30+ reads), the Explore subagent is usually the ri
 | Searching only for the exact function name | Miss renamed-but-not-everywhere-updated equivalents and concept-level matches | Search the concept (`auth`, `token`, `validate`) before the symbol |
 | Writing new code that parallels an existing helper | Two implementations diverge; reviewers ask "why not use X" | Pass 2 explicitly searches for sibling helpers — if one exists, your change calls it |
 | Skipping existing tests | New test asserts the wrong invariant; reviewer pushes back on style | Read `*test*` in the area before authoring a new test |
-| Treating one plausible file as definitive | The actual root cause is one level up; you patch the symptom | `root_files` is ordered by *root cause likelihood*. The symptom file is at best position #2 |
+| Treating one plausible file as definitive | The actual root cause is one level up; you patch the symptom | Rank candidate files by *root-cause likelihood* — the file named in the report or stack trace is at best #2 on that list |
 | Dumping wide grep output into your own context | Context fills, you re-read trying to remember earlier results | Dispatch the Explore subagent for wide searches; it returns a digest |
 | "I'll just start writing and see what fits" | Half-written code shaped by incomplete understanding; rewrite cost > read cost | Apply the three rule-of-thumb questions before the first edit |
 | Reading until you "feel like you understand" | No-progress spiral, context bloat | Per-pass file budget; synthesize between passes |

@@ -4,11 +4,9 @@ A reusable AI review workflow for improving code, architecture, product decision
 
 This skill uses scoped sub-agents, claim tracking, adversarial review, impact tracing, deduplication, and human approval gates to improve decisions before action is taken.
 
-## Why Markdown and YAML?
+## Why Markdown?
 
 Markdown is used for prompts, templates, and documentation because it is readable by humans, easy for AI coding tools to parse, and simple to version in Git.
-
-YAML is used for structured configuration because it gives the workflow a stable machine-readable contract. This makes it easier to adapt the skill across ChatGPT, Claude, Codex, Cursor, Windsurf, Claude Code, custom scripts, and future AI IDEs.
 
 Plain `.txt` prompts work, but Markdown is better for long-term reuse because it supports headings, examples, tables, fenced blocks, and embedded instructions without becoming hard to scan.
 
@@ -18,11 +16,6 @@ Plain `.txt` prompts work, but Markdown is better for long-term reuse because it
 adversarial-review/
 ├── README.md
 ├── SKILL.md
-├── config/
-│   ├── skill.yaml
-│   ├── agents.yaml
-│   ├── review-modes.yaml
-│   └── safety-gates.yaml
 ├── prompts/
 │   ├── 00-orchestrator.md
 │   ├── 01-investigator.md
@@ -31,14 +24,21 @@ adversarial-review/
 │   ├── 04-fix-planner.md
 │   ├── 05-triage-lead.md
 │   └── 06-final-decision.md
+├── references/
+│   ├── agent-roles.md
+│   ├── one-shot-prompt.md
+│   └── severity-and-safety.md
 ├── templates/
 │   ├── review-packet.md
 │   ├── claim-ledger.md
 │   └── review-report.md
-└── examples/
-    ├── code-review-example.md
-    ├── architecture-review-example.md
-    └── decision-review-example.md
+├── examples/
+│   ├── code-review-example.md
+│   ├── architecture-review-example.md
+│   └── decision-review-example.md
+└── evals/
+    ├── evals.json
+    └── files/
 ```
 
 ## Core Pattern
@@ -85,4 +85,4 @@ Fill out `templates/review-packet.md`, then run the prompts in order:
 6. `prompts/05-triage-lead.md`
 7. `prompts/06-final-decision.md`
 
-For a single chat window, use the all-in-one prompt in `SKILL.md`.
+For a single chat window in an external chat UI, use the all-in-one prompt in `references/one-shot-prompt.md`. Inside Claude Code, `SKILL.md` (version 1.1.0) drives execution directly.

@@ -15,6 +15,7 @@ Try to actively disprove it. Look for:
 - Weak evidence
 - False positives
 - Overstated impact
+- Confidence overstated relative to evidence quality — is High confidence actually justified by the evidence, or does it just sound plausible?
 - Scope violations
 - Simpler explanations
 - Existing safeguards

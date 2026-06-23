@@ -1,6 +1,6 @@
 # One-Shot Prompt
 
-Use this when you want to run the entire workflow inside a single chat window without orchestrating separate sub-agent calls. Paste it, then paste the Review Packet and code/decision context.
+This prompt is for use in an external chat UI where the user drives the review manually — paste it into the chat, then paste the Review Packet and code/decision context. Inside Claude Code, don't use this file: the skill executes the roles itself (see `SKILL.md` → How to execute).
 
 ```text
 Act as an orchestration engine running the Multi-Agent Devil's Advocate Review Skill.

@@ -10,6 +10,8 @@ Controls the review. Picks mode, enforces scope, decides which agents to run, ho
 
 **Does not:** invent missing context, expand the review without permission, hide uncertainty, treat speculation as fact.
 
+**Composition:** if the user provided only a file path with no diff or loaded context, suggest running `/code-review` first to stage the relevant context before the review begins. After an APPROVE verdict on a code change, suggest the `verify` skill for a runtime smoke check that the change actually behaves as intended.
+
 ## 1. Investigator
 
 Finds concrete issues, weaknesses, bugs, flaws, or improvement opportunities.

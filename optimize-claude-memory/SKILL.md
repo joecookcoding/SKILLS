@@ -1,6 +1,6 @@
 ---
 name: optimize-claude-memory
-description: Audit and restructure a repository's agent memory system (CLAUDE.md, AGENTS.md, skills, MEMORY.md) to minimize per-turn token usage, enable multi-agent portability (Claude Code + Copilot + Cursor + Cody all reading the same AGENTS.md), and preserve context accuracy. Use when the user wants to "optimize CLAUDE.md", "add AGENTS.md", "support multiple agents", "make docs portable across Copilot/Cursor/Cody", "reduce token usage", "speed up Claude", "shrink memory", "audit AGENTS.md", "fix the claude setup", "make this repo ready for Claude", "add a CLAUDE/AGENTS file for each service", "full docs on every service", "port the optimization pattern to another project", "add nested CLAUDE.md files", "move rules into skills", or mentions CLAUDE.md being too long / hard to follow / slow / duplicated. Also triggers on "Claude Code memory", "context window", "skill migration", "@AGENTS.md pattern", "sibling CLAUDE.md", "directory-scoped rules", "monorepo docs", or "claude.md best practices". Works in any repo (React, Vue, Python, Go, Rust, monorepo, docker-compose, etc.) — detects stack and shell, adapts recommendations. Always produces a plan file for user approval before editing; never commits. Expected result: 2,000–2,600 tokens saved per turn, docs usable by any coding agent, plus improved skill triggering accuracy.
+description: Audit and restructure a repository's agent memory system (CLAUDE.md, AGENTS.md, skills, MEMORY.md) to minimize per-turn token usage, enable multi-agent portability (Claude Code + Copilot + Cursor + Cody all reading the same AGENTS.md), and preserve context accuracy. Use when the user wants to "optimize CLAUDE.md", "add AGENTS.md", "support multiple agents", "make docs portable across Copilot/Cursor/Cody", "reduce token usage", "speed up Claude", "shrink memory", "audit AGENTS.md", "fix the claude setup", "make this repo ready for Claude", "add a CLAUDE/AGENTS file for each service", "full docs on every service", "port the optimization pattern to another project", "add nested CLAUDE.md files", "move rules into skills", or mentions CLAUDE.md being too long / hard to follow / slow / duplicated. Also triggers on "Claude Code memory", "context window", "skill migration", "@AGENTS.md pattern", "sibling CLAUDE.md", "directory-scoped rules", "monorepo docs", or "claude.md best practices". Any stack or monorepo; plan-first and approval-gated. (The claude-md-improver plugin covers template-based CLAUDE.md quality audits; this skill owns the portable AGENTS.md + sibling-pattern migration and token optimization.)
 ---
 
 # Optimize Claude Memory
@@ -39,7 +39,7 @@ repo/
 - Duplicate task/todo files consolidated
 - Broken doc references fixed
 - Stale commands reconciled across CLAUDE.md / AGENTS.md / README.md (common: deprecated CLIs lingering in one but fixed in another)
-- **No per-directory file counts in navigation tables.** A count cell in a multi-row table drifts on every file add and is guaranteed to be wrong somewhere — strip the count column and steer navigation by a complexity/purpose label instead. At most, keep one count in an area doc's *header*, refreshed only on material drift. A precise count is a one-line command when someone actually needs it (`find <dir> \( -name '*.ts' -o -name '*.tsx' \) | wc -l`; PowerShell `(Get-ChildItem <dir> -Recurse -File -Include *.ts,*.tsx).Count`) — it does not belong baked into the docs.
+- **No per-directory file counts in navigation tables** — steer by complexity/purpose labels instead; full rule and rationale in anti-pattern #10 below.
 - Build, type-check, and lint still pass (if the repo has any — docs-only repos skip this)
 
 Expected savings: **~2,000–2,600 tokens per turn** from CLAUDE.md reduction; additional **~300–400 tokens** if MEMORY.md is trimmed. Accuracy improves because tight skill descriptions match intent better than a monolithic rules file.
@@ -54,12 +54,15 @@ Follow these phases in order. Phase 3 (plan approval) is the only mandatory user
 
 Goal: understand the current state before proposing changes, AND establish a baseline so post-change verification is unambiguous.
 
-**Triage first — migration or touch-up?** Before the detailed inventory, get a fast read on which case you're in: glob for `AGENTS.md` + sibling `CLAUDE.md` pairs and look at the root `CLAUDE.md`. Two very different starting points:
+**Run `scripts/audit-memory-tree.ps1 -Root <repo>` for the deterministic measurements** (true root line counts, sibling-pattern coverage %, downward `@import` hits, broken `.md` references in root CLAUDE.md); **never eyeball-count.**
+
+**Fast path check / triage — migration or touch-up? (do this first).** `Glob` for `**/AGENTS.md` and `**/CLAUDE.md` and look at the root `CLAUDE.md` (the audit script computes this verdict for you). If ≥90% of `AGENTS.md` files have a sibling `CLAUDE.md` containing only `@AGENTS.md`, AND the root `CLAUDE.md` / `AGENTS.md` is under ~200 lines, the repo is already on the pattern — skip the full 6-phase audit and go straight to producing a **Touch-up plan** (gap-fixes only: the few missing siblings, a stale reference, a line-budget trim). A full audit of an already-optimized repo just manufactures busywork. If the check fails, proceed with the full workflow below. Two very different starting points:
 - **Migration** — a monolithic root `CLAUDE.md`, few or no `AGENTS.md` files, no sibling pattern. The full workflow below applies.
 - **Touch-up** — the tree is already on the pattern (sibling `CLAUDE.md`/`AGENTS.md` pairs, root `CLAUDE.md` already an `@AGENTS.md` one-liner). Here the win is *deltas*, not a restructure: a root file a little over budget, a stale reference, one missing sibling, a block duplicated across two files. Run the audit to find those specific deltas and make the plan a **minimal diff**. State plainly in the plan that the repo is already on the pattern and this is a touch-up — otherwise a big-sounding six-phase workflow reads as alarming on a repo that's 95% done, and you risk manufacturing a restructure it doesn't need. Most steps below still apply; you'll just be confirming compliance rather than building from scratch.
 
-  When a touch-up's root file is over its line budget, remember that **line count only drops when you remove whole lines** — a redundant section (Bucket 5), a duplicated fenced command, a multi-line prose block. **Shortening the prose inside a markdown table row does not reduce the line count** — the row is still one line — so never propose "tightening" or "condensing" a table's rows to hit a line target (that saves tokens, not lines). If the only big block left to cut is one *pinned* by a "keep in sync" convention (anti-pattern #9), you usually can't reach the budget without either finding other whole-line cuts or dropping real content: say that to the user as a decision rather than quietly condensing the pinned block.
+  When a touch-up's root file is over its line budget: **line count only drops when you remove whole lines — trimming prose inside a table row saves tokens, not lines** (canonical explanation: `references/verification.md` §1). If the only big block left to cut is one *pinned* by a "keep in sync" convention (anti-pattern #9), you usually can't reach the budget without either finding other whole-line cuts or dropping real content: say that to the user as a decision rather than quietly condensing the pinned block.
 
+0. **Step 0 — prior-run memory.** Glob `~/.claude/plans/` for a prior plan and its `<plan>-report.md` for this repo (Phase 6 writes the report next to the plan). If found, read the report's "Deliberately NOT doing" / follow-up sections and **diff against it instead of cold-auditing** — run N must not re-propose changes run N−1 deliberately rejected; carry unresolved follow-ups into this run's plan.
 1. **Baseline build/lint/type-check BEFORE editing anything (when there IS a root build).** Run the stack-appropriate commands and save their output — in Phase 5 you'll diff against these to distinguish pre-existing issues from regressions.
    ```
    npm run type-check 2>&1 | tee /tmp/baseline-typecheck.txt
@@ -146,13 +149,14 @@ Work through the plan in this order (low-risk changes first):
 
 1. **Create new skills — but ONLY after checking user-level skills first.** For every candidate new skill:
    - Did Phase 1 find a matching skill at `~/.claude/skills/` already? If yes, **don't duplicate** — remove the content from CLAUDE.md and replace with a pointer (`"/skill-name"`). The cross-repo reuse is the whole point.
-   - Only create net-new skills for content that's genuinely unique to this repo (e.g., `cid-auth-flow` for CID — auth flow is CID-specific).
+   - Only create net-new skills for content that's genuinely unique to this repo (e.g., a skill documenting this project's bespoke auth/SSO flow — something no other repo shares).
    - Location choice:
      - **`~/.claude/skills/`** if the skill applies across repos (stack-agnostic or applies to every project using a common framework)
      - **`.claude/skills/` (repo-local)** if the skill is genuinely specific to this project
    - YAML frontmatter with `name` and `description` (≤1,536 chars)
    - Descriptions MUST include explicit trigger keywords — see `references/skill-writing.md` for the craft
    - Skill body contains the actual procedure/reference content extracted from CLAUDE.md
+   - For building or eval-testing a NEW skill, hand off to `skill-creator`; for auditing existing skills against best practices, `skill-optimizer`.
 2. **Write or update every `AGENTS.md`** (this is where the content lives):
    - **Root `AGENTS.md`** — the trimmed, facts-only version: environment, project one-liner + stack, commands table, 10–15 critical rules, service-docs pointer table (points at each subdirectory's AGENTS.md), skill pointers, core workflow line. Target 120–150 lines.
    - **Subdirectory `AGENTS.md` files** — one per service/package/area with substantive rules. When moving content from a pre-existing `CLAUDE.md`, **default to verbatim** — preserve the team's wording, just change the H1 header to reflect the new filename. Only rewrite to fix stale commands or broken references.
@@ -253,6 +257,7 @@ Windows repos typically use PowerShell — never assume bash. Check CLAUDE.md fo
 
 ## When NOT to use this skill
 
+- **Template-based CLAUDE.md quality audits** — that's the `claude-md-management:claude-md-improver` plugin's territory (scans CLAUDE.md files, scores them against templates, makes targeted quality updates). Use this skill when the goal is the portable AGENTS.md + sibling-pattern migration, nested directory rules, skill migration, or per-turn token reduction.
 - **Greenfield projects with no CLAUDE.md yet** — just write a good one from scratch using the target structure directly.
 - **CLAUDE.md already under 200 lines** — unless there's a specific pain point (broken references, stale content), don't churn.
 - **The user is in active feature work** — wait for a clean checkpoint. This skill touches many files and makes review difficult mid-feature.
@@ -266,6 +271,10 @@ Windows repos typically use PowerShell — never assume bash. Check CLAUDE.md fo
 - `references/content-categorization.md` — Decision framework for facts vs procedures vs area-rules
 - `references/skill-writing.md` — How to write trigger-focused skill descriptions that actually match user intent
 - `references/verification.md` — Full post-change verification checklist
+
+## Scripts
+
+- `scripts/audit-memory-tree.ps1` — deterministic Phase 1 measurements (true root line counts, sibling-pattern coverage % + missing-siblings list, downward `@import` hits, broken `.md` references in root CLAUDE.md). PowerShell 5.1-compatible; read-only.
 
 ## Assets
 

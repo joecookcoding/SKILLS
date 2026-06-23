@@ -117,7 +117,7 @@ Slash commands (`.claude/commands/*.md`) and skills are different mechanisms, bu
 ### "Content spans multiple scopes"
 
 Split it. The "Design System" section might have:
-- Universal facts (use `--vc-*` tokens, never raw colors) → root CLAUDE.md as a 1-liner
+- Universal facts (use design-system color tokens, never raw hex values) → root CLAUDE.md as a 1-liner
 - Deep reference (token catalog, atmospheres) → `design-system-tokens` skill
 - Component-specific conventions (badges, buttons) → `src/components/AGENTS.md` or per-component doc
 

@@ -4,7 +4,7 @@ A collection of [Claude Code](https://claude.com/claude-code) **skills** — reu
 
 Built and maintained by **[Joe Cook](https://www.cookcoding.com/)** ([Cook Coding](https://www.cookcoding.com/)) — full-stack developer and digital solutions architect. *Turning ideas into production-ready digital products.*
 
-> 📍 Florida, USA · [cookcoding.com](https://www.cookcoding.com/) · [@joecookcoding](https://github.com/joecookcoding) · [LinkedIn](https://www.linkedin.com/in/cookcoding/)
+> 📍 Florida, USA · [cookcoding.com](https://www.cookcoding.com/) · [@joecookcoding](https://github.com/joecookcoding) · [LinkedIn](https://www.linkedin.com/in/cookcoding/) · [X @thejoecook](https://x.com/thejoecook)
 
 ---
 
@@ -34,8 +34,11 @@ Each skill here follows a consistent layout:
 | Skill | What it does |
 |-------|--------------|
 | **[adversarial-review](adversarial-review/)** | A structured, multi-agent review workflow. Splits the work across narrow roles — Orchestrator, Investigator, Devil's Advocate, Impact Tracer, Fix Planner, Triage Lead, Final Decision — to catch what a single pass misses. Use for thorough reviews, red-teaming, ship/no-ship calls, and high-stakes engineering *or* business decisions, with explicit human-approval gates on risky actions. |
+| **[no-glaze](no-glaze/)** | Senior-engineer feedback mode where accuracy beats agreeableness. Leads with the strongest technical truth, bans flattery openers, labels confidence, pushes back on insecure or over-engineered directions, and separates facts from assumptions. The blunt *register*; pairs with `adversarial-review` (the *pipeline*). |
 | **[codebase-exploration](codebase-exploration/)** | An *investigate-before-mutate* discipline (adapted from NVIDIA's TensorRT-LLM exploration playbook) for any bug fix, feature, or refactor. Search the concept not the symbol, read callers before callees, find existing helpers before writing new ones, and use a three-pass file budget to avoid the "read 30 files, still lost" spiral. |
 | **[optimize-claude-memory](optimize-claude-memory/)** | Audits and restructures a repo's agent memory (`CLAUDE.md`, `AGENTS.md`, skills, `MEMORY.md`) to cut per-turn token usage, make docs portable across Claude Code / Copilot / Cursor / Cody, and improve trigger accuracy. Always produces a plan for approval before editing. |
+| **[skill-optimizer](skill-optimizer/)** | Audits and upgrades existing Claude Code skills against Anthropic's skill-authoring best practices — trims bloated descriptions without dropping triggers, splits monolith bodies into references, and flags missing gotchas. Complements `optimize-claude-memory` (which owns repo `CLAUDE.md`/`AGENTS.md`). |
+| **[zod-validation-patterns](zod-validation-patterns/)** | Zod v4 schema patterns for writing, editing, or reviewing validation code — locking schemas to generated API types, cross-field rules, custom error messages, transforms, `zodResolver` + react-hook-form, and a v3 → v4 migration reference. |
 
 ### 🚀 Founder, brand & growth
 
@@ -49,6 +52,8 @@ Each skill here follows a consistent layout:
 | Skill | What it does |
 |-------|--------------|
 | **[heic-to-jpeg](heic-to-jpeg/)** | Converts iPhone HEIC/HEIF images to widely-compatible JPEG, preserving EXIF metadata and orientation. Handles single files or whole directories, skips already-converted files, and auto-installs `pillow` + `pillow-heif` if missing. |
+| **[commit](commit/)** | Generates a Conventional Commits message from your staged/unstaged diff for review — correct type, scope, and a body that captures the *why*. Runs on Sonnet for the turn; never commits for you. |
+| **[pull-request](pull-request/)** | Drafts a PR title + body from every commit on the branch since its base, grouped by theme rather than chronologically. Auto-detects the base branch and emits ready-to-run `git push` + `gh pr create` commands. |
 
 ---
 
@@ -89,6 +94,7 @@ Or copy individual skill folders into a project's `.claude/skills/` directory to
 - 🌐 [cookcoding.com](https://www.cookcoding.com/)
 - 💼 [linkedin.com/in/cookcoding](https://www.linkedin.com/in/cookcoding/)
 - 🐙 [github.com/joecookcoding](https://github.com/joecookcoding)
+- 𝕏 [@thejoecook](https://x.com/thejoecook)
 
 ---
 
