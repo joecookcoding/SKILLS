@@ -1,0 +1,29 @@
+schema_version: 1
+project:
+  id: project-slug
+  name: Project Name
+  type: unknown
+repository:
+  root: ..
+  remote: unknown
+  default_branch: unknown
+ownership:
+  team: unknown
+mesh:
+  enabled: auto
+  failure_policy: continue-local
+  path: null
+  discovery:
+    environment_variable: REPO_MESH_PATH
+    sibling_directories:
+      - ../repo-mesh
+      - ../engineering-mesh
+privacy:
+  export:
+    source_code: false
+    secrets: false
+    private_notes: false
+    architecture: true
+    interfaces: true
+    dependencies: true
+    decisions: reviewed-only
