@@ -18,6 +18,19 @@ mesh:
     sibling_directories:
       - ../repo-mesh
       - ../engineering-mesh
+context:
+  strategy: adaptive-graph-closure
+  hard_token_cap: null
+  token_warning_threshold: 32000
+  traversal:
+    directions:
+      - upstream
+      - downstream
+    include_complete_flows: true
+    include_required_edges: true
+    include_relevant_edges: true
+    include_reference_edges: on-demand
+    stop_when: no-new-material-relationships
 privacy:
   export:
     source_code: false

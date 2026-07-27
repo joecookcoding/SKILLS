@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "status": "draft",
+  "project": {
+    "id": "replace-project-id",
+    "name": "Replace Project Name",
+    "source_commit": "replace-with-full-git-commit",
+    "generated_at": "replace-with-ISO-8601-timestamp"
+  },
+  "nodes": [
+    {
+      "id": "entry-point",
+      "label": "Entry Point",
+      "type": "interface",
+      "group": "Application",
+      "description": "Replace with source-grounded purpose.",
+      "path": "replace/with/repository-relative/path",
+      "status": "draft"
+    }
+  ],
+  "edges": [],
+  "flows": [
+    {
+      "id": "primary-flow",
+      "name": "Primary Flow",
+      "description": "Replace with an important verified application flow.",
+      "steps": [
+        {
+          "order": 1,
+          "nodeId": "entry-point",
+          "label": "Start",
+          "detail": "Replace with a source-grounded step.",
+          "path": "replace/with/repository-relative/path"
+        }
+      ],
+      "edgeIds": []
+    }
+  ],
+  "metadata": {
+    "generator": "RepoMesh",
+    "contains_source_code": false,
+    "contains_secrets": false
+  }
+}
