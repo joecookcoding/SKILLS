@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineer Agent Graphs"
+  short_description: "Run verified agent graphs that learn across runs"
+  default_prompt: "Use $engineer-agent-graphs to turn this goal into a verified worker graph that records one measurable improvement for the next run."

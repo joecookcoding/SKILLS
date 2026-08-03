@@ -1,0 +1,9 @@
+{
+  "objective_score": 0.0,
+  "quality_gate_passed": false,
+  "worker_success_rate": 0.0,
+  "rework_count": 0,
+  "wall_time_seconds": 0.0,
+  "cost_units": 0.0,
+  "notes": "Explain how the objective score and gate were measured."
+}

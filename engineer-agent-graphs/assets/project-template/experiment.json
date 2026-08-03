@@ -1,0 +1,15 @@
+{
+  "observation": "Describe one measured bottleneck or failure mode from this run.",
+  "hypothesis": "Describe why one bounded change should improve one metric.",
+  "change": "State the exact prompt, process, routing, tool, or context change to test next run.",
+  "target_metric": "objective_score",
+  "expected_direction": "increase",
+  "minimum_delta": 1.0,
+  "guardrails": [
+    {
+      "metric": "quality_gate_passed",
+      "rule": "must_equal",
+      "value": true
+    }
+  ]
+}
