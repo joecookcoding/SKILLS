@@ -39,6 +39,12 @@ Start with the file-backed temporal ledger in this skill. It is inspectable, ver
 
 Use cheap/fast models for bounded extraction or classification. Use stronger judgment for decomposition, adversarial verification, conflict resolution, and final synthesis. Record the routing policy as an experiment before making it permanent.
 
+The per-node-kind table lives in SKILL.md under "Route models to node kinds". Two properties make that table worth following rather than approximating:
+
+**Verification is the load-bearing tier.** A worker on too weak a model produces a poor artifact that its verifier catches. A *verifier* on too weak a model produces a false `pass`, and nothing downstream re-checks it — the graph's entire trust boundary is the verifier's independence and judgment. Economizing on workers is recoverable; economizing on verifiers silently converts the graph into a single-agent pipeline that merely looks reviewed.
+
+**A default model is a decision you did not make.** Harnesses inherit the orchestrator's model when none is passed, so "I did not choose" resolves to "everything runs on the most expensive tier." That is not a safe default: it multiplies cost by the fan-out width and makes rate-limit death the expected outcome of a wide graph. Cap concurrent strongest-tier agents and release in waves — an outage takes every in-flight node with it, including nodes that were one tool call from finishing, and their partial work is unrecoverable because artifacts are written at the end.
+
 ## Failure handling
 
 - Missing worker result: flag the exact gap; do not call the report complete.

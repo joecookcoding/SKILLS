@@ -58,6 +58,26 @@ Use `TODO.md` and `.graph/dashboard.html` to inspect status. They are regenerate
 10. Produce the final draft from the consolidated artifact and record it.
 11. Dispatch `verify-final` in a fresh context. Return `revise` if any material claim lacks support, the answer misses the goal, or residual gaps are hidden. The verifier-passed draft is the final answer; do not rewrite it afterward.
 
+## Route models to node kinds
+
+Model choice is part of the topology, not an afterthought. **Pass an explicit model on every dispatch** (in Claude Code, the `model` field on the Agent tool). An omitted model inherits the orchestrator's, which silently puts the entire graph on the most expensive tier — the most common cause of a run dying mid-flight on rate limits, and the reason a fan-out can lose every in-flight node at once.
+
+| Node | Tier | Why |
+|---|---|---|
+| `split` | strongest | Decomposition errors propagate to every downstream node and surface last, when they cost the most to fix. |
+| `worker-*`, first attempt | mid | Bounded sweep-and-cite against a fixed contract. |
+| `worker-*`, revise round | strongest | A `revise` verdict means the cheaper pass already missed something; repeating it at the same tier tends to reproduce the same miss. |
+| `verify-*` | strongest | Adversarial judgment in fresh context is the graph's only real trust boundary. Never economize here. |
+| `consolidate` | strongest | Conflict resolution across artifacts that disagree. |
+| `final`, `verify-final` | strongest | Synthesis, and the last gate before release. |
+| `retrospective` | mid | Mechanical metric assembly against a fixed schema. |
+
+Reserve the cheapest tier for workers whose task is genuinely mechanical: one fixed extraction, a format conversion, a lookup with no verdict attached. **A worker that assigns a judgment — a verdict, a severity, a pass/fail — is not mechanical**, however routine its output looks.
+
+Treat concurrency as a budget, not only a speed knob. Cap simultaneous strongest-tier agents at roughly three and release the rest in waves. Verifiers can always run one wave behind their workers, and a wave that survives is worth more than a fan-out that exhausts the rate limit with six nodes half-finished.
+
+When a rate limit or other environmental fault kills nodes mid-flight, do **not** record those nodes as failed attempts. Retry caps exist to bound bad work; spending them on an outage both starves the node of real retries and corrupts any `rework_count`-style metric the improvement loop compares across runs. Record the event in the resume notes, and re-dispatch at the same attempt number.
+
 Record nodes with:
 
 ```bash
@@ -107,7 +127,7 @@ Say the system “learned” after every closed run. Say it “improved” only 
 ## Operate safely
 
 - Cap workers, attempts, rounds, and context passed into fan-in.
-- Use a stronger model or greater reasoning effort at split, verification, and synthesis when available; use cheaper settings for bounded mechanical workers.
+- Pass an explicit model on every dispatch and cap concurrent strongest-tier agents. See "Route models to node kinds" — never let a node inherit its model by default.
 - Count expected versus received artifacts at every fan-in.
 - Keep the event ledger append-only. Use the CLI rather than hand-editing `.graph/state.json` or `.graph/memory.json`.
 - Let only the orchestrator call mutating CLI commands. The runner serializes concurrent mutations, but central recording keeps worker responsibilities narrow and audit order clear.
