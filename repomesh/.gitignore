@@ -1,8 +1,0 @@
-__pycache__/
-*.py[cod]
-.venv/
-dist/
-build/
-.DS_Store
-Thumbs.db
-*.tmp
