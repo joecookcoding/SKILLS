@@ -47,7 +47,8 @@ Run these six steps in order. Steps 1–3 are read-only; step 4 is the only one 
 
 - **Long ≠ wrong for descriptions.** Trigger-dense descriptions fight undertriggering, which is the more common failure. Cut *workflow narration* from descriptions, never trigger phrases — and verify with evals when in doubt.
 - **Splitting small skills backfires.** Each `references/` file costs a Read round-trip at invocation time. For a 120-line skill (especially a cheap model-pinned utility), the split costs more than the always-loaded lines it saves. Threshold guidance lives in `references/restructuring.md`.
-- **A 1-line bundled file isn't automatically a bug.** Check intent before flagging (e.g., a template whose entire correct content is `@AGENTS.md`).
+- **A 1-line bundled file isn't automatically a bug.** Check intent before flagging (e.g., a template whose entire correct content is a single import line).
+- **A skill can outlive the platform fact it encodes.** When Claude Code changes how it loads something, skills built on the old behavior keep prescribing it. Example: Claude Code v2.1.277 began reading `AGENTS.md` itself, and any `CLAUDE.md` on the path switches that off, so `optimize-claude-memory`'s old "sibling `CLAUDE.md` containing `@AGENTS.md`" pattern became the thing to remove. When a skill cites platform mechanics, re-check them against the current docs before scoring the rest.
 - **Skill-level memory can duplicate repo-level tracking.** If the data has a canonical home in a repo (an INDEX.md, a tasks file), adding a parallel log in the skill creates drift, not memory. Memory belongs in the skill only when no better home exists.
 - **Duplicate skill names across scopes** (user `~/.claude/skills` vs repo `.claude/skills`) double the always-on cost and make triggering ambiguous. The inventory script only sees one root per run — when auditing inside a repo, run it against both roots and compare names.
 

@@ -3,26 +3,29 @@
 ## Context
 
 Current state:
-- Root `CLAUDE.md`: **[N] lines** (target: ≤200, ideally 120–150 per https://code.claude.com/docs/en/memory)
-- Root `AGENTS.md`: [exists / missing]
+- Root `CLAUDE.md`: **[N] lines / absent**
+- Root `AGENTS.md`: **[N] lines / missing** (target: ≤200, ideally 120–150 per https://code.claude.com/docs/en/memory)
+- `CLAUDE.md`-family files found: [N] in the repo, [N] in parent directories ([N] one-line `@AGENTS.md`, [N] with content)
+- Claude Code version: [vX.Y.Z] (needs ≥ 2.1.277 to read AGENTS.md); Project instructions: [claude-md-or-agents-md / ...]; fallback needed: [no / yes — why]
 - Existing skills: [count] at `.claude/skills/` + [count] at `~/.claude/skills/`
 - Existing `AGENTS.md` files: [count] across the tree
-- Services/packages missing `CLAUDE.md`/`AGENTS.md`: [list from Phase 1 step 12]
+- Services/packages missing `AGENTS.md`/`README.md`: [list from Phase 1 step 13]
 - Stack: [React/Vue/Python/Go/docker-compose/etc.] + [TS/JS] + [Vite/Webpack/etc.]
 - Root build: [yes — `npm run lint` etc. / no — docker-compose only / pure docs]
 - Shell: [PowerShell/bash/zsh]
 - Stale commands detected: [e.g., `tctl` in CLAUDE.md vs `temporal operator namespace` in README]
 
-The root CLAUDE.md is above the guideline and mixes three content types that should live in different places. This plan redistributes content into the **AGENTS.md-first + sibling CLAUDE.md** pattern so that all agents (Claude Code, Copilot, Cursor, Cody) read the same source of truth, while reducing per-turn token cost.
+The root instruction file is above the guideline and mixes three content types that should live in different places. This plan redistributes content into the **AGENTS.md-only** pattern, with no `CLAUDE.md` left, so that all agents (Claude Code, Copilot, Cursor, Cody) read the same source of truth, while reducing per-turn token cost.
 
 ## Target pattern
 
 ```
-AGENTS.md            ← source of truth everywhere
-CLAUDE.md            ← one line: @AGENTS.md  (picks up AGENTS.md for Claude Code)
+AGENTS.md            ← source of truth; Claude Code (≥ v2.1.277) reads it at launch
+.claude/rules/       ← optional: Claude-only rules
 services/x/AGENTS.md ← subdirectory source of truth, loads on demand
-services/x/CLAUDE.md ← one line: @AGENTS.md
 ```
+
+No `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` in the repo or above it: any one of them makes Claude read only CLAUDE.md files and drop every `AGENTS.md`. [If the fallback was chosen: say which session needs it, and that every `AGENTS.md`, root included, gets a one-line `@AGENTS.md` sibling.]
 
 Never `@import` a subdirectory AGENTS.md from root — that forces subtree content into every startup.
 
@@ -67,35 +70,36 @@ Example:
 | `src/constants/` | Verify | Status Model rules already present? |
 | ... | ... | ... |
 
-## Sibling CLAUDE.md files to create
+## CLAUDE.md files to delete
 
-For every directory with AGENTS.md (except inside `.claude/skills/` and `node_modules/`):
+Every `CLAUDE.md`, `.claude/CLAUDE.md` and `CLAUDE.local.md` in the repo (except inside `.claude/skills/` and `node_modules/`), deleted together in one step:
 
-- `src/CLAUDE.md` → `@AGENTS.md`
-- `src/api/CLAUDE.md` → `@AGENTS.md`
-- `src/api/queries/CLAUDE.md` → `@AGENTS.md`
-- ... (full list)
+| File | Content | Action |
+|---|---|---|
+| `CLAUDE.md` | [N] lines | Migrate per the map above, then delete |
+| `src/api/CLAUDE.md` | `@AGENTS.md` | Delete |
+| ... | ... | ... |
 
-Each file contains only one line: `@AGENTS.md` (or `@README.md` if that's where the rules live).
+Parent directories: [`../CLAUDE.md` — the user removes or moves it; it is outside this repo]
 
-**Total: [N] sibling CLAUDE.md files.**
+**Total: [N] files.**
 
 ## Collateral
 
 - [ ] Trim `MEMORY.md` at `~/.claude/projects/<slug>/memory/MEMORY.md` — remove completed migration blocks (list them)
-- [ ] Dedupe root `AGENTS.md` against new root `CLAUDE.md` (remove duplicated Critical Rules table, Skills listing)
+- [ ] Add the one-line "no `CLAUDE.md` on purpose" note to the root `AGENTS.md`
 - [ ] Merge duplicate task files (e.g., `ACTION_ITEMS.md` + `todo.md` → keep only `todo.md`); update `tasks/AGENTS.md` references
 - [ ] Fix broken doc references: [list paths that point at deleted files]
 - [ ] Add lesson entries to `tasks/lessons.md` (or project equivalent):
-   - "CLAUDE.md is facts-only"
-   - "Every AGENTS.md has a sibling CLAUDE.md that is just `@AGENTS.md`"
+   - "AGENTS.md is facts-only"
+   - "There is no CLAUDE.md: Claude Code reads AGENTS.md itself, and a CLAUDE.md or CLAUDE.local.md would switch that off"
 
 ## Execution order
 
-Phase A (low risk — new files only, nothing removed):
+Phase A (low risk — content lands in its new home before anything is removed):
 1. Create new skills under `.claude/skills/` (or `~/.claude/skills/` if cross-repo)
 2. Write each `AGENTS.md` — root + every subdirectory. For existing CLAUDE.md content being moved, copy **verbatim** (change only the H1 header) unless a specific section needs a stale-command fix.
-3. Create/overwrite every sibling `CLAUDE.md` as the one-liner `@AGENTS.md` (root + every subdirectory that has an AGENTS.md)
+3. `git rm` every `CLAUDE.md`-family file in the list, all in one step (fallback: create a `@AGENTS.md` one-liner beside every AGENTS.md instead)
 
 Phase B (targeted fixes):
 4. Reconcile stale commands flagged in Phase 1 (e.g., `tctl` → `temporal operator namespace`) across AGENTS.md and README.md
@@ -104,20 +108,20 @@ Phase B (targeted fixes):
 7. Merge duplicate task files
 
 Phase C (verify):
-8. Line count: root AGENTS.md ≤ 200; root CLAUDE.md is 1 line (`@AGENTS.md`)
-9. Verify every AGENTS.md has a sibling CLAUDE.md
-10. Grep root AGENTS.md / CLAUDE.md for any `@` path containing `/` — there should be none (no downward imports)
+8. Line count: root AGENTS.md ≤ 200
+9. No `CLAUDE.md`-family file left in the repo or its parent directories (re-run the audit script)
+10. Grep root AGENTS.md for any `@` path containing `/` — there should be none (no downward imports)
 11. Run lint + type-check + build if the repo has a root build; skip if not (docker-compose monorepos, pure-docs)
 12. Grep for broken references
 13. Grep for deprecated commands flagged in Phase 1 — any remaining occurrences should be deliberate deprecation notices
-14. Smoke test in fresh session (optional, ask user)
+14. Fresh session (ask user): `/memory` lists the root AGENTS.md; a subdirectory's AGENTS.md appears once Claude opens a file there
 
 ## Expected outcome
 
-- Root CLAUDE.md: [N] → **~150 lines**
+- Root instruction file: [N] → **~150 lines** (root AGENTS.md)
 - New skills: [count] added
 - AGENTS.md added: [count]
-- Sibling CLAUDE.md added: [count]
+- CLAUDE.md files removed: [count]
 - Broken references fixed: [count]
 - Expected token savings per turn: **~[estimate] tokens**
 - Build/lint/type-check: **no regressions expected** (markdown-only changes)
@@ -126,10 +130,10 @@ Phase C (verify):
 
 See `references/verification.md` in the skill directory. Summary:
 
-- [ ] Root CLAUDE.md ≤ 200 lines
+- [ ] Root AGENTS.md ≤ 200 lines
 - [ ] `npm run type-check` / stack equivalent passes
 - [ ] `npm run lint` / stack equivalent passes
-- [ ] Every AGENTS.md has sibling CLAUDE.md (outside skill dirs)
+- [ ] No CLAUDE.md, .claude/CLAUDE.md or CLAUDE.local.md in the repo or above it (outside skill dirs)
 - [ ] No broken references remain
 - [ ] Smoke test passes (optional)
 
@@ -142,8 +146,8 @@ See `references/verification.md` in the skill directory. Summary:
 - `[list every existing file being edited]`
 
 **Deleted files:**
-- `[list every file being removed — e.g., merged duplicate task files]`
+- `[list every file being removed — the CLAUDE.md files, merged duplicate task files]`
 
 ## Rollback plan
 
-All changes are markdown + skill directories. No code changes, no dependency changes. Rollback = revert commits or `git restore` touched files. If mid-execute something breaks, stop at the last completed phase and report state.
+All changes are markdown + skill directories. No code changes, no dependency changes. Rollback = revert commits, or `git restore --staged --worktree` the touched files (that also brings back deleted `CLAUDE.md` files). If mid-execute something breaks, stop at the last completed phase and report state.

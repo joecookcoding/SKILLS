@@ -1,10 +1,10 @@
 # Content Categorization Framework
 
-How to decide where a given chunk of CLAUDE.md content should live after optimization. Apply this to each section, paragraph, and rule.
+How to decide where a given chunk of root instruction-file content (a monolithic CLAUDE.md, or an over-budget AGENTS.md) should live after optimization. Apply this to each section, paragraph, and rule.
 
 ## The five buckets
 
-### 1. Always-true fact → stays in root CLAUDE.md
+### 1. Always-true fact → root AGENTS.md
 
 A fact is information Claude needs **regardless of what task is being performed**. Examples:
 
@@ -34,7 +34,7 @@ A procedure is a multi-step workflow or a lookup table that's only relevant for 
 
 **Write the skill's description with explicit trigger keywords.** A vague description is useless — see `skill-writing.md`.
 
-### 3. Area-specific rule → nested AGENTS.md + sibling CLAUDE.md
+### 3. Area-specific rule → nested AGENTS.md
 
 An area rule applies only when working in a specific subtree of the repo. Examples:
 
@@ -82,7 +82,7 @@ Content that is accurate and useful but **already lives in another file (or anot
 Is this content already stated elsewhere in the tree (another AGENTS.md / a sibling section)?
 ├── YES → bucket 5 (collapse to a pointer) — unless a documented "keep in sync" convention pins it
 └── NO → Is this content a fact Claude needs in every session?
-        ├── YES → bucket 1 (root CLAUDE.md)
+        ├── YES → bucket 1 (root AGENTS.md)
         └── NO → Is this describing how to do X or reference material for X?
                 ├── YES → Is X invoked by intent keywords?
                 │       ├── YES → bucket 2 (skill)
@@ -98,13 +98,13 @@ Is this content already stated elsewhere in the tree (another AGENTS.md / a sibl
 
 **Under-using skills:** Many repos put all API reference material directly in CLAUDE.md. This is always wrong — API references are the textbook case for skills. Tight description matches when the user asks about endpoints; zero cost otherwise.
 
-**Skipping AGENTS.md for "small" rules:** Even a single rule like "in this directory, use `client.query(...)` instead of raw SQL" should live in the directory's AGENTS.md, not in root CLAUDE.md. The principle is directory locality, not size.
+**Skipping AGENTS.md for "small" rules:** Even a single rule like "in this directory, use `client.query(...)` instead of raw SQL" should live in the directory's AGENTS.md, not in the root file. The principle is directory locality, not size.
 
 ## Handling edge cases
 
 ### "This rule SOMETIMES applies repo-wide, but mostly only in src/X/"
 
-Put the rule in `src/X/AGENTS.md`. If there are exceptions elsewhere, add a one-liner in root CLAUDE.md: "For X, see src/X/AGENTS.md." Rare violations are easier to catch in review than bloating CLAUDE.md for 80% unaffected work.
+Put the rule in `src/X/AGENTS.md`. If there are exceptions elsewhere, add a one-liner in the root AGENTS.md: "For X, see src/X/AGENTS.md." Rare violations are easier to catch in review than bloating the root file for 80% unaffected work.
 
 ### "This procedure is invoked via slash command"
 
@@ -117,7 +117,7 @@ Slash commands (`.claude/commands/*.md`) and skills are different mechanisms, bu
 ### "Content spans multiple scopes"
 
 Split it. The "Design System" section might have:
-- Universal facts (use design-system color tokens, never raw hex values) → root CLAUDE.md as a 1-liner
+- Universal facts (use design-system color tokens, never raw hex values) → root AGENTS.md as a 1-liner
 - Deep reference (token catalog, atmospheres) → `design-system-tokens` skill
 - Component-specific conventions (badges, buttons) → `src/components/AGENTS.md` or per-component doc
 

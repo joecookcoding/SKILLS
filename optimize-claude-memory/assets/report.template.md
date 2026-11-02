@@ -6,17 +6,17 @@
 
 ## Headline
 
-- Root CLAUDE.md: **[before] → [after] lines** ([%] reduction)
+- Root instruction file: **[before] → [after] lines** ([%] reduction)
 - Estimated per-turn token savings: **~[N] tokens**
 - New skills added: [count]
-- Sibling CLAUDE.md files added: [count]
+- CLAUDE.md files removed: [count]
 - Broken references fixed: [count]
 
 ## Line-count deltas
 
 | File | Before | After | Δ |
 |---|---|---|---|
-| Root `CLAUDE.md` | [N] | [N] | [Δ] |
+| Root `CLAUDE.md` | [N] | absent | [Δ] |
 | Root `AGENTS.md` | [N] | [N] | [Δ] |
 | `MEMORY.md` (auto-memory) | [N] | [N] | [Δ] |
 
@@ -35,13 +35,13 @@
 | `src/Y/AGENTS.md` | Merged | [what was added] |
 | ... | ... | ... |
 
-## Sibling CLAUDE.md coverage
+## CLAUDE.md removal
 
-Created [N] sibling CLAUDE.md files, each containing only `@AGENTS.md`. Every directory with an AGENTS.md (outside `.claude/skills/` and dependency dirs) now has on-demand auto-load coverage.
+Removed [N] `CLAUDE.md`-family files ([N] one-line `@AGENTS.md` imports, [N] migrated into AGENTS.md / `.claude/rules/` first). No `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` remains in the repo or its parent directories, so Claude Code reads the root `AGENTS.md` at launch and each subdirectory's on demand. [Fallback instead: every AGENTS.md has a `@AGENTS.md` sibling, because ...]
 
 ## Structural changes
 
-- [ ] Root AGENTS.md deduped against new CLAUDE.md
+- [ ] Root AGENTS.md says there is no CLAUDE.md on purpose
 - [ ] Duplicate task files consolidated ([list])
 - [ ] Broken references fixed ([list])
 - [ ] MEMORY.md trimmed ([which blocks removed])
@@ -51,11 +51,11 @@ Created [N] sibling CLAUDE.md files, each containing only `@AGENTS.md`. Every di
 
 | Check | Result |
 |---|---|
-| Root CLAUDE.md ≤ 200 lines | [✅ / ❌] [value] |
+| Root AGENTS.md ≤ 200 lines | [✅ / ❌] [value] |
 | Type-check | [✅ pass / ❌ fail details] |
 | Lint | [✅ pass / ❌ fail details] |
 | Build | [✅ pass / ❌ fail details] |
-| Sibling CLAUDE.md coverage | [✅ / ❌ missing: list] |
+| No CLAUDE.md left (repo + parents) | [✅ / ❌ list] |
 | Broken references | [✅ none / ❌ list] |
 | Smoke test (if run) | [notes] |
 
@@ -63,24 +63,24 @@ Created [N] sibling CLAUDE.md files, each containing only `@AGENTS.md`. Every di
 
 Per-turn savings from files that auto-load at startup:
 
-- CLAUDE.md reduction: `([before lines] - [after lines]) × ~5 tokens/line` = **~[N] tokens**
+- Root-file reduction: `([before lines] - [after lines]) × ~5 tokens/line` = **~[N] tokens**
 - MEMORY.md reduction: `([before] - [after]) × ~5 tokens/line` = **~[N] tokens**
 - **Total: ~[N] tokens saved per turn**
 
 Over a typical 50-turn session, that's **~[N × 50] tokens** of context reclaimed for actual work.
 
-Accuracy improvements (qualitative): tight skill descriptions trigger more reliably on intent than a monolithic rules file. The sibling CLAUDE.md pattern loads area-specific rules exactly when they're relevant, reducing noise.
+Accuracy improvements (qualitative): tight skill descriptions trigger more reliably on intent than a monolithic rules file. Subdirectory AGENTS.md files load area-specific rules exactly when they're relevant, reducing noise.
 
 ## What the user should do next
 
-1. **Fresh-session smoke test** — open a new Claude Code session in this repo, ask 2–3 representative questions, confirm the right skills and nested AGENTS.md files surface in context.
+1. **Fresh-session smoke test** — open a new Claude Code session in this repo; `/memory` should list the root AGENTS.md. Ask 2–3 representative questions, confirm the right skills and nested AGENTS.md files surface in context. Don't run `/init` here: it writes a CLAUDE.md.
 2. **Port to other repos** — this skill (`optimize-claude-memory`) is at user level, so invoke `/optimize-claude-memory` in the next repo to apply the same audit-plan-execute-verify flow there.
 3. **Monitor MEMORY.md over time** — completed migrations drift back in. Periodically re-trim (quarterly is reasonable).
 4. **Update skill descriptions** — if a skill isn't triggering reliably for a case you expected, sharpen its description. See the `skill-writing.md` reference inside the optimize-claude-memory skill.
 
 ## Follow-ups and optional wins
 
-- [ ] Consider `CLAUDE.local.md` for per-machine overrides (absolute project paths etc.)
+- [ ] Per-machine overrides go in `~/.claude/CLAUDE.md`, not `CLAUDE.local.md` (which would switch AGENTS.md off)
 - [ ] Run `/fewer-permission-prompts` if you haven't — reduces noise from common bash/MCP tool approvals
 - [ ] If you have a `tasks/lessons.md` log, review it quarterly — old lessons go stale too
 
