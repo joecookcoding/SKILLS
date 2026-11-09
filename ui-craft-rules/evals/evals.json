@@ -1,0 +1,76 @@
+{
+  "skill_name": "ui-craft-rules",
+  "evals": [
+    {
+      "id": 0,
+      "name": "review-ai-generated-banking-screen",
+      "prompt": "An AI tool generated this mobile banking home screen. Review it and tell me what to fix.\n\n- Purple top bar with the logo, a pink notification dot, and a bright purple avatar circle\n- Balance card: 'Balance' label in 16px bold, '$2,340.18' in 16px bold, 'Updated 2 min ago' in 16px bold, all centre-aligned\n- Four action tiles in coloured boxes: Send (green), Request (orange), Top up (blue), More (red)\n- Bottom tab bar: Home, Cards, a large purple '+' button in the middle, Activity, Profile\n- Settings form: a dropdown 'Statement frequency' with options Weekly / Monthly / Quarterly\n- Logout dialog: title 'Are you sure?', buttons 'YES' and 'NO'",
+      "expected_output": "A findings list keyed to rule IDs, most severe first: the action in the tab bar, the dropdown for three options, the 'Are you sure?' dialog, flat hierarchy in the balance card, centre-aligned multi-line text, and excess colour in the chrome and tiles, each with a concrete fix.",
+      "files": [],
+      "assertions": [
+        {"text": "flags the '+' button inside the tab bar and says tab bars are for navigation only (CMP-1)", "kind": "content"},
+        {"text": "recommends radio buttons (or a segmented control) instead of the dropdown for 3 options (CMP-2)", "kind": "content"},
+        {"text": "rewrites the dialog with a verb + noun title such as 'Log out?' and action-labelled buttons such as 'Cancel' / 'Log out' (CMP-3, CMP-8)", "kind": "content"},
+        {"text": "makes the balance amount the hero element, larger than its label and timestamp (HIE-1 or HIE-2)", "kind": "content"},
+        {"text": "calls out the multi-colour chrome or tiles and recommends neutral chrome with one primary colour (VIS-6)", "kind": "content"},
+        {"text": "uses the RULE-ID: problem → fix format", "kind": "structural"},
+        {"text": "does not list rules that pass", "kind": "constraint"}
+      ]
+    },
+    {
+      "id": 1,
+      "name": "build-delete-dialog-react",
+      "prompt": "Write a React + Tailwind confirmation dialog for deleting a project. The project name is passed in as a prop.",
+      "expected_output": "A dialog component whose title is a verb + noun, whose body names the project and states the consequence, with Cancel and a destructive 'Delete project' button, left-aligned, with a close control.",
+      "files": [],
+      "assertions": [
+        {"text": "title is a verb + noun question such as 'Delete project?', not 'Are you sure?'", "kind": "content"},
+        {"text": "body interpolates the project name prop and states the action can't be undone", "kind": "content"},
+        {"text": "buttons are labelled 'Cancel' and 'Delete project' (or 'Delete'), never Yes/No/OK", "kind": "content"},
+        {"text": "destructive button uses a danger colour and sits on the trailing side after Cancel", "kind": "content"},
+        {"text": "includes a dismiss (×) control in the header", "kind": "content"},
+        {"text": "text is left-aligned, not text-center", "kind": "structural"},
+        {"text": "button labels are not uppercase", "kind": "constraint"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "dark-mode-token-setup",
+      "prompt": "Set up the colour tokens for our app as CSS custom properties with light and dark themes. Today the components use hex values directly: #FFFFFF, #F7F7F7, #EDEFF3, #777F8A, #191B1F for greys and #E8EFFD, #2966E9 for blue.",
+      "expected_output": "A primitive layer (grey-100…grey-500, blue-100/blue-…) holding the hex values, and a semantic layer named by element/priority/state that aliases primitives differently per theme, with dark surfaces getting lighter as they elevate.",
+      "files": [],
+      "assertions": [
+        {"text": "defines primitive tokens named family-weight (e.g. --grey-100, --blue-500) holding the raw hex values", "kind": "content"},
+        {"text": "defines semantic tokens following color-{element}-{priority}-{state}, e.g. --color-bg, --color-bg-surface, --color-text-primary", "kind": "content"},
+        {"text": "semantic tokens reference primitives via var(), not raw hex", "kind": "structural"},
+        {"text": "light and dark themes change only the semantic layer's aliases; primitives are not redefined per theme", "kind": "structural"},
+        {"text": "in dark mode, elevated surfaces are lighter shades of dark, and no surface token maps to a light grey or white", "kind": "content"},
+        {"text": "states that components should reference semantic tokens only", "kind": "content"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "nested-radius-card",
+      "prompt": "I have a product card with 8px padding and an image inside it with a 12px corner radius. The card itself has a 12px radius too and the corners look off. What radius should the card be? Give me the CSS.",
+      "expected_output": "The card radius should be 20px (inner 12 + padding 8), expressed as a calc() or fixed value.",
+      "files": [],
+      "assertions": [
+        {"text": "answers 20px for the outer card radius", "kind": "content"},
+        {"text": "states the rule outer = inner + padding", "kind": "content"},
+        {"text": "CSS sets the card border-radius to 20px or calc(12px + 8px) / calc(var(--inner) + var(--pad))", "kind": "content"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "signup-header-buttons",
+      "prompt": "Our marketing site header has two black buttons on the right: 'Sign in' and 'Sign up'. We have a free plan. Improve the buttons.",
+      "expected_output": "Sign in becomes a ghost button for returning users, the sign-up button stays primary, and its label becomes verb + product + value (e.g. 'Get <Product> free').",
+      "files": [],
+      "assertions": [
+        {"text": "makes 'Sign in' a ghost or text button and keeps one primary button (CMP-6)", "kind": "content"},
+        {"text": "rewrites the sign-up label as verb + product + value, e.g. 'Get Acme free' (CMP-8)", "kind": "content"},
+        {"text": "does not leave two primary buttons", "kind": "constraint"}
+      ]
+    }
+  ]
+}

@@ -48,6 +48,12 @@ Each skill here follows a consistent layout:
 | **[founder-validation-skills](founder-validation-skills/)** | A 5-step workflow taking a founder from "I have an idea" to a validated landing page and growth plan — without building the wrong thing. Customer-pain research → lead-magnet selection → copy → site build → funnel + 30/60/90 plan. Don't build until pain is validated. |
 | **[profile-hero-redesign](profile-hero-redesign/)** | A 5-step workflow that turns a clean-but-generic profile, personal-brand, or service-provider hero into a focused, premium, conversion-driven layout. Diagnosis → message hierarchy → visual composition → CTA conversion → responsive polish. |
 
+### 🎨 Design & UI
+
+| Skill | What it does |
+|-------|--------------|
+| **[ui-craft-rules](ui-craft-rules/)** | 39 checkable UI/UX rules (hierarchy, component choice, button copy, radius, colour, dark mode, motion, tokens, AI-ready design systems) plus a 22-point review list of the tells AI-generated UI leaves: action buttons in tab bars, dropdowns for three options, "Are you sure?" dialogs, light cards in dark mode. Works in code or in Figma. Download the ready-to-upload zip: **[dist/ui-craft-rules.zip](dist/ui-craft-rules.zip)**. |
+
 ### 🖼️ Utilities
 
 | Skill | What it does |
