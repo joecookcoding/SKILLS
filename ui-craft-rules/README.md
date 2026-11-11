@@ -14,13 +14,18 @@ design tokens and component naming.
 ```
 ui-craft-rules/
 ├── SKILL.md              # when to use, how to apply, the review list, and a one-line rule index
-└── references/
-    ├── hierarchy.md      # HIE-1–9: hierarchy, alignment, grouping, choice count
-    ├── components.md     # CMP-1–9: tab bars, dropdowns, dialogs, menus, buttons, empty states
-    ├── visual.md         # VIS-1–7: radius, contrast, gradients, type, colour, dark mode
-    ├── motion.md         # MOT-1–4: transitions, staging, easing
-    ├── tokens.md         # TOK-1–5: token tiers, token names, modes, component names, props
-    └── ai-readiness.md   # SYS-1–5: layer names, file structure, token linting, agent docs
+├── references/
+│   ├── hierarchy.md      # HIE-1–9: hierarchy, alignment, grouping, choice count
+│   ├── components.md     # CMP-1–9: tab bars, dropdowns, dialogs, menus, buttons, empty states
+│   ├── visual.md         # VIS-1–7: radius, contrast, gradients, type, colour, dark mode
+│   ├── motion.md         # MOT-1–4: transitions, staging, easing
+│   ├── tokens.md         # TOK-1–5: token tiers, token names, modes, component names, props
+│   ├── ai-readiness.md   # SYS-1–5: layer names, file structure, token linting, agent docs
+│   └── enhancing.md      # improving pages that already ship: audit, plan, before and after
+├── scripts/
+│   └── shot.mjs          # before-and-after screenshots with headless Chrome (Node 22+, no packages)
+└── evals/
+    └── evals.json        # prompts and assertions for testing the skill
 ```
 
 The assistant loads `SKILL.md` when a UI task comes up and reads a reference file only when it
@@ -45,6 +50,10 @@ tokens". The skill fires on its own. You can also name it: "use ui-craft-rules t
 modal".
 
 When it reviews, it reports findings as `RULE-ID: what is wrong → the fix`.
+
+Ask it to "enhance this site with ui-craft-rules" and it audits the pages, gives a plan, makes
+the changes with the project's own components, shows before and after screenshots, and writes
+the rules into the project's design doc.
 
 ## Credits
 

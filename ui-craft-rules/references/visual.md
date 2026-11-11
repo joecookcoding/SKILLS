@@ -31,6 +31,7 @@ Check:
 - No heavy block colour behind content; use a light elevated surface and put the accessible primary colour only on the main action.
 - Chrome is neutral: tab-bar icons share one neutral colour (selected state aside), and avatar placeholders are neutral or the user's photo, not a brand-colour circle.
 - Category chips do not each get their own colour.
+- The primary colour's *fill* is for actions and for state (selected, in progress). A label, a step number, or a bullet filled with it competes with the button: nine accent chips on a page make its one accent button the least noticeable thing there. Use a neutral surface or the text colour for those.
 - The top bar and the tab bar are in the same mode (both light or both dark).
 
 **VIS-7 Dark mode: one mode per screen, elevation by lighter dark.**

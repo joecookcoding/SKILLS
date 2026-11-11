@@ -8,13 +8,34 @@
       "expected_output": "A findings list keyed to rule IDs, most severe first: the action in the tab bar, the dropdown for three options, the 'Are you sure?' dialog, flat hierarchy in the balance card, centre-aligned multi-line text, and excess colour in the chrome and tiles, each with a concrete fix.",
       "files": [],
       "assertions": [
-        {"text": "flags the '+' button inside the tab bar and says tab bars are for navigation only (CMP-1)", "kind": "content"},
-        {"text": "recommends radio buttons (or a segmented control) instead of the dropdown for 3 options (CMP-2)", "kind": "content"},
-        {"text": "rewrites the dialog with a verb + noun title such as 'Log out?' and action-labelled buttons such as 'Cancel' / 'Log out' (CMP-3, CMP-8)", "kind": "content"},
-        {"text": "makes the balance amount the hero element, larger than its label and timestamp (HIE-1 or HIE-2)", "kind": "content"},
-        {"text": "calls out the multi-colour chrome or tiles and recommends neutral chrome with one primary colour (VIS-6)", "kind": "content"},
-        {"text": "uses the RULE-ID: problem → fix format", "kind": "structural"},
-        {"text": "does not list rules that pass", "kind": "constraint"}
+        {
+          "text": "flags the '+' button inside the tab bar and says tab bars are for navigation only (CMP-1)",
+          "kind": "content"
+        },
+        {
+          "text": "recommends radio buttons (or a segmented control) instead of the dropdown for 3 options (CMP-2)",
+          "kind": "content"
+        },
+        {
+          "text": "rewrites the dialog with a verb + noun title such as 'Log out?' and action-labelled buttons such as 'Cancel' / 'Log out' (CMP-3, CMP-8)",
+          "kind": "content"
+        },
+        {
+          "text": "makes the balance amount the hero element, larger than its label and timestamp (HIE-1 or HIE-2)",
+          "kind": "content"
+        },
+        {
+          "text": "calls out the multi-colour chrome or tiles and recommends neutral chrome with one primary colour (VIS-6)",
+          "kind": "content"
+        },
+        {
+          "text": "uses the RULE-ID: problem → fix format",
+          "kind": "structural"
+        },
+        {
+          "text": "does not list rules that pass",
+          "kind": "constraint"
+        }
       ]
     },
     {
@@ -24,13 +45,34 @@
       "expected_output": "A dialog component whose title is a verb + noun, whose body names the project and states the consequence, with Cancel and a destructive 'Delete project' button, left-aligned, with a close control.",
       "files": [],
       "assertions": [
-        {"text": "title is a verb + noun question such as 'Delete project?', not 'Are you sure?'", "kind": "content"},
-        {"text": "body interpolates the project name prop and states the action can't be undone", "kind": "content"},
-        {"text": "buttons are labelled 'Cancel' and 'Delete project' (or 'Delete'), never Yes/No/OK", "kind": "content"},
-        {"text": "destructive button uses a danger colour and sits on the trailing side after Cancel", "kind": "content"},
-        {"text": "includes a dismiss (×) control in the header", "kind": "content"},
-        {"text": "text is left-aligned, not text-center", "kind": "structural"},
-        {"text": "button labels are not uppercase", "kind": "constraint"}
+        {
+          "text": "title is a verb + noun question such as 'Delete project?', not 'Are you sure?'",
+          "kind": "content"
+        },
+        {
+          "text": "body interpolates the project name prop and states the action can't be undone",
+          "kind": "content"
+        },
+        {
+          "text": "buttons are labelled 'Cancel' and 'Delete project' (or 'Delete'), never Yes/No/OK",
+          "kind": "content"
+        },
+        {
+          "text": "destructive button uses a danger colour and sits on the trailing side after Cancel",
+          "kind": "content"
+        },
+        {
+          "text": "includes a dismiss (×) control in the header",
+          "kind": "content"
+        },
+        {
+          "text": "text is left-aligned, not text-center",
+          "kind": "structural"
+        },
+        {
+          "text": "button labels are not uppercase",
+          "kind": "constraint"
+        }
       ]
     },
     {
@@ -40,12 +82,30 @@
       "expected_output": "A primitive layer (grey-100…grey-500, blue-100/blue-…) holding the hex values, and a semantic layer named by element/priority/state that aliases primitives differently per theme, with dark surfaces getting lighter as they elevate.",
       "files": [],
       "assertions": [
-        {"text": "defines primitive tokens named family-weight (e.g. --grey-100, --blue-500) holding the raw hex values", "kind": "content"},
-        {"text": "defines semantic tokens following color-{element}-{priority}-{state}, e.g. --color-bg, --color-bg-surface, --color-text-primary", "kind": "content"},
-        {"text": "semantic tokens reference primitives via var(), not raw hex", "kind": "structural"},
-        {"text": "light and dark themes change only the semantic layer's aliases; primitives are not redefined per theme", "kind": "structural"},
-        {"text": "in dark mode, elevated surfaces are lighter shades of dark, and no surface token maps to a light grey or white", "kind": "content"},
-        {"text": "states that components should reference semantic tokens only", "kind": "content"}
+        {
+          "text": "defines primitive tokens named family-weight (e.g. --grey-100, --blue-500) holding the raw hex values",
+          "kind": "content"
+        },
+        {
+          "text": "defines semantic tokens following color-{element}-{priority}-{state}, e.g. --color-bg, --color-bg-surface, --color-text-primary",
+          "kind": "content"
+        },
+        {
+          "text": "semantic tokens reference primitives via var(), not raw hex",
+          "kind": "structural"
+        },
+        {
+          "text": "light and dark themes change only the semantic layer's aliases; primitives are not redefined per theme",
+          "kind": "structural"
+        },
+        {
+          "text": "in dark mode, elevated surfaces are lighter shades of dark, and no surface token maps to a light grey or white",
+          "kind": "content"
+        },
+        {
+          "text": "states that components should reference semantic tokens only",
+          "kind": "content"
+        }
       ]
     },
     {
@@ -55,9 +115,18 @@
       "expected_output": "The card radius should be 20px (inner 12 + padding 8), expressed as a calc() or fixed value.",
       "files": [],
       "assertions": [
-        {"text": "answers 20px for the outer card radius", "kind": "content"},
-        {"text": "states the rule outer = inner + padding", "kind": "content"},
-        {"text": "CSS sets the card border-radius to 20px or calc(12px + 8px) / calc(var(--inner) + var(--pad))", "kind": "content"}
+        {
+          "text": "answers 20px for the outer card radius",
+          "kind": "content"
+        },
+        {
+          "text": "states the rule outer = inner + padding",
+          "kind": "content"
+        },
+        {
+          "text": "CSS sets the card border-radius to 20px or calc(12px + 8px) / calc(var(--inner) + var(--pad))",
+          "kind": "content"
+        }
       ]
     },
     {
@@ -67,9 +136,55 @@
       "expected_output": "Sign in becomes a ghost button for returning users, the sign-up button stays primary, and its label becomes verb + product + value (e.g. 'Get <Product> free').",
       "files": [],
       "assertions": [
-        {"text": "makes 'Sign in' a ghost or text button and keeps one primary button (CMP-6)", "kind": "content"},
-        {"text": "rewrites the sign-up label as verb + product + value, e.g. 'Get Acme free' (CMP-8)", "kind": "content"},
-        {"text": "does not leave two primary buttons", "kind": "constraint"}
+        {
+          "text": "makes 'Sign in' a ghost or text button and keeps one primary button (CMP-6)",
+          "kind": "content"
+        },
+        {
+          "text": "rewrites the sign-up label as verb + product + value, e.g. 'Get Acme free' (CMP-8)",
+          "kind": "content"
+        },
+        {
+          "text": "does not leave two primary buttons",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "enhance-existing-site",
+      "prompt": "Using ui-craft-rules, enhance our marketing site and add the rules to DESIGN.md. The repo has a DESIGN.md with tokens and a shared component library. The header has one filled 'Sign In' button and no sign-up button; feature cards each carry an accent-filled one-word chip; the sign-up button is worded 'Start a trial', 'Start a pilot' and 'Start your free trial' on different pages; the sign-in page has two filled buttons, with a comment: 'owner, 2026-09-13: first-time users from the TV's QR code could not find the sign-up link'.",
+      "expected_output": "Reads the project's design doc first, takes before pictures, reports findings by rule id with a plan, fixes the header, the chips and the label through shared components, keeps the sign-in page's two buttons and says why, takes after pictures at the same sizes, and adds the rules to DESIGN.md.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "reads DESIGN.md and the shared components before proposing changes",
+          "kind": "structural"
+        },
+        {
+          "text": "takes or proposes 'before' screenshots before editing, and 'after' screenshots of the same pages and widths",
+          "kind": "structural"
+        },
+        {
+          "text": "makes 'Sign in' a ghost button and adds one primary sign-up button to the header (CMP-6)",
+          "kind": "content"
+        },
+        {
+          "text": "removes the accent fill from the label chips (VIS-6)",
+          "kind": "content"
+        },
+        {
+          "text": "replaces the three sign-up wordings with one shared label (CMP-8)",
+          "kind": "content"
+        },
+        {
+          "text": "leaves the sign-in page's two filled buttons in place and reports the owner's recorded reason",
+          "kind": "constraint"
+        },
+        {
+          "text": "adds a section to DESIGN.md in the project's own terms, including where the project keeps its own answer",
+          "kind": "content"
+        }
       ]
     }
   ]

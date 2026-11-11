@@ -42,7 +42,7 @@ Check: write the copy first. Title states the situation in the user's terms ("Yo
 
 **CMP-8 Button labels: verb + object.**
 Why: a label that names the action removes the need to read the surrounding text.
-Check: labels start with a verb and name what they act on (`Delete file`, `Order sushi`, `Remove member`). Acquisition CTAs on a free tier use **verb + product + value** (`Get Claude free`). Never `Yes`/`No`/`OK`/`Submit`, never ALL CAPS.
+Check: labels start with a verb and name what they act on (`Delete file`, `Order sushi`, `Remove member`). Acquisition CTAs on a free tier use **verb + product + value** (`Get Claude free`). Never `Yes`/`No`/`OK`/`Submit`, never ALL CAPS. One action has one wording across the product: "Start a trial", "Start a pilot", and "Start your free trial" on three pages read as three offers. Keep the label in one constant, with a short form for tight spaces such as a header.
 
 **CMP-9 One card with a variant picker, not a card per variant.**
 Why: duplicate cards for each colour or model make users compare near-identical blocks.

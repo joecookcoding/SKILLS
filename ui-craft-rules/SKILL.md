@@ -25,6 +25,7 @@ rules supply the "when".
    | Transitions, animation, easing | `references/motion.md` |
    | Tokens, theme files, CSS variables, component props/variants | `references/tokens.md` |
    | Design-system docs, Figma file structure, layer naming | `references/ai-readiness.md` |
+   | Improving pages that already ship (audit, plan, before and after pictures) | `references/enhancing.md` |
 
 2. **The project's own design system wins.** If it already has tokens, components, a radius
    scale, or a brand palette, use them. These rules decide how to apply and name things, not
@@ -33,6 +34,10 @@ rules supply the "when".
    Say which rows you checked.
 4. **When reviewing someone else's UI**, report each finding as
    `RULE-ID: what is wrong → the fix`, most severe first. Don't list passes.
+5. **When enhancing an existing site or app**, read `references/enhancing.md` first. It gives
+   the order: the project's own rules, "before" pictures, the audit, a plan, the changes,
+   "after" pictures, then the rules written into the project's design doc. Take the pictures
+   with `node scripts/shot.mjs` (headless Chrome, no packages); don't rewrite it each time.
 
 ## Review list: AI calling cards
 
@@ -53,13 +58,13 @@ rules supply the "when".
 | 13 | Raw hex values; invented token or component names | The system's semantic tokens and real component names | TOK-1, SYS-4 |
 | 14 | Hand-drawn or mixed-library icons | One library, one style | CMP-5 |
 | 15 | One dissolve for every change; linear easing | Transition chosen by what changed; staged, eased motion | MOT-1, MOT-3, MOT-4 |
-| 16 | Colour everywhere: coloured top bar, nav icon, avatar circles, 5+ colours in a section | Neutral chrome, two background levels, one primary colour | VIS-6 |
+| 16 | Colour everywhere: coloured top bar, nav icon, avatar circles, 5+ colours in a section; the primary colour filling labels, step numbers, and bullets | Neutral chrome, two background levels, the primary colour on actions only | VIS-6 |
 | 17 | White or light cards on a dark-mode screen | Lighter-toned *dark* surfaces for elevation | VIS-7 |
 | 18 | "Sign in" and "Sign up" both primary | Ghost for returning users, primary for new users | CMP-6 |
 | 19 | Fractional values (padding 13.5, radius 15.3); one-off unnamed hex | Snap to the scale and the token set | SYS-5 |
 | 20 | A bare "No items" empty state | Situation + invitation + one CTA, then an illustration | CMP-7 |
 | 21 | Option rows with no visual anchor, or anchors on only some rows | A distinct icon or image leading every row | HIE-9 |
-| 22 | Generic labels ("Submit", "Yes", "Get started") | Verb + object; verb + product + value for sign-up | CMP-8 |
+| 22 | Generic labels ("Submit", "Yes", "Get started"); one action worded differently on each page | Verb + object; verb + product + value for sign-up; one wording per action | CMP-8 |
 
 ## Rule index
 
@@ -135,6 +140,19 @@ rules supply the "when".
   VIS-4 only keeps it off buttons and links when it fails contrast.
 - **Don't fix what isn't in scope.** When asked to change one component, apply the rules to that
   component and *mention* other violations rather than rewriting the page.
+- **A rule hit may be a recorded decision.** Before changing one, look for a dated comment or
+  a test that pins it. A sign-in page kept two filled buttons because first-time users
+  arriving from a QR code could not find a quiet sign-up link; a test said so. Keep it, and
+  report it as kept, with the reason.
+- **Copy is often pinned by tests.** Search the tests for a label before rewording it, and
+  update the assertion to the new intended wording, not to whatever renders.
+- **Nested radius against a radius scale.** VIS-1's sum (outer = inner + padding) is easy to
+  honour when the shapes sit close together (a segmented control, a picture in a padded
+  well). At 24px of padding it asks for a radius most scales don't have. When the project has
+  a scale (VIS-2), the scale wins there: apply VIS-1 where both radii land on it.
+- **Judge the rendered page, not the JSX.** A centred six-line paragraph, a hole left in a
+  card after its buttons were removed, and nine accent chips out-shouting one button are all
+  invisible in code review. Take pictures before and after (`scripts/shot.mjs`).
 - **Not covered here:** spacing and type scale values, focus and keyboard states,
   touch-target sizes, loading and error states, form validation copy, breakpoints, and reduced
   motion. Use the platform guidelines (WCAG 2.2, Apple HIG, Material 3) for those.
