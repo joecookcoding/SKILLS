@@ -1,6 +1,6 @@
 ---
 name: codebase-exploration
-description: Use whenever the user asks to fix a bug, add a feature, refactor code, extend a system, implement something new, or change how an existing piece of code behaves — including "fix this bug", "add support for X", "refactor Y", "where should I put this", "extend the auth flow", "implement Z", "wire up the new endpoint", "modify how the worker handles N", "the API is returning the wrong thing, fix it", or any task that involves writing or changing more than a one-line edit. Also trigger on questions like "where does X get called", "what existing function does this", "is there already a helper for Y", "how does this dispatch work" — the moments when investigation saves the most rework. Enforces investigate-before-mutate so new code never duplicates an existing helper. Skip only for: trivial one-line edits, typos, removing a print, or tasks where the user has already named the exact file + symbol + change.
+description: "Investigate-before-mutate discipline, so new code never duplicates an existing helper. Use whenever the user asks to fix a bug, add a feature, refactor code, extend a system, implement something new, or change how an existing piece of code behaves — including \"fix this bug\", \"add support for X\", \"refactor Y\", \"where should I put this\", \"extend the auth flow\", \"implement Z\", \"wire up the new endpoint\", \"modify how the worker handles N\", \"the API is returning the wrong thing, fix it\", or any task that involves writing or changing more than a one-line edit. Also trigger on questions like \"where does X get called\", \"what existing function does this\", \"is there already a helper for Y\", \"how does this dispatch work\" — the moments when investigation saves the most rework. Skip only for: trivial one-line edits, typos, removing a print, or tasks where the user has already named the exact file + symbol + change."
 metadata:
   version: "1.0.0"
   tags: [code, investigation, bug-fix, refactor, multi-step]
@@ -52,7 +52,7 @@ Goal: find the *dispatch chain* — caller → router → called function. The b
 - **Check the dispatcher.** Many bugs are mis-routing — the right function exists, the request never reaches it.
 - **Read existing tests as evidence.** `Glob` for `*test*` in the area; existing tests encode the team's expected behavior and the style a new test should mirror.
 
-For wide searches that would dump hundreds of lines into your context (e.g. "find every caller of a widely-used utility"), **dispatch the Explore subagent**. Explore returns a digest, not raw output — your context stays clean while you still get the picture. Same for "what does this entire subsystem do" investigations.
+For wide searches that would dump hundreds of lines into your context (e.g. "find every caller of a widely-used utility"), **dispatch the Explore subagent** when the session has subagents. Explore returns a digest, not raw output — your context stays clean while you still get the picture. Same for "what does this entire subsystem do" investigations. Where subagents are off (some setups deny the Agent tool), get the same effect by narrowing: `Grep` with `files_with_matches` first, rank the files, then read only the top few.
 
 End of Pass 2: a list of 1-3 candidate files for the change, with one-line annotations on each.
 
@@ -76,9 +76,9 @@ For very long investigations (30+ reads), the Explore subagent is usually the ri
 
 ## Handoffs
 
-- **Bug investigation that ends Pass 3 without a confirmed cause** → superpowers:systematic-debugging takes over. These passes are its locate phase; reproduction and instrumentation pick up where reading stops.
-- **New-feature work** → superpowers:brainstorming settles intent before these passes settle mechanics.
-- **Multi-step changes** → Pass 3's output (candidate files + contract notes) is the input superpowers:writing-plans expects.
+- **Bug investigation that ends Pass 3 without a confirmed cause** → switch to reproduction and instrumentation. These passes are the locate phase; debugging picks up where reading stops.
+- **New-feature work** → settle intent with the user before these passes settle mechanics.
+- **Multi-step changes** → Pass 3's output (candidate files + contract notes) is the input a written plan should start from.
 
 ## Common exploration mistakes
 
@@ -89,7 +89,7 @@ For very long investigations (30+ reads), the Explore subagent is usually the ri
 | Writing new code that parallels an existing helper | Two implementations diverge; reviewers ask "why not use X" | Pass 2 explicitly searches for sibling helpers — if one exists, your change calls it |
 | Skipping existing tests | New test asserts the wrong invariant; reviewer pushes back on style | Read `*test*` in the area before authoring a new test |
 | Treating one plausible file as definitive | The actual root cause is one level up; you patch the symptom | Rank candidate files by *root-cause likelihood* — the file named in the report or stack trace is at best #2 on that list |
-| Dumping wide grep output into your own context | Context fills, you re-read trying to remember earlier results | Dispatch the Explore subagent for wide searches; it returns a digest |
+| Dumping wide grep output into your own context | Context fills, you re-read trying to remember earlier results | Dispatch the Explore subagent for wide searches; it returns a digest. Without subagents, list matching files first and read only the top few |
 | "I'll just start writing and see what fits" | Half-written code shaped by incomplete understanding; rewrite cost > read cost | Apply the three rule-of-thumb questions before the first edit |
 | Reading until you "feel like you understand" | No-progress spiral, context bloat | Per-pass file budget; synthesize between passes |
 | Confidence without evidence | "This is the cause" with no caller trace, no test confirmation | Confidence is a function of evidence quality. State explicitly what evidence you have |
@@ -101,8 +101,8 @@ The Claude Code tools that pair with this discipline:
 - **`Grep`** — concept-first search. Use `output_mode: "content"` with `-C 3` for short looks, `files_with_matches` for "where does this live."
 - **`Glob`** — layout discovery. `**/*test*.{ts,py}` for existing tests, `**/AGENTS.md` for documented decisions.
 - **`Read`** — focused file reads. Don't speculate about content; read it.
-- **`Agent` with `subagent_type: "Explore"`** — wide-area investigation. Use when the search would put hundreds of lines in your context. Give Explore a specific question, not a vague one. *"Find every place that calls `verify_token` and report the 3-5 most interesting callsites with brief context"* beats *"explore the auth system."*
-- **`TodoWrite`** — between-pass scratchpad. One todo per pass with the synthesis you wrote at the end of it. This survives context compression and gives the model a stable reference for what's been ruled out.
+- **`Agent` with `subagent_type: "Explore"`** (when subagents are available) — wide-area investigation. Use when the search would put hundreds of lines in your context. Give Explore a specific question, not a vague one. *"Find every place that calls `verify_token` and report the 3-5 most interesting callsites with brief context"* beats *"explore the auth system."*
+- **`TodoWrite`** (or whichever task-list tool the session has) — between-pass scratchpad. One todo per pass with the synthesis you wrote at the end of it. This survives context compression and gives the model a stable reference for what's been ruled out.
 
 ## Reading C / native code, generated code, vendored deps
 

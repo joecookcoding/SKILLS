@@ -167,7 +167,7 @@ if ($parentHits.Count -gt 0) {
     Write-Output '  In parent directories: none'
 }
 
-# Only meaningful under the legacy fallback: AGENTS.md files with no @AGENTS.md sibling.
+# Mixed state: AGENTS.md files with no @AGENTS.md sibling while other CLAUDE.md files remain.
 $noSibling = @()
 foreach ($a in $agentsFiles) {
     $sib = Join-Path (Split-Path -Parent $a) 'CLAUDE.md'
@@ -175,7 +175,9 @@ foreach ($a in $agentsFiles) {
 }
 
 $rootAgentsOver = $rootCounts.ContainsKey('AGENTS.md') -and $rootCounts['AGENTS.md'] -gt 200
-if ($agentsFiles.Count -eq 0) {
+if ($agentsFiles.Count -eq 0 -and $withContent.Count -eq 0 -and $oneLiners.Count -eq 0) {
+    Write-Output '  VERDICT: GREENFIELD - no instruction files in the repo; write a root AGENTS.md directly (not /init, which writes a CLAUDE.md).'
+} elseif ($agentsFiles.Count -eq 0) {
     Write-Output '  VERDICT: MIGRATION - no AGENTS.md tree yet; build it and retire the CLAUDE.md files.'
 } elseif ($withContent.Count -gt 0) {
     Write-Output ("  VERDICT: MIGRATION - {0} CLAUDE.md file(s) hold content to move into AGENTS.md (or .claude/rules/) before deleting." -f $withContent.Count)
@@ -209,7 +211,7 @@ if ($null -eq $claudeCmd) {
     if ($m.Success) {
         $ver = New-Object System.Version ([int]$m.Groups[1].Value), ([int]$m.Groups[2].Value), ([int]$m.Groups[3].Value)
         $ok = ''
-        if ($ver -lt (New-Object System.Version 2, 1, 277)) { $ok = '   [TOO OLD: reads CLAUDE.md only - update, or use the fallback]' }
+        if ($ver -lt (New-Object System.Version 2, 1, 277)) { $ok = '   [TOO OLD: reads CLAUDE.md only - update Claude Code]' }
         Write-Output ("  claude --version: {0}{1}" -f $ver, $ok)
     } else {
         Write-Output "  claude --version: could not parse '$verText'"

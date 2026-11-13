@@ -8,7 +8,9 @@ The skill *folder* is a progressive-disclosure machine: metadata (always loaded)
 |---|---|
 | < ~150 lines | Leave the structure alone. Fix content issues in place. |
 | 150–400 lines | Reorganize in place: principle first, gotchas prominent, decision trees near the top. Split only if clear situational blocks exist. |
-| > ~400 lines | Split. At this size the highest-value content (usually gotchas) is buried, and every invocation pays for sections most runs never need. |
+| > ~400 lines | Split. At this size the highest-value content (usually gotchas) is buried, and every invocation pays for sections most runs never need. The docs' own ceiling is 500 lines. |
+
+Lines are a proxy; tokens are what count. A loaded SKILL.md stays in context for the whole session, and after compaction only its **first ~5,000 tokens** come back. The script's `BODY>5kTOK` flag marks a body whose tail is lost that way: split it, or at least move what must survive to the top.
 
 ## When NOT to split (the inverse failure)
 
@@ -23,9 +25,11 @@ The skill *folder* is a progressive-disclosure machine: metadata (always loaded)
 3. **Add an explicit conditional pointer for every moved block**: "If the backend shipped on a different cadence, read `references/edge-cases.md`." The blog's model: SKILL.md says *if a job is pending, reference stuck-jobs.md*. A bundled file with no pointer is invisible — an orphan.
 4. **Keep in SKILL.md**: the core principle (the "why" that shapes judgment), the workflow overview, the gotchas *index* (one line each, pointing into the details file if long), and the when-NOT-to-use section.
 5. **Re-run the inventory script** afterward and confirm: body line count down, no orphaned files (pointer count covers every bundled file), description unchanged.
+6. **One copy of everything.** If a script or template is bundled as a file, SKILL.md points at the file and does not also paste it. Two copies drift, and the pasted one costs tokens on every invocation.
 
 ## Ordering within SKILL.md (cheap wins without splitting)
 
 - **Principle before procedure** — open with the constraint that makes the skill necessary ("TypeScript types are erased at runtime", "the Status: header is not a delivery signal"). A model that understands the why executes the steps better and adapts when they don't fit.
 - **Decision trees and rule-of-thumb gates near the top** — they route the reader; burying them at line 350 defeats their purpose.
-- **Gotchas visible, not appended** — if it's the highest-signal content, it shouldn't be the last thing loaded attention reaches.
+- **Gotchas visible, not appended** — if it's the highest-signal content, it shouldn't be the last thing loaded attention reaches, and in a long body it is the first thing compaction cuts.
+- **Standing instructions, not one-time steps** — the file is read once at invocation and never re-read. "Run the tests" gets done once; "run the tests after every edit" holds for the task.

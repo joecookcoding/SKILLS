@@ -1,6 +1,6 @@
 ---
 name: pull-request
-description: Generate a pull request message (title + body) from ALL commits on the current branch since the base branch. Use when the user wants to open a PR, finalize a feature branch, or asks for a "PR message", "PR description", "pull request body", or runs /pull-request. Runs on Sonnet for the turn for stronger multi-commit synthesis while keeping session token cost well below Opus.
+description: Generate a pull request message (title + body) from ALL commits on the current branch since the base branch. Use when the user wants to open a PR, finalize a feature branch, or asks for a "PR message", "PR description", "pull request body", or runs /pull-request. Writes the message only and never pushes or opens the PR. For a single commit use commit.
 model: sonnet
 allowed-tools:
   - Bash(git status:*)
@@ -151,8 +151,8 @@ gh pr create --base <base> --title "<title parsed from above>" --web
 
 ## Composition with other skills
 
-- **Pre-merge review of the branch** → use `adversarial-review` or the `code-review` plugin before opening/merging the PR. This skill only writes the message; it does not review the code.
-- **Boundary:** `superpowers:finishing-a-development-branch` decides merge-vs-PR-vs-cleanup. This skill does not make that call — it only writes the PR message (and emits the ready-to-run commands above).
+- **Pre-merge review of the branch** → use `adversarial-review` or the `code-review` skill before opening/merging the PR. This skill only writes the message; it does not review the code.
+- **Boundary:** Deciding merge-vs-PR-vs-cleanup is the user's call. This skill does not make it — it only writes the PR message (and emits the ready-to-run commands above).
 
 ## What this skill must NOT do
 

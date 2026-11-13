@@ -1,6 +1,6 @@
 ---
 name: profile-hero-redesign
-description: A 5-step workflow for turning a clean-but-generic profile, personal-brand, coach, speaker, author, creator, consultant, counselor, newsletter, or service-provider hero section into a focused, modern, premium, trust-building, conversion-driven layout. Use whenever the user wants to "redesign / audit / fix / improve / rework my hero", says their hero "feels generic / flat / forgettable / template-y", complains the headline is weak, the CTA is invisible, the portrait looks pasted in, the page lacks focal point or depth, the mobile version collapses into a generic stack, the opt-in form doesn't convert, or shares a screenshot of an above-the-fold section asking what's wrong. Also triggers on "newsletter landing page hero", "subscribe form design", "book-a-call hero", "personal brand homepage redesign", "make my hero more premium / editorial / elevated". Walks through diagnosis → message hierarchy → visual composition → CTA conversion → responsive polish, with each step's output feeding the next. Always invoke this BEFORE jumping to layout or visual fixes when a hero is on the table — diagnosis comes first.
+description: A 5-step workflow for turning a clean-but-generic profile, personal-brand, coach, speaker, author, creator, consultant, counselor, newsletter, or service-provider hero section into a focused, modern, premium, trust-building, conversion-driven layout. Use whenever the user wants to "redesign / audit / fix / improve / rework my hero", says their hero "feels generic / flat / forgettable / template-y", complains the headline is weak, the CTA is invisible, the portrait looks pasted in, the page lacks focal point or depth, the mobile version collapses into a generic stack, the opt-in form doesn't convert, or shares a screenshot of an above-the-fold section asking what's wrong. Also triggers on "newsletter landing page hero", "subscribe form design", "book-a-call hero", "personal brand homepage redesign", "make my hero more premium / editorial / elevated". Always invoke this BEFORE jumping to layout or visual fixes when a hero is on the table — diagnosis comes first.
 ---
 
 # Profile Hero Redesign
@@ -48,3 +48,18 @@ When the user invokes this skill (or describes a matching hero problem), read th
 If the user names a specific step ("just rewrite my headline", "I only need responsive polish"), jump directly to that file. Otherwise default to running step 1.
 
 Pass the structured handoff fields between steps so each subsequent step has the inputs it expects.
+
+Every step file ends with a **Quality Checklist** and **Red Flags**. Check the step's output against both before showing it to the user.
+
+## Gotchas
+
+- **Diagnose the rendered hero, not the markup.** Focal point, depth and a pasted-in portrait are invisible in JSX. Work from a screenshot at desktop and mobile widths; if there is none, ask for one or render the page first.
+- **Don't invent proof.** Testimonials, subscriber counts, logos and credentials come from the user. With none, design the proof slot and mark it as needing real content.
+- **The site's own design system wins.** Fonts, colours, radius and components already in the project are kept; the steps decide hierarchy and composition, not a new palette.
+- **Only the hero.** Note problems further down the page; don't redesign them unasked.
+- **`ALL_SKILLS.md` is an index for people.** It lists the five step files and holds a paste-ready prompt for chat tools without file access. Don't load it here.
+
+## Composition
+
+- Component, colour and button-copy rules while implementing the plan → `ui-craft-rules` (it also bundles a screenshot script for before and after pictures).
+- The offer or audience itself is unvalidated → `founder-validation-skills` first.

@@ -24,7 +24,7 @@ Score each criterion **pass / gap / n-a** with one line of evidence (quote or li
 > Structure the entire folder as a context-engineering tool. "Tell Claude what files are in your skill, and it will read them at appropriate times."
 
 - **Pass test:** SKILL.md stays lean; situational content lives in `references/`, `scripts/`, `assets/`; every bundled file has an explicit conditional pointer ("if a job is pending, read `stuck-jobs.md`").
-- **Gap signs:** body >~400 lines; bundled files nothing points to (orphans); the highest-value section buried at the bottom of a monolith.
+- **Gap signs:** body >~400 lines; bundled files nothing points to (orphans); pointers to files that don't exist; the same content both inline and in a bundled file (they drift); the highest-value section buried at the bottom of a monolith, where compaction cuts it (only the first ~5,000 tokens of a loaded skill survive).
 - **Fix:** see `restructuring.md`. Note the inverse gap too: splitting skills too small to benefit (also covered there).
 
 ## D — Avoid railroading
@@ -38,7 +38,7 @@ Score each criterion **pass / gap / n-a** with one line of evidence (quote or li
 ## E — Think through the setup
 
 - **Pass test:** if the skill needs user/environment-specific values (channels, paths, team layouts), it discovers them, reads a `config.json`, or **prompts** (AskUserQuestion) when missing. Degrades gracefully when dependencies (network, VPN, services) fail.
-- **Gap signs:** hardcoded environment assumptions; silent failure when a fetch 403s; "the user will know."
+- **Gap signs:** hardcoded environment assumptions; silent failure when a fetch 403s; "the user will know"; a step that requires a tool the session may not have (subagents, a browser, an MCP server) with no inline fallback; a platform fact stated without a date or version, so nobody can tell when it went stale.
 - **Fix:** add discovery order + a troubleshooting block for known failure modes.
 
 ## F — Descriptions for the model, not for humans
@@ -46,7 +46,7 @@ Score each criterion **pass / gap / n-a** with one line of evidence (quote or li
 > "The description field is not a summary, it's a description of when to trigger this skill."
 
 - **Pass test:** concrete trigger phrases users actually type, contexts/file patterns, near-miss exclusions — and nothing else.
-- **Gap signs:** workflow narration inside the description (the body's job); marketing prose; >~400 chars of non-trigger content. Remember the cost model: name+description load **every session**, triggered or not (~chars/4 tokens).
+- **Gap signs:** workflow narration inside the description (the body's job); marketing prose; >~400 chars of non-trigger content; over 1,536 chars (the listing truncates there); an unquoted value containing `: ` (invalid YAML outside Claude Code). Remember the cost model: name+description load **every session**, triggered or not (~chars/4 tokens), and a fleet over the listing budget loses whole descriptions (`platform-facts.md`).
 - **Fix:** see `description-patterns.md`. Never trim without keeping every trigger phrase; verify risky rewrites with skill-creator trigger evals.
 
 ## G — Help Claude remember
@@ -70,11 +70,12 @@ Score each criterion **pass / gap / n-a** with one line of evidence (quote or li
 > "Reference other skills by name, and the model will invoke them if they are installed."
 
 - **Pass test:** the skill names its companions at the natural handoff points instead of duplicating them (file → wire-up; review → verify; message → PR).
-- **Gap signs:** re-implementing a sibling skill's behavior inline; an obvious before/after companion never mentioned.
+- **Gap signs:** re-implementing a sibling skill's behavior inline; an obvious before/after companion never mentioned; a handoff to a skill that isn't installed or doesn't exist (a plugin the user removed, a renamed built-in), with no plain-words fallback.
+- **Check:** list every skill name the SKILL.md mentions and compare it with the skills the session actually has.
 
 ## K — Measurable
 
-- **Pass test (fleet-level, not per-skill):** usage is observable — e.g., a PreToolUse hook logging skill invocations — so undertriggering is detected with data, not vibes. See `measuring-usage.md`.
+- **Pass test (fleet-level, not per-skill):** usage is observable — the built-in `/skill-doctor` report, or a PreToolUse hook logging skill invocations — so undertriggering is detected with data, not vibes. See `measuring-usage.md`.
 
 ---
 

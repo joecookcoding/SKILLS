@@ -7,7 +7,13 @@
 
 {PASTE SCRIPT TABLE — one per root scanned}
 
+**Listing budget:** {total chars across every root scanned} of ~8,000 (200K window) / ~40,000 (1M window); `/doctor` figure if the user ran it: {…}
+
 **Cross-scope duplicates:** {skill names appearing in more than one root, or "none"}
+
+**Source ↔ installed drift (`-CompareRoot`):** {skills that differ and which side holds the newer fix, or "none" / "not applicable"}
+
+**Platform facts re-checked:** {docs pages read and date, or "none cited by the audited skills"}
 
 ## Scorecards
 
@@ -44,7 +50,7 @@
 
 | Priority | Skill | Change | Rubric | Verify via |
 |---|---|---|---|---|
-| 1 | | | F | trigger evals / none (narration-only) |
+| 1 | | | F | trigger evals / phrase diff (narration-only) |
 
 ## Deliberately NOT doing
 {changes considered and rejected, with the reason — prevents re-litigating next audit}

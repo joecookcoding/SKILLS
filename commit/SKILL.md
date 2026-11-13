@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Generate a commit message based on staged and unstaged changes since the last commit. Reviews changes and creates a conventional commit message for user approval. Runs on Sonnet for the turn for sharper diff synthesis and scope detection while keeping cost well below Opus.
+description: Generate a Conventional Commits message from the staged and unstaged changes since the last commit, for the user to review. Use for "/commit", "write a commit message", "commit message for this", "what should this commit say", or when the user is ready to commit and wants the message written. Writes the message only and never commits. For a whole branch use pull-request.
 model: sonnet
 allowed-tools:
   - Bash(git status:*)
@@ -15,7 +15,7 @@ user-invocable: true
 
 Generate a conventional commit message based on recent changes for user review.
 
-> **Model:** this skill uses `model: sonnet` as a per-turn override — Claude Code switches to Sonnet for the duration of this skill's turn, then the session model resumes on your next prompt. Reading a diff and synthesizing an accurate Conventional Commits message — correct type, right scope, a body that captures the *why* across multiple files — is synthesis work Sonnet handles noticeably better than Haiku, while still costing far less per turn than Opus. Override with `/model` before invoking if you need Opus for a specific commit.
+> **Model:** this skill uses `model: sonnet` as a per-turn override — Claude Code switches to Sonnet for the duration of this skill's turn, then the session model resumes on your next prompt. Reading a diff and synthesizing an accurate Conventional Commits message — correct type, right scope, a body that captures the *why* across multiple files — is synthesis work Sonnet handles noticeably better than Haiku, while still costing far less per turn than Opus. Override with `/model` before invoking if you need Opus for a specific commit. The alias is deliberate: `sonnet` follows the current Sonnet, where a pinned ID such as `claude-sonnet-4-6` keeps the skill on that version long after newer ones ship.
 
 ## Usage
 

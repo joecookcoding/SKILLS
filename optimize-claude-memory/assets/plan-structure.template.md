@@ -6,7 +6,7 @@ Current state:
 - Root `CLAUDE.md`: **[N] lines / absent**
 - Root `AGENTS.md`: **[N] lines / missing** (target: ≤200, ideally 120–150 per https://code.claude.com/docs/en/memory)
 - `CLAUDE.md`-family files found: [N] in the repo, [N] in parent directories ([N] one-line `@AGENTS.md`, [N] with content)
-- Claude Code version: [vX.Y.Z] (needs ≥ 2.1.277 to read AGENTS.md); Project instructions: [claude-md-or-agents-md / ...]; fallback needed: [no / yes — why]
+- Claude Code version: [vX.Y.Z] (needs ≥ 2.1.277 to read AGENTS.md); Project instructions: [claude-md-or-agents-md / ...]; fix needed before AGENTS.md loads: [none / update Claude Code / change the setting]
 - Existing skills: [count] at `.claude/skills/` + [count] at `~/.claude/skills/`
 - Existing `AGENTS.md` files: [count] across the tree
 - Services/packages missing `AGENTS.md`/`README.md`: [list from Phase 1 step 13]
@@ -25,7 +25,7 @@ AGENTS.md            ← source of truth; Claude Code (≥ v2.1.277) reads it at
 services/x/AGENTS.md ← subdirectory source of truth, loads on demand
 ```
 
-No `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` in the repo or above it: any one of them makes Claude read only CLAUDE.md files and drop every `AGENTS.md`. [If the fallback was chosen: say which session needs it, and that every `AGENTS.md`, root included, gets a one-line `@AGENTS.md` sibling.]
+No `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` in the repo or above it: any one of them makes Claude read only CLAUDE.md files and drop every `AGENTS.md`.
 
 Never `@import` a subdirectory AGENTS.md from root — that forces subtree content into every startup.
 
@@ -99,7 +99,7 @@ Parent directories: [`../CLAUDE.md` — the user removes or moves it; it is outs
 Phase A (low risk — content lands in its new home before anything is removed):
 1. Create new skills under `.claude/skills/` (or `~/.claude/skills/` if cross-repo)
 2. Write each `AGENTS.md` — root + every subdirectory. For existing CLAUDE.md content being moved, copy **verbatim** (change only the H1 header) unless a specific section needs a stale-command fix.
-3. `git rm` every `CLAUDE.md`-family file in the list, all in one step (fallback: create a `@AGENTS.md` one-liner beside every AGENTS.md instead)
+3. `git rm` every `CLAUDE.md`-family file in the list, all in one step
 
 Phase B (targeted fixes):
 4. Reconcile stale commands flagged in Phase 1 (e.g., `tctl` → `temporal operator namespace`) across AGENTS.md and README.md
