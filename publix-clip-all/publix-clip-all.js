@@ -23,6 +23,7 @@
   console.log("🚀 Starting Publix clip-all...");
 
   while (true) {
+    // Clip currently loaded coupons in parallel batches.
     while (true) {
       const buttons = getClipButtons();
 
@@ -44,6 +45,7 @@
       await sleep(BATCH_DELAY_MS);
     }
 
+    // Find Load More.
     const loadMore = getLoadMore();
 
     if (!loadMore || loadMore.disabled) {
@@ -66,6 +68,7 @@
     HTMLElement.prototype.click.call(loadMore);
     loadMoreClicks++;
 
+    // Wait until Publix actually adds more content.
     let changed = false;
     const checks = Math.ceil(LOAD_MORE_TIMEOUT_MS / 500);
 

@@ -2,6 +2,8 @@
 
 The description is the **only** thing Claude sees when deciding whether to invoke a skill. It is also **always-on context** — loaded into every session whether the skill triggers or not (~chars ÷ 4 tokens, every session, forever). Both facts must shape every word.
 
+Two hard limits sit on top (details in `platform-facts.md`): each skill's `description` + `when_to_use` is cut at 1,536 characters in the listing, and the whole listing gets 1% of the context window. Over that, Claude Code drops entire descriptions from the least-used skills. So trimming one description protects the *other* skills' triggers too.
+
 ## The tension to manage
 
 - **Undertriggering** is the dominant failure mode — Claude tends to skip skills it should use. Trigger-dense, even "pushy" descriptions fight this. Long is not automatically wrong.
@@ -11,12 +13,16 @@ Resolution: a description earns each clause by improving triggering. Trigger phr
 
 ## Anatomy of a good description
 
-1. **What it does** — one clause, so the model knows what problem it solves.
+1. **What it does** — one clause, first, so the model knows what problem it solves and the key use case survives truncation.
 2. **Trigger phrases** — verbatim things users actually type, including casual/abbreviated forms ("BR for X", "babysit this PR"). The blog's example: including the word "babysit" in a PR-monitoring skill's description.
 3. **Trigger contexts** — situations and file patterns ("when editing files importing `zod`", "any paste of a backend team's delivery email").
 4. **Near-miss exclusions** — "Skip for: …" and disambiguation from sibling skills ("for repo memory use optimize-claude-memory instead"). These prevent both wrong-skill triggers and overtriggering.
 
-That's it. No step lists, no implementation details, no guarantees ("never runs git commit") unless the guarantee itself drives the trigger decision.
+That's it. No step lists, no implementation details, no model or cost notes ("runs on Sonnet for the turn"), no guarantees ("never runs git commit") unless the guarantee itself drives the trigger decision.
+
+## YAML form
+
+Write the value in double quotes whenever it contains `: ` (as in `Skip for: typos`) or ` #`, and escape inner quotes as `\"`. Unquoted, that is invalid YAML: Claude Code still reads it, but PyYAML-based tools (`package_skill.py`, a claude.ai upload, other agents) reject the frontmatter. Use `[placeholder]`, not `<placeholder>`; angle brackets display as `&lt;`.
 
 ## Worked example
 
@@ -30,7 +36,8 @@ That's it. No step lists, no implementation details, no guarantees ("never runs 
 2. Delete workflow narration, rationale essays, and feature lists.
 3. Keep disambiguators ("not X — use /other-skill for that") — they're triggering logic.
 4. Anything deleted that's still true and useful moves to the body — don't destroy content, relocate it.
-5. **Verify**: for high-traffic or rewritten-heavily descriptions, run skill-creator's description-optimization loop (`scripts/run_loop.py`: 20 realistic queries, 60/40 train/test split, 3 runs per query). A trim that loses a trigger costs more than the tokens it saves. For mechanical narration-only cuts where every trigger survives verbatim, evals are optional.
+5. **Verify**: for high-traffic or rewritten-heavily descriptions, run skill-creator's description-optimization loop (`scripts/run_loop.py`: 20 realistic queries, 60/40 train/test split, 3 runs per query). A trim that loses a trigger costs more than the tokens it saves. For mechanical narration-only cuts where every trigger survives verbatim, evals are optional. The loop starts many `claude -p` sessions, so say what it will cost before running it.
+6. **Diff the trigger list.** After the edit, extract the quoted phrases from the old and new descriptions and confirm none went missing. It takes one command and catches the slip evals are too expensive to run for.
 
 ## Eval-query design (for the verification step)
 

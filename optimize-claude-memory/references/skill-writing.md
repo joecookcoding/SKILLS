@@ -17,8 +17,10 @@ description: [One-sentence purpose]. Use when [specific user contexts — what p
 
 ### Character budget
 
-- Total cap per skill: **1,536 characters**
+- Total cap per skill: **1,536 characters** (`description` + `when_to_use`; the listing cuts the rest, so the key use case goes first)
+- All skills together share a listing budget of 1% of the context window. Past it, Claude Code drops whole descriptions from the least-used skills, so every new skill's description is paid for by the others
 - Average good description: 400–700 chars
+- Quote the value (`description: "..."`) when it contains `: ` or ` #`. Unquoted, it is invalid YAML for every tool except Claude Code
 - Don't pad; don't abbreviate to the point of vagueness. Invest every character in matching accuracy.
 
 ## Examples
@@ -100,7 +102,7 @@ After writing a description:
 3. Mentally score each: does the description obviously match the positive cases? Does it NOT match the negative cases?
 4. Adjust until both sides are clean
 
-For high-stakes skills, use the description optimization loop from skill-creator (runs 3x per query, iterates 5 times, picks best-scoring version on held-out test set).
+For high-stakes skills, use the description optimization loop from skill-creator (runs 3x per query, iterates 5 times, picks best-scoring version on held-out test set). To audit descriptions that already exist, use `skill-optimizer`.
 
 ## Scope/exclusion phrases
 
@@ -111,7 +113,7 @@ If your skill overlaps with another, disambiguate:
 
 ## When NOT to trigger
 
-Some skills should only run when the user explicitly invokes them via `/skill-name`. For those, add `disable-model-invocation: true` to the frontmatter. The description still exists as documentation but costs zero tokens at startup.
+Some skills should only run when the user explicitly invokes them via `/skill-name`. For those, add `disable-model-invocation: true` to the frontmatter. The description still exists as documentation but costs zero tokens at startup. Good for procedures with side effects (deploys, releases) that the user always starts by hand.
 
 Use this sparingly — most skills benefit from auto-triggering.
 

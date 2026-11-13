@@ -4,6 +4,12 @@ Anthropic instruments skill usage company-wide with a PreToolUse hook that logs 
 
 Iteration on data beats iteration on vibes: a skill that never triggers either has a description problem or shouldn't exist.
 
+## Start with the built-in report
+
+Claude Code v2.1.252+ ships `/skill-doctor`: what each skill costs in the listing, how often it is used, and which have never been invoked, with where to turn them off. `/doctor` adds the listing's total cost and biggest contributors. Ask the user to run both and paste the output (they are slash commands; the model can't run them). It covers personal, project and plugin skills, not bundled or enterprise ones, and it is unavailable over Remote Control.
+
+Use the hook below only for what the report doesn't give: a per-invocation log with timestamps and working directories, so usage can be compared before and after a description change.
+
 ## Local equivalent (Windows / PowerShell)
 
 A `PreToolUse` hook matching the `Skill` tool, appending JSONL to `~/.claude/skill-usage.jsonl`. Install via the `update-config` skill (hooks live in `settings.json` — the harness executes them, not the model). Use the **exec form** (`command` + `args` array — spawned directly, no shell):
@@ -49,6 +55,6 @@ Get-Content (Join-Path $env:USERPROFILE '.claude\skill-usage.jsonl') -Encoding u
 
 Interpretation:
 - **Zero invocations + broad description** → undertriggering. Candidate for a description rewrite verified with skill-creator trigger evals.
-- **Zero invocations + you don't miss it** → candidate for deletion (its description is pure always-on cost).
+- **Zero invocations + you don't miss it** → candidate for deletion (its description is pure always-on cost). Short of deleting: `"name-only"` or `"off"` in `skillOverrides`, or `disable-model-invocation: true` if it is only ever started by hand.
 - **Very high frequency** → optimization target: is it model-pinned appropriately? Could bundled scripts cut its per-run cost?
 - Compare against `optimization-log.md` entries: did a description trim change a skill's trigger rate?

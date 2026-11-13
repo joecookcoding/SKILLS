@@ -7,7 +7,7 @@ After executing the approved plan, run through this list before reporting succes
 | File | Target | How to check |
 |---|---|---|
 | Root `AGENTS.md` | ≤ 200 lines (aim 120–150) | bash `wc -l AGENTS.md`; PowerShell `(Get-Content AGENTS.md).Count` |
-| Root `CLAUDE.md` | Absent (fallback only: 1 line, `@AGENTS.md`) | — |
+| Root `CLAUDE.md` | Absent | — |
 | `MEMORY.md` (if trimmed) | ≤ 200 lines (loaded chunk) | — |
 | Each new skill `SKILL.md` | ≤ 500 lines (per skill-creator guidance) | — |
 
@@ -38,7 +38,7 @@ Get-ChildItem -Recurse -Include CLAUDE.md, CLAUDE.local.md -File `
   | ForEach-Object { Write-Host "FOUND: $($_.FullName)" }
 ```
 
-Both should print nothing. **Fallback only:** instead, every `AGENTS.md` (root included) must have a sibling `CLAUDE.md` whose whole content is `@AGENTS.md`; `scripts/audit-memory-tree.ps1` lists any that don't.
+Both should print nothing. `scripts/audit-memory-tree.ps1` runs the same check and also looks in the parent directories.
 
 **Expected exclusions:**
 - `.claude/skills/**` — inside a skill (skill has its own discovery)

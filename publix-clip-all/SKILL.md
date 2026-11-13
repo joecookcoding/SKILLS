@@ -38,115 +38,9 @@ This is intended for a user running code manually in their own authenticated bro
 
 ## Recommended script
 
-```js
-(async () => {
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-  const BATCH_SIZE = 10;
-  const BATCH_DELAY_MS = 1400;
-  const LOAD_MORE_TIMEOUT_MS = 15000;
-
-  const getClipButtons = () =>
-    [...document.querySelectorAll('button')]
-      .filter(b =>
-        b.innerText.trim().toLowerCase() === 'clip coupon' &&
-        !b.disabled
-      );
-
-  const getLoadMore = () =>
-    document.querySelector(
-      'button[data-qa-automation="button-Load more"]'
-    );
-
-  let totalClipped = 0;
-  let loadMoreClicks = 0;
-
-  console.log("🚀 Starting Publix clip-all...");
-
-  while (true) {
-    // Clip currently loaded coupons in parallel batches.
-    while (true) {
-      const buttons = getClipButtons();
-
-      if (!buttons.length) break;
-
-      const batch = buttons.slice(0, BATCH_SIZE);
-
-      batch.forEach(button => {
-        if (button.isConnected && !button.disabled) {
-          button.click();
-          totalClipped++;
-        }
-      });
-
-      console.log(
-        `✂️ Clicked ${batch.length} coupons — ${totalClipped} total`
-      );
-
-      await sleep(BATCH_DELAY_MS);
-    }
-
-    // Find Load More.
-    const loadMore = getLoadMore();
-
-    if (!loadMore || loadMore.disabled) {
-      console.log("🏁 No more Load More button.");
-      break;
-    }
-
-    loadMore.scrollIntoView({
-      block: "center",
-      behavior: "auto"
-    });
-
-    await sleep(400);
-
-    const beforeHeight = document.documentElement.scrollHeight;
-    const beforeButtons = document.querySelectorAll("button").length;
-
-    console.log("⬇️ Clicking Load More...");
-
-    HTMLElement.prototype.click.call(loadMore);
-    loadMoreClicks++;
-
-    // Wait until Publix actually adds more content.
-    let changed = false;
-    const checks = Math.ceil(LOAD_MORE_TIMEOUT_MS / 500);
-
-    for (let i = 0; i < checks; i++) {
-      await sleep(500);
-
-      const afterHeight = document.documentElement.scrollHeight;
-      const afterButtons = document.querySelectorAll("button").length;
-
-      if (
-        afterHeight > beforeHeight ||
-        afterButtons > beforeButtons ||
-        getClipButtons().length > 0
-      ) {
-        changed = true;
-        console.log(
-          `✅ New coupons loaded — Load More #${loadMoreClicks}`
-        );
-        break;
-      }
-    }
-
-    if (!changed) {
-      console.warn(
-        "⚠️ Load More was clicked, but no new coupons appeared."
-      );
-      break;
-    }
-
-    await sleep(800);
-  }
-
-  console.log(
-    `✅ DONE — clicked ${totalClipped} coupons and used Load More ${loadMoreClicks} times.`
-  );
-})();
-```
+The script is `publix-clip-all.js`, in this skill's folder. Read it and give it to the user
+in a `js` code block, unchanged, so they can review it before pasting. It is the only copy:
+fix selectors and tuning values there, not in a pasted version.
 
 ## User instructions
 
@@ -156,7 +50,7 @@ This is intended for a user running code manually in their own authenticated bro
    - Chrome / Edge: `F12` or `Ctrl+Shift+J`
    - macOS Chrome: `Cmd+Option+J`
 4. Open the **Console** tab.
-5. Paste the script above.
+5. Paste the contents of `publix-clip-all.js`.
 6. Press Enter.
 7. Keep the tab open until the console prints `DONE`.
 
@@ -220,4 +114,4 @@ If the script stops working:
 1. Inspect the current Clip Coupon button.
 2. Inspect the current Load More button.
 3. Prefer stable `data-*` automation attributes where available.
-4. Update selectors in this skill.
+4. Update the selectors in `publix-clip-all.js`, and the one quoted under Troubleshooting.

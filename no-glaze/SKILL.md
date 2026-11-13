@@ -120,7 +120,7 @@ If the code is poor, say so. If the architecture is risky, say so. If the timeli
 ## Routing
 
 - User wants a structured multi-role ship/no-ship review rather than direct feedback → hand off to **adversarial-review**. This skill is the register; that skill is the pipeline.
-- The critiqued target is Claude's own prior work → **superpowers:receiving-code-review** governs: verify before agreeing, no performative concession.
+- The critiqued target is Claude's own prior work → verify before agreeing, no performative concession.
 
 ## Response templates
 

@@ -1,6 +1,6 @@
 ---
 name: founder-validation-skills
-description: A 5-step workflow for moving a founder from "I have an idea" to a validated landing page with a real growth plan — without building the wrong thing. Use whenever the user says "validate my idea", "is there a market for X", "find customer pain", "voice-of-customer research", "should I build this SaaS / course / coaching offer / newsletter / lead magnet", "what lead magnet should I build", "free offer / opt-in / freebie ideas", "write landing page copy", "headline for my opt-in", "benefit bullets", "CTA button text", "build my landing page", "ship a one-pager", "growth plan", "funnel for my lead magnet", "30/60/90 plan", "email nurture sequence", "how do I get traffic", "drive signups", or any pre-build / pre-launch / post-launch founder question about validating pain, picking a free offer, writing conversion copy, building a one-page lead-magnet site, or driving traffic to it. Walks through customer-pain research → lead magnet selection → copy → site build → funnel + 30/60/90 growth plan, with feedback looping back to research. Always invoke this BEFORE writing copy, building pages, or planning marketing when the underlying customer pain hasn't been validated yet.
+description: A 5-step workflow for moving a founder from "I have an idea" to a validated landing page with a real growth plan — without building the wrong thing. Use whenever the user says "validate my idea", "is there a market for X", "find customer pain", "voice-of-customer research", "should I build this SaaS / course / coaching offer / newsletter / lead magnet", "what lead magnet should I build", "free offer / opt-in / freebie ideas", "write landing page copy", "headline for my opt-in", "benefit bullets", "CTA button text", "build my landing page", "ship a one-pager", "growth plan", "funnel for my lead magnet", "30/60/90 plan", "email nurture sequence", "how do I get traffic", "drive signups", or any pre-build / pre-launch / post-launch founder question about validating pain, picking a free offer, writing conversion copy, building a one-page lead-magnet site, or driving traffic to it. Always invoke this BEFORE writing copy, building pages, or planning marketing when the underlying customer pain hasn't been validated yet.
 ---
 
 # Founder Validation Skills
@@ -51,3 +51,18 @@ When the user invokes this skill (or describes a matching founder problem), read
 If the user names a specific step ("I just need lead magnet ideas", "write the email sequence"), jump directly to that file. Otherwise default to step 1 unless the user has clearly already validated pain.
 
 Pass the structured handoff fields between steps so each subsequent step has the inputs it expects.
+
+Every step file ends with **Red Flags** and a **Quality Checklist**. Check the step's output against both before showing it to the user, and say which red flags it tripped.
+
+## Gotchas
+
+- **Never invent customer language.** Step 1 is only worth anything if the quotes are real. With no web access, say so and ask the user to paste threads, reviews or interview notes. A plausible made-up complaint validates nothing, and steps 2–5 are then built on it.
+- **Entering at a later step.** Each step file lists its **Required Inputs**. Ask the user for the ones the skipped steps would have produced; don't fill them with guesses to keep moving.
+- **Step 4 defaults are defaults.** If the user already has a site or a stack, build the page there. Next.js / Vite + Tailwind + shadcn is for a blank slate.
+- **No proof numbers from nowhere.** Subscriber counts, testimonials and results in copy come from the user. Leave a marked placeholder when there are none.
+- **`ALL_SKILLS.md` is not a source.** It is an older combined copy of the five step files, kept for pasting into a chat tool that can't read files. It has drifted; read the step files.
+
+## Composition
+
+- A hero section that already exists and feels generic → `profile-hero-redesign`.
+- Reviewing or polishing the built page's components, colour and copy → `ui-craft-rules`.

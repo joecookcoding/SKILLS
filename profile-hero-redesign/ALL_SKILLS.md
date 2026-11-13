@@ -6,23 +6,23 @@ This file combines all five skills into a single reference.
 
 ## Skill 01: Hero Diagnosis
 
-See `01_hero_diagnosis/SKILL.md`.
+See `HERO-DIAGNOSIS.md`.
 
 ## Skill 02: Message Hierarchy
 
-See `02_message_hierarchy/SKILL.md`.
+See `MESSAGE-HIERARCHY.md`.
 
 ## Skill 03: Visual Composition
 
-See `03_visual_composition/SKILL.md`.
+See `VISUAL-COMPOSITION.md`.
 
 ## Skill 04: CTA Conversion
 
-See `04_cta_conversion/SKILL.md`.
+See `CTA-CONVERSION.md`.
 
 ## Skill 05: Responsive Polish
 
-See `05_responsive_polish/SKILL.md`.
+See `RESPONSIVE-POLISH.md`.
 
 ---
 

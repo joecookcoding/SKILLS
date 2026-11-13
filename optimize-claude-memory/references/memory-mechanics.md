@@ -1,6 +1,6 @@
 # Claude Code Memory Mechanics
 
-Authoritative behavior of Claude Code's memory system, extracted from https://code.claude.com/docs/en/memory (checked 2026-11-01, Claude Code v2.1.316). Understanding these mechanics is the difference between an effective optimization and a pointless churn.
+Authoritative behavior of Claude Code's memory system, extracted from https://code.claude.com/docs/en/memory (checked 2026-11-12, Claude Code v2.1.323). Understanding these mechanics is the difference between an effective optimization and a pointless churn.
 
 ## What Claude Code reads: AGENTS.md or CLAUDE.md
 
@@ -45,7 +45,9 @@ Claude reads `CLAUDE.md` files only, and Project instructions is missing from `/
 - the built-in plugin was disabled with `/plugin`;
 - in some cases, it is the first session after upgrading from v2.1.276 or earlier (the next one reads `AGENTS.md`).
 
-These are the cases for the legacy sibling pattern below.
+The fix in each case is on the machine, not in the repo: update Claude Code, re-enable the plugin, or start a second session. Don't add `CLAUDE.md` files to a repo to work around one person's setup; every other session then reads `CLAUDE.md` only.
+
+The docs still describe an import bridge (a `CLAUDE.md` holding `@AGENTS.md`) for a repo that must serve such sessions, that relies on `InstructionsLoaded` hooks, or that is added with `--add-dir` while `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD` is set. This skill never proposes it. If the user asks for one by name, it has to exist beside **every** `AGENTS.md`, root included, or the subdirectories without one stop loading.
 
 ## The `@path/to/file.md` import syntax
 
@@ -57,18 +59,18 @@ These are the cases for the legacy sibling pattern below.
   - A `@foo.md` inside a *nested* `AGENTS.md` loads `foo.md` only when that nested file loads (i.e., only when Claude reads files in that subdirectory)
 - First import in a project shows an approval dialog; if declined, imports stay disabled and the dialog doesn't reappear
 
-## The legacy sibling-CLAUDE.md pattern (fallback only)
+## Retiring the old sibling-CLAUDE.md pattern
 
-Before v2.1.277 only `CLAUDE.md` was auto-discovered, so the multi-agent convention needed a bridge:
+Before v2.1.277 only `CLAUDE.md` was auto-discovered, so the multi-agent convention needed a bridge, and many repos still carry it:
 
 ```
 src/api/AGENTS.md          ← canonical content (edited here, read by all agents)
 src/api/CLAUDE.md          ← one line: `@AGENTS.md`
 ```
 
-Use it now only when a session on the team can't read `AGENTS.md` directly (see above), and then at **every** level, root included. A root `CLAUDE.md` with sibling-less subdirectory `AGENTS.md` files is the broken middle state: the root `CLAUDE.md` puts Claude in CLAUDE.md-only mode, so those subdirectories' rules never load.
+Delete every one of them, root included, in one change. A root `CLAUDE.md` with sibling-less subdirectory `AGENTS.md` files is the broken middle state: the root `CLAUDE.md` puts Claude in CLAUDE.md-only mode, so those subdirectories' rules never load.
 
-Retiring it: a `CLAUDE.md` whose whole content is `@AGENTS.md` can be deleted; keeping it never makes Claude read `AGENTS.md` twice. A `CLAUDE.md` that only *tells* Claude in words to read `AGENTS.md` should be deleted (Claude sees `AGENTS.md` only if it decides to open it). A `CLAUDE.md` symlinked to `AGENTS.md` can stay or go. A `SessionStart` hook that prints `AGENTS.md` must go, or Claude gets a second copy.
+What to do with each leftover: a `CLAUDE.md` whose whole content is `@AGENTS.md` is deleted (it has nothing to migrate). A `CLAUDE.md` that only *tells* Claude in words to read `AGENTS.md` should be deleted (Claude sees `AGENTS.md` only if it decides to open it). A `CLAUDE.md` symlinked to `AGENTS.md` is read once either way; delete it so the repo has one layout. A `SessionStart` hook that prints `AGENTS.md` must go, or Claude gets a second copy.
 
 ## Why NOT `@import` nested AGENTS.md from the root
 
@@ -107,9 +109,9 @@ On-demand loading works precisely *because* the nested files are not in any star
 
 ## Skill activation mechanics
 
-- Skills appear in the startup catalog with their `name` + `description` — the combined text is capped at **1,536 characters per skill**, with the total catalog capped around **8,000 characters** dynamically
+- Skills appear in the startup listing with their `name` + `description` — `description` + `when_to_use` is cut at **1,536 characters per skill**, and the whole listing gets **1% of the context window** (roughly 8,000 characters on a 200K window). Over that budget Claude Code drops whole descriptions, least-invoked skills first, so a skill moved out of `AGENTS.md` only triggers if its description fits
 - Full skill body (`SKILL.md` contents + referenced files) loads **only when the skill is invoked** — either by user (`/skill-name`) or by Claude auto-triggering on description match
-- Unused skills cost only their description line in startup (~450 tokens total for a typical catalog)
+- Unused skills cost only their description line in startup. `/doctor` reports the listing's real cost
 - `disable-model-invocation: true` hides the skill from the catalog entirely — the description costs zero tokens; only reachable via `/skill-name`
   - Use this for user-only triggered skills where you're confident the user will invoke manually
   - DON'T use for skills you want Claude to trigger automatically on intent

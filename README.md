@@ -35,10 +35,9 @@ Each skill here follows a consistent layout:
 |-------|--------------|
 | **[adversarial-review](adversarial-review/)** | A structured, multi-agent review workflow. Splits the work across narrow roles — Orchestrator, Investigator, Devil's Advocate, Impact Tracer, Fix Planner, Triage Lead, Final Decision — to catch what a single pass misses. Use for thorough reviews, red-teaming, ship/no-ship calls, and high-stakes engineering *or* business decisions, with explicit human-approval gates on risky actions. |
 | **[no-glaze](no-glaze/)** | Senior-engineer feedback mode where accuracy beats agreeableness. Leads with the strongest technical truth, bans flattery openers, labels confidence, pushes back on insecure or over-engineered directions, and separates facts from assumptions. The blunt *register*; pairs with `adversarial-review` (the *pipeline*). |
-| **[engineer-agent-graphs](engineer-agent-graphs/)** | Designs and runs persistent agent execution graphs: Goal → Split → Workers → Verifiers → Consolidate → Final → Retrospective. Each worker's output is checked by its own verifier in a fresh context, and only accepted work is consolidated. The retrospective sets one improvement experiment for the next run. Use it for multi-agent workflows, maker-checker or Ralph loops, and reusable research or code-review pipelines. |
 | **[codebase-exploration](codebase-exploration/)** | An *investigate-before-mutate* discipline (adapted from NVIDIA's TensorRT-LLM exploration playbook) for any bug fix, feature, or refactor. Search the concept not the symbol, read callers before callees, find existing helpers before writing new ones, and use a three-pass file budget to avoid the "read 30 files, still lost" spiral. |
-| **[optimize-claude-memory](optimize-claude-memory/)** | Audits and restructures a repo's agent memory (`CLAUDE.md`, `AGENTS.md`, skills, `MEMORY.md`) to cut per-turn token usage, make docs portable across Claude Code / Copilot / Cursor / Cody, and improve trigger accuracy. Always produces a plan for approval before editing. |
-| **[skill-optimizer](skill-optimizer/)** | Audits and upgrades existing Claude Code skills against Anthropic's skill-authoring best practices — trims bloated descriptions without dropping triggers, splits monolith bodies into references, and flags missing gotchas. Complements `optimize-claude-memory` (which owns repo `CLAUDE.md`/`AGENTS.md`). |
+| **[optimize-claude-memory](optimize-claude-memory/)** | Audits and restructures a repo's agent memory into an `AGENTS.md`-only layout: a lean root `AGENTS.md`, per-directory `AGENTS.md` files, procedures moved into skills, and no `CLAUDE.md` (Claude Code reads `AGENTS.md` itself). Cuts per-turn token usage and keeps the docs portable across Claude Code / Copilot / Cursor / Cody. Always produces a plan for approval before editing. |
+| **[skill-optimizer](skill-optimizer/)** | Audits and upgrades existing Claude Code skills against Anthropic's skill-authoring best practices — trims bloated descriptions without dropping triggers, splits monolith bodies into references, flags missing gotchas and dead handoffs, and reports drift between a skills repo and the installed copies. Complements `optimize-claude-memory` (which owns a repo's `AGENTS.md` tree). |
 | **[zod-validation-patterns](zod-validation-patterns/)** | Zod v4 schema patterns for writing, editing, or reviewing validation code — locking schemas to generated API types, cross-field rules, custom error messages, transforms, `zodResolver` + react-hook-form, and a v3 → v4 migration reference. |
 
 ### 🚀 Founder, brand & growth
@@ -47,6 +46,18 @@ Each skill here follows a consistent layout:
 |-------|--------------|
 | **[founder-validation-skills](founder-validation-skills/)** | A 5-step workflow taking a founder from "I have an idea" to a validated landing page and growth plan — without building the wrong thing. Customer-pain research → lead-magnet selection → copy → site build → funnel + 30/60/90 plan. Don't build until pain is validated. |
 | **[profile-hero-redesign](profile-hero-redesign/)** | A 5-step workflow that turns a clean-but-generic profile, personal-brand, or service-provider hero into a focused, premium, conversion-driven layout. Diagnosis → message hierarchy → visual composition → CTA conversion → responsive polish. |
+
+### 🎨 Design & UI
+
+| Skill | What it does |
+|-------|--------------|
+| **[ui-craft-rules](ui-craft-rules/)** | 39 checkable UI/UX rules (hierarchy, component choice, button copy, radius, colour, dark mode, motion, tokens, AI-ready design systems) plus a 22-point review list of the tells AI-generated UI leaves: action buttons in tab bars, dropdowns for three options, "Are you sure?" dialogs, light cards in dark mode. Works in code or in Figma. Download the ready-to-upload zip: **[dist/ui-craft-rules.zip](dist/ui-craft-rules.zip)**. |
+
+### ⚖️ Legal text
+
+| Skill | What it does |
+|-------|--------------|
+| **[legal-draft](legal-draft/)** | Drafts or updates legal text: terms of use, privacy policies, cookie notices, NDAs, an MSA, DPAs, a HIPAA BAA, an advisor agreement and an offer letter from [General Legal's](https://github.com/General-Legal/legal-templates) CC0 templates (bundled), plus short notices and disclaimers backed by a project's own terms. It states only what the code does, never renumbers a published clause, and ends with the decisions that belong to the owner or a lawyer. **Not legal advice.** It is drafting help, and anything a customer's money or health depends on needs a lawyer's review. |
 
 ### 🖼️ Utilities
 

@@ -1,6 +1,6 @@
 ---
 name: adversarial-review
-description: A structured adversarial review workflow that splits review work across narrow agent roles (Investigator, Devil's Advocate, Impact Tracer, and more) to catch what a single pass would miss. Use for "thorough review", "adversarial review", "second opinion", "red team", "devil's advocate", "steelman / strongest case against", "pre-merge review", "ship/no-ship call", "production-readiness review", "is this safe to ship", "what am I missing", "talk me out of this", "poke holes in", "challenge my plan", "stress test this decision", "find what I'm not seeing" — or validating any high-stakes engineering or business decision before commitment: PRs, architecture, database migrations, auth/permissions changes, refactor plans, AI agent designs, vendor selection, hiring, roadmap calls. Skip for: simple one-shot answers, throwaway scripts, light cleanup reviews, or when the user already knows the answer and just wants execution.
+description: "Multi-role adversarial review (Investigator, Devil's Advocate, Impact Tracer and more) that catches what a single pass would miss. Use for \"thorough review\", \"adversarial review\", \"second opinion\", \"red team\", \"devil's advocate\", \"steelman / strongest case against\", \"pre-merge review\", \"ship/no-ship call\", \"production-readiness review\", \"is this safe to ship\", \"what am I missing\", \"talk me out of this\", \"poke holes in\", \"challenge my plan\", \"stress test this decision\", \"find what I'm not seeing\" — or validating any high-stakes engineering or business decision before commitment: PRs, architecture, database migrations, auth/permissions changes, refactor plans, AI agent designs, vendor selection, hiring, roadmap calls. Skip for: simple one-shot answers, throwaway scripts, light cleanup reviews, or when the user already knows the answer and just wants execution."
 metadata:
   version: "1.1.0"
   tags: [review, quality, safety, multi-agent]
@@ -52,7 +52,7 @@ Use this skill when the user is about to make a decision they can't easily rever
 - **no-glaze** is the register; this skill is the pipeline. If the user wants direct blunt feedback rather than a structured multi-role ship/no-ship process, use no-glaze alone.
 - A plain correctness sweep on a diff → the **code-review** skill is cheaper.
 - Auth/permissions-heavy targets → **security-review**.
-- After an APPROVE verdict on code → the **verify** skill to confirm the behavior.
+- After an APPROVE verdict on code → confirm the behavior by running it: the **run** skill where it exists, otherwise the project's own tests. A review reads; it doesn't prove the change works.
 
 ## Workflow
 
@@ -188,7 +188,7 @@ This skill runs *in this session* — Claude executes the roles directly. Each r
 
 **Lightweight mode:** run the three roles (Orchestrator → Investigator → Final Decision) as one in-context pass, reading only those three prompt files.
 
-**Full pipeline:** run each role as a sequential in-context pass under its prompt-file contract above. Emit the claim ledger after the Investigator pass and update it between every subsequent pass. For very large targets, roles MAY be dispatched as subagents instead of in-context passes — same contracts, same ledger threading.
+**Full pipeline:** run each role as a sequential in-context pass under its prompt-file contract above. Emit the claim ledger after the Investigator pass and update it between every subsequent pass. For very large targets, and where the session allows subagents, roles MAY be dispatched as subagents instead of in-context passes — same contracts, same ledger threading. Where it doesn't, the in-context passes are the whole method, not a lesser one.
 
 `references/one-shot-prompt.md` is not an execution path for this skill; it is a paste-ready prompt for an external chat UI where the user drives the review manually.
 

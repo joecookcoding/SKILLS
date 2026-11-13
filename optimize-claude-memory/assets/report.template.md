@@ -37,7 +37,7 @@
 
 ## CLAUDE.md removal
 
-Removed [N] `CLAUDE.md`-family files ([N] one-line `@AGENTS.md` imports, [N] migrated into AGENTS.md / `.claude/rules/` first). No `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` remains in the repo or its parent directories, so Claude Code reads the root `AGENTS.md` at launch and each subdirectory's on demand. [Fallback instead: every AGENTS.md has a `@AGENTS.md` sibling, because ...]
+Removed [N] `CLAUDE.md`-family files ([N] one-line `@AGENTS.md` imports, [N] migrated into AGENTS.md / `.claude/rules/` first). No `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` remains in the repo or its parent directories, so Claude Code reads the root `AGENTS.md` at launch and each subdirectory's on demand.
 
 ## Structural changes
 
