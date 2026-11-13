@@ -53,6 +53,12 @@ Each skill here follows a consistent layout:
 |-------|--------------|
 | **[ui-craft-rules](ui-craft-rules/)** | 39 checkable UI/UX rules (hierarchy, component choice, button copy, radius, colour, dark mode, motion, tokens, AI-ready design systems) plus a 22-point review list of the tells AI-generated UI leaves: action buttons in tab bars, dropdowns for three options, "Are you sure?" dialogs, light cards in dark mode. Works in code or in Figma. Download the ready-to-upload zip: **[dist/ui-craft-rules.zip](dist/ui-craft-rules.zip)**. |
 
+### ⚖️ Legal text
+
+| Skill | What it does |
+|-------|--------------|
+| **[legal-draft](legal-draft/)** | Drafts or updates legal text: terms of use, privacy policies, cookie notices, NDAs, an MSA, DPAs, a HIPAA BAA, an advisor agreement and an offer letter from [General Legal's](https://github.com/General-Legal/legal-templates) CC0 templates (bundled), plus short notices and disclaimers backed by a project's own terms. It states only what the code does, never renumbers a published clause, and ends with the decisions that belong to the owner or a lawyer. **Not legal advice.** It is drafting help, and anything a customer's money or health depends on needs a lawyer's review. |
+
 ### 🖼️ Utilities
 
 | Skill | What it does |
