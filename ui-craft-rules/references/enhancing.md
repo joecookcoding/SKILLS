@@ -22,8 +22,8 @@ out-shouting one button.
 
 ## 3. Audit against the review list
 
-Go page by page down the 22 rows in `SKILL.md`, then the reference file for anything the page
-is mostly made of (forms → `components.md`). Write each finding as
+Go page by page down the 30 rows in `SKILL.md`, then the reference file for anything the page
+is mostly made of (forms → `components.md` and `interaction.md`). Write each finding as
 `RULE-ID: what is wrong → the fix`, and sort them into three piles:
 
 - **Fix**: a clear hit, no recorded decision against it.

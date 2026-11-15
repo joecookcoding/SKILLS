@@ -1,9 +1,14 @@
 # ui-craft-rules
 
-An Agent Skill that gives an AI assistant 39 checkable UI/UX rules and a 22-point review list
+An Agent Skill that gives an AI assistant 57 checkable UI/UX rules and a 30-point review list
 of the tells AI-generated interfaces leave behind: tab bars with action buttons, dropdowns for
 three options, "Are you sure?" dialogs, light cards in dark mode, muddy gradients, mismatched
-corner radii, raw hex values, and more.
+corner radii, raw hex values, tiny icon buttons, `transition: all`, placeholder-only labels,
+and more.
+
+Every rule opens with a **When** line saying when it applies. The 12 principles of animation
+and the usability laws (Fitts, Hick, Miller, Doherty, Postel, Jakob, frequency of use) are
+included as rules, and `SKILL.md` has a table that finds each one by name.
 
 Use it when an assistant builds or reviews screens and components in code (React, HTML/CSS,
 SwiftUI, Flutter) or in a design tool (Figma, Figma Make, Claude Design), or when it sets up
@@ -13,14 +18,15 @@ design tokens and component naming.
 
 ```
 ui-craft-rules/
-├── SKILL.md              # when to use, how to apply, the review list, and a one-line rule index
+├── SKILL.md              # how to apply, the review list, a principle finder, and a one-line rule index
 ├── references/
-│   ├── hierarchy.md      # HIE-1–9: hierarchy, alignment, grouping, choice count
+│   ├── hierarchy.md      # HIE-1–9: hierarchy, alignment, grouping, choice count (Hick's Law)
 │   ├── components.md     # CMP-1–9: tab bars, dropdowns, dialogs, menus, buttons, empty states
-│   ├── visual.md         # VIS-1–7: radius, contrast, gradients, type, colour, dark mode
-│   ├── motion.md         # MOT-1–4: transitions, staging, easing
+│   ├── interaction.md    # INT-1–7: Fitts, hit areas, Jakob, Doherty, Miller, Postel, frequency of use
+│   ├── visual.md         # VIS-1–8: radius, contrast, gradients, type, colour, dark mode, depth
+│   ├── motion.md         # MOT-1–13: the animation principles: transitions, timing, easing, feedback, reduced motion
 │   ├── tokens.md         # TOK-1–5: token tiers, token names, modes, component names, props
-│   ├── ai-readiness.md   # SYS-1–5: layer names, file structure, token linting, agent docs
+│   ├── ai-readiness.md   # SYS-1–6: layer names, file structure, token linting, agent docs, component contracts
 │   └── enhancing.md      # improving pages that already ship: audit, plan, before and after
 ├── scripts/
 │   └── shot.mjs          # before-and-after screenshots with headless Chrome (Node 22+, no packages)
@@ -46,7 +52,8 @@ that folder.
 ## Use
 
 Just ask for UI work: "build a settings screen", "review this checkout page", "set up dark mode
-tokens". The skill fires on its own. You can also name it: "use ui-craft-rules to review this
+tokens", "add press feedback to these buttons", "apply Fitts's Law to this toolbar". The skill
+fires on its own. You can also name it: "use ui-craft-rules to review this
 modal".
 
 When it reviews, it reports findings as `RULE-ID: what is wrong → the fix`.
@@ -58,4 +65,6 @@ the rules into the project's design doc.
 ## Credits
 
 Distilled from the public UI design reels of Memorisely (memorisely.com), April–November 2026.
+The animation principles and usability laws follow a 20-principle summary by Charles Liu, built
+on Thomas and Johnston's *The Illusion of Life* (1981) and Laws of UX (lawsofux.com).
 Packaged by Joe Cook ([cookcoding.com](https://www.cookcoding.com/)).

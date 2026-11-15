@@ -186,6 +186,117 @@
           "kind": "content"
         }
       ]
+    },
+    {
+      "id": 6,
+      "name": "build-product-tile-interactions",
+      "prompt": "Write a React + Tailwind product tile for a shop grid. The whole tile opens the product page. It has a small heart icon button in the top corner to save the item, a hover effect, and an 'Add to cart' button that calls an async addToCart(id) function.",
+      "expected_output": "A tile whose navigation is a real link, a heart button with a hit area of at least 24×24 (44×44 on touch) around a smaller icon, an add-to-cart button with a pending state, transitions on named properties with deliberate durations, a reduced-motion fallback, slight press compression, and a restrained one-step hover lift.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "the heart button's clickable area is at least 24×24 CSS px (ideally 44×44) with padding around a smaller icon, not a bare icon (INT-2)",
+          "kind": "content"
+        },
+        {
+          "text": "the add-to-cart button enters a pending state while addToCart runs (disabled or aria-busy, with a spinner or 'Adding…') so it can't be submitted twice (INT-4)",
+          "kind": "content"
+        },
+        {
+          "text": "navigation to the product page uses a real anchor or framework Link, not a div with onClick (INT-3)",
+          "kind": "structural"
+        },
+        {
+          "text": "transitions name their properties and use a deliberate duration in the 100–300 ms range; no transition-all (MOT-5)",
+          "kind": "content"
+        },
+        {
+          "text": "includes a reduced-motion fallback (motion-reduce: classes or a prefers-reduced-motion media query) (MOT-6)",
+          "kind": "content"
+        },
+        {
+          "text": "the hover lift is small (about 2px and one shadow step), not scale-105 with the largest shadow (VIS-8)",
+          "kind": "content"
+        },
+        {
+          "text": "pressable controls compress slightly on press, scaling to about 0.95–0.98 (MOT-7)",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "review-signup-form-usability",
+      "prompt": "Review this sign-up form an AI generated and tell me what to fix.\n\n- Three steps: details, phone, password. Going back to a step clears its fields.\n- Fields have placeholder text ('Full name', 'Email') but no labels.\n- Phone uses <input type=\"number\" pattern=\"\\d{10}\"> and rejects '(386) 555-0100'.\n- The password rules ('12+ characters, one number') appear only in a tooltip on an info icon.\n- On an invalid submit, the bad fields get a red border and the form shakes for 800 ms. No message.\n- The 'Create account' button does nothing visible for the 2–3 seconds the request takes.\n- The close × in the corner is a 14px icon with no padding.",
+      "expected_output": "Findings keyed to rule IDs, most severe first, covering visible labels and kept input, forgiving phone input with one stored format, persistent password hints, errors in text with focus and announcement plus a short or no shake, a pending state on submit, and a bigger hit area for the close icon.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "requires visible labels instead of placeholder-only fields (INT-5)",
+          "kind": "content"
+        },
+        {
+          "text": "says going back must keep entered values (INT-5)",
+          "kind": "content"
+        },
+        {
+          "text": "replaces type=number with a tel or text input that strips formatting, accepts '(386) 555-0100', and stores one normalised format (INT-6)",
+          "kind": "content"
+        },
+        {
+          "text": "moves the password rules out of the tooltip so they stay visible beside the field (INT-5)",
+          "kind": "content"
+        },
+        {
+          "text": "requires error text by each field, focus moved to the first invalid field, and an announcement; the shake is shortened to about 300 ms or dropped, and not played under reduced motion (MOT-8, MOT-6)",
+          "kind": "content"
+        },
+        {
+          "text": "adds a pending state to 'Create account' that prevents a double submit (INT-4)",
+          "kind": "content"
+        },
+        {
+          "text": "enlarges the close button's hit area to at least 24×24 CSS px, 44×44 on touch (INT-2)",
+          "kind": "content"
+        },
+        {
+          "text": "uses the RULE-ID: problem → fix format and does not list passes",
+          "kind": "structural"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "motion-for-dense-admin-tool",
+      "prompt": "We're building an internal claims-processing dashboard. Each processor handles about 200 claims a day: search, open, approve or reject, next. Our designer wants to apply all 12 Disney animation principles to make it feel polished. Which should we use, and what else matters most for this app?",
+      "expected_output": "Keeps essential motion (transition by change, easing, short timing, press feedback, error and success feedback, reduced motion), skips expressive principles such as anticipation and arcs for a dense daily tool, and puts frequency of use, response time, targets, and conventions ahead of animation.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "recommends short, purposeful motion only: easing, timing at the short end, and feedback (MOT-4, MOT-5, MOT-7 to MOT-9)",
+          "kind": "content"
+        },
+        {
+          "text": "advises skipping or minimising anticipation and arcs (MOT-12, MOT-13) because they slow down a tool used hundreds of times a day",
+          "kind": "content"
+        },
+        {
+          "text": "requires a reduced-motion fallback (MOT-6)",
+          "kind": "content"
+        },
+        {
+          "text": "applies frequency of use: search and approve/reject one click away, keyboard shortcuts, remembered filters, and Undo instead of confirmation for reversible actions (INT-7)",
+          "kind": "content"
+        },
+        {
+          "text": "addresses response feedback for actions that wait on the server (INT-4)",
+          "kind": "content"
+        },
+        {
+          "text": "does not recommend applying all 12 principles",
+          "kind": "constraint"
+        }
+      ]
     }
   ]
 }
