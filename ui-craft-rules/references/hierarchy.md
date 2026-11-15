@@ -3,12 +3,14 @@
 Rules for what users see first, how content groups, and how much they must choose between.
 
 Each rule: **When** to apply it, **Why** it matters, then **Check**, what to verify in a design
-or in code.
+or in code. Where a reel teaches the rule, a **Watch** line links it (Facebook may ask you to
+sign in).
 
 **HIE-1 One primary element per group; build hierarchy with weight and colour, not only size.**
 When: any card, section, or screen with more than one piece of text.
 Why: if everything is emphasised, nothing is.
 Check: each card or section has exactly one dominant element (name, title, or hero metric). Secondary text steps down in weight *and* colour. Bigger isn't automatically better. On a profile card the avatar was shrunk and moved beside the name to free up space.
+Watch: [Memorisely, 2026-10-29](https://www.facebook.com/share/r/1C5tWbC956/): one profile card fixed step by step (HIE-1, HIE-2, HIE-3, HIE-5, HIE-6, CMP-6, VIS-1).
 
 **HIE-2 Lead with a hero metric; values beat labels.**
 When: a card, dashboard, or summary that shows numbers (stats, balances, run times, prices, ratings).

@@ -1,11 +1,11 @@
 ---
 name: ui-craft-rules
-description: UI/UX craft rules for building or reviewing web and mobile screens in code or Figma. Use for a page, card, form, modal, menu, tab bar, button, or empty state; animation, press feedback, or loading states; tap targets; UX laws (Fitts, Hick, Jakob) or animation principles; design tokens or dark mode; or making a UI look less AI-generated. Includes a 30-point review list of AI UI tells.
+description: UI/UX craft rules for building or reviewing web and mobile screens in code or Figma. Use for a page, card, form, modal, menu, tab bar, button, or empty state; animation, press feedback, or loading states; tap targets; UX laws (Fitts, Hick, Jakob) or animation principles; design tokens or dark mode; or making a UI look less AI-generated. Includes a 31-point review list of AI UI tells.
 ---
 
 # UI Craft Rules
 
-57 rules for interface craft, each written as something you can check and each opening with a
+58 rules for interface craft, each written as something you can check and each opening with a
 **When** line that says when it applies, plus a review list of the fingerprints AI-generated
 UI leaves behind. The 12 principles of animation and the named usability laws (Fitts, Hick,
 Miller, Doherty, Postel, Jakob) are in here, translated into checks; find them by name in
@@ -27,7 +27,7 @@ rules supply the "when".
    | Any screen, card, list, or layout | `references/hierarchy.md` |
    | Forms, dialogs, menus, tab bars, buttons, empty states, icons | `references/components.md` |
    | Anything clicked, tapped, or typed into; loading and waiting; links and navigation; what goes where | `references/interaction.md` |
-   | Colour, dark mode, radius, gradients, shadows and elevation, typefaces | `references/visual.md` |
+   | Colour, dark mode, radius, gradients, shadows and elevation, typefaces, icon sizes | `references/visual.md` |
    | Transitions, animation, easing, durations, press and error feedback, reduced motion | `references/motion.md` |
    | Tokens, theme files, CSS variables, component props/variants | `references/tokens.md` |
    | Design-system docs, component specs, Figma file structure, layer naming | `references/ai-readiness.md` |
@@ -79,6 +79,7 @@ rules supply the "when".
 | 28 | `div onClick` for navigation; a restyled control that loses its native behaviour | Real `<a href>` and `<button>`; Enter, Esc, Back, and labels work as usual | INT-3 |
 | 29 | An error shown only by a red border or a shake | Text and an icon by the field, focus moved there, announced | MOT-8 |
 | 30 | `type="number"` or a strict regex on phone, card, or postcode fields | Text input with `inputmode`, formatting stripped, one stored format | INT-6 |
+| 31 | Icons sized by eye: heavier or smaller than the label beside them, a different size on each row | Icon box = the label's line height (20 beside 14px text on a 20px line), centred on it, 8px gap, one keyline | VIS-9 |
 
 ## Find a rule by principle
 
@@ -158,6 +159,7 @@ then focus, choices, and memory (MOT-3, HIE-7, INT-5); then response, input, and
 - VIS-6 Less colour: neutral chrome, two background levels, one primary colour.
 - VIS-7 Dark mode: no light surfaces; elevate with lighter shades of dark.
 - VIS-8 Depth: one light source, elevation from a scale; only clickable things lift (solid drawing).
+- VIS-9 Size icons from the text beside them: the box is the line height, 8px to the label, one keyline.
 
 **Motion**, in `references/motion.md` (starts with a "which rules apply" table)
 - MOT-1 Pick the transition by what changed: context, drill, or continuity.
@@ -198,6 +200,7 @@ then focus, choices, and memory (MOT-3, HIE-7, INT-5); then response, input, and
 - Token name: `color-{bg|bg-surface|bg-fill|text|border|icon}-{primary|secondary|tertiary}-{default|hover|active|disabled}`.
 - Component name: `Button / Secondary / Large / Default`. Props: `variant` (emphasis), `tone` (intent), `size` (sm | md | lg).
 - Hit area: ≥ 24×24 CSS px (WCAG 2.2 AA); 44×44 pt on iOS, 48×48 dp on Android.
+- Icon beside text: the icon's box is the label's line height (14px text on a 20px line → 20 × 20), centred on the line, 8px to the label.
 - Durations: press 100–150 ms, small surfaces 150–200, dialogs and sheets 250–300, full screen 300–400, never over 500. Exits about a fifth shorter.
 - Response: acknowledge at once; spinner only after ~300 ms; progress past 1 s; background past 10 s.
 - Press scale ~0.97; stagger 20–40 ms per item, the whole list in within ~200 ms; an error shake under 10px, ~300 ms, once.
@@ -241,7 +244,7 @@ then focus, choices, and memory (MOT-3, HIE-7, INT-5); then response, input, and
 ## Credits
 
 Distilled from the public UI design reels of Memorisely (memorisely.com), April–November 2026,
-and rewritten as checkable rules. The 20-principle list (MOT-5 to MOT-13, VIS-8, INT-1 to
+and rewritten as checkable rules; a rule a reel teaches links it on a **Watch** line. The 20-principle list (MOT-5 to MOT-13, VIS-8, INT-1 to
 INT-7, and extensions to HIE-7, MOT-3, and MOT-4) follows a summary by Charles Liu, built on the
 12 principles of animation (Frank Thomas and Ollie Johnston, *The Illusion of Life*, 1981) and
 the usability laws collected at Laws of UX (lawsofux.com). Product examples (Uber, Airbnb,

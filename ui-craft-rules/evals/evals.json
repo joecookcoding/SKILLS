@@ -297,6 +297,31 @@
           "kind": "constraint"
         }
       ]
+    },
+    {
+      "id": 9,
+      "name": "sidebar-icon-sizing",
+      "prompt": "An AI tool built our app's sidebar: 14px labels with Tailwind's text-sm, icons at size={18} on Inbox and Projects, size={24} on Settings, and size={16} on Help, with a 12px gap between icon and label. Two items have no icon. It looks slightly off but we can't say why. Fix it.",
+      "expected_output": "Ties every icon to the label's line height (20px for 14px text on a 20px line), centred on the line, with an 8px gap, gives every item an icon or none on one keyline, and keeps hit areas separate from icon size.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "sizes every icon to the label's line height, 20 × 20 for 14px text on a 20px line (VIS-9)",
+          "kind": "content"
+        },
+        {
+          "text": "sets the gap between icon and label to 8px (VIS-9)",
+          "kind": "content"
+        },
+        {
+          "text": "gives every item an icon or none, on one left keyline (HIE-5, HIE-9, VIS-9)",
+          "kind": "content"
+        },
+        {
+          "text": "keeps each row's hit area at least 44px tall on touch regardless of icon size (INT-2)",
+          "kind": "content"
+        }
+      ]
     }
   ]
 }

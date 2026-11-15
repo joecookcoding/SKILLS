@@ -5,7 +5,8 @@ of the classic 12 principles of animation (Thomas and Johnston, 1981) live here,
 to interfaces. The map from principle to rule is in `SKILL.md`.
 
 Each rule: **When** to apply it, **Why** it matters, then **Check**, what to verify in a design
-or in code.
+or in code. Where a reel teaches the rule, a **Watch** line links it (Facebook may ask you to
+sign in).
 
 ## Which motion rules apply
 
@@ -37,6 +38,7 @@ Check:
 | Content changes, structure stays | **Context**: content swaps in place; chrome stays still | tab switching, applying a filter, state change |
 | Move between levels of the IA | **Drill**: push in from the trailing edge; back reverses it | list → item, feed → post, summary → full view |
 | The same object changes form | **Continuity**: shared elements persist and morph | card → full screen, collapsed → full player, grid → product page |
+Watch: [Memorisely, 2026-10-12](https://www.facebook.com/share/r/1BvyEFq8K4/): context, drill and continuity side by side.
 
 **MOT-2 Motion must communicate, not decorate.**
 When: before adding any animation; ask what it tells the user.
@@ -50,6 +52,7 @@ Check:
 2. The primary element scales and fades in.
 3. Secondary surfaces (an action sheet) slide in after a delay; the nav bar can slide away to make room.
 4. Dim (a scrim) or blur what's behind an overlay, so the overlay is the only thing in focus and its one primary button (CMP-6) is the first thing seen.
+Watch: [Memorisely, 2026-10-30](https://www.facebook.com/share/r/1FAE4b7EZ7/): a card overlay staged: the nav bar slides down, the card scales in, its sheet slides up after.
 
 **MOT-4 Match the easing to the job (slow in and slow out).**
 When: any animation that moves, resizes, enters, or leaves.

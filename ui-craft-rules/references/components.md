@@ -3,7 +3,8 @@
 Rules for picking the right component or pattern, and the copy on it.
 
 Each rule: **When** to apply it, **Why** it matters, then **Check**, what to verify in a design
-or in code.
+or in code. Where a reel teaches the rule, a **Watch** line links it (Facebook may ask you to
+sign in).
 
 **CMP-1 The tab bar is for navigation only.**
 When: building or reviewing a mobile tab bar or any persistent primary navigation.
@@ -33,10 +34,11 @@ Check:
 When: a mobile menu, hamburger drawer, or account menu.
 Why: multi-column menus save vertical space but are slower to scan and have inconsistent anchors. Boring lists are fast.
 Check: a single vertical list; icons removed unless every item has one; gaps tightened; long lists grouped into categories with small section labels. Use one control in one position that changes state (☰ ↔ ×), not separate open and close controls in different places.
+Watch: [Memorisely, 2026-10-23](https://www.facebook.com/share/r/1Dz4gksCUt/): a two-column menu made one grouped list, opened and closed by one control.
 
 **CMP-5 Use an established icon library; don't draw icons.**
 When: adding any icon, or reviewing a screen whose icons come from more than one place.
-Check: all icons come from one library at one style (e.g. Lucide, Heroicons, Phosphor, or Untitled UI Icons; 3dicons for 3D illustration). Outline and solid are not mixed within a control set unless solid marks the selected state. On a React/shadcn stack, prefer Lucide so design and engineering use the same set.
+Check: all icons come from one library at one style (e.g. Lucide, Heroicons, Phosphor, or Untitled UI Icons; 3dicons for 3D illustration). Outline and solid are not mixed within a control set unless solid marks the selected state. On a React/shadcn stack, prefer Lucide so design and engineering use the same set. Size each icon from the text beside it (VIS-9).
 
 **CMP-6 One primary button per view or group.**
 When: a view or group has two or more buttons, including auth headers.

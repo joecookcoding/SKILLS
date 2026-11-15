@@ -1,9 +1,10 @@
 # Visual craft (VIS)
 
-Rules for corner radius, colour, gradients, dark mode, type, and depth.
+Rules for corner radius, colour, gradients, dark mode, type, depth, and icon size.
 
 Each rule: **When** to apply it, **Why** it matters, then **Check**, what to verify in a design
-or in code.
+or in code. Where a reel teaches the rule, a **Watch** line links it (Facebook may ask you to
+sign in).
 
 **VIS-1 Nested corner radius: outer = inner + padding.**
 When: a rounded element sits inside a rounded container (an image in a card, a button in a pill, a segmented control).
@@ -55,3 +56,13 @@ Check:
 - Only clickable things lift on hover: one level up and about 2px up (`translateY(-2px)`), in 150–200 ms. Not `scale(1.05)` with the largest shadow on every card; a lift promises a click.
 - In dark mode shadows barely show, so elevation comes from lighter surfaces (VIS-7).
 - One depth cue per element: not a border, a heavy shadow, and a tint on the same card (HIE-4). Perspective and 3D tilt only where they mean something (a card flipping over), never as decoration.
+
+**VIS-9 Size icons from the text beside them.**
+When: an icon sits next to a label: navigation items, menu and list rows, buttons, chips, form hints.
+Why: an icon sized by eye ends up too big and heavy, or too small to read, and a little different on every row. AI-generated UI hard-codes these sizes, so a list feels slightly off without anyone knowing why.
+Check:
+- Set the label's line height on the 4px grid first (14px text on a 20px line), then make the icon's box that line height (20 × 20) and centre it on the line. In CSS, `width: 1lh; height: 1lh` keeps the two tied when the text size changes.
+- 8px between the icon and its label.
+- The icons in a list share one left keyline, and every row has an icon or none does (HIE-5, HIE-9). The row's padding comes from the same 4px grid (SYS-5).
+- The icon's box is not its hit area: an icon-only button still needs INT-2's target around it.
+Watch: [Memorisely, 2026-11-13](https://www.facebook.com/share/r/1A7Z25DQ5S/): a sidebar's icons snapped to a 20px line height, on one keyline, 8px from their labels.
