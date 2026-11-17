@@ -1,0 +1,76 @@
+{
+  "skill_name": "plan-model-picker",
+  "evals": [
+    {
+      "id": 0,
+      "name": "phased-plan-per-phase-models",
+      "prompt": "Here's a plan with four phases. Phase 1: reword six strings on the sign-in screen and add one links table with a read policy, copying the pattern of an existing table. Phase 2: add a new session kind that every schedule screen, the countdown and the admin forms must handle. Phase 3: a new Edge Function that reads an outside API nobody on the team has called yet, plus its admin screen. Phase 4: write the staff runbook and close out the trackers. Phase 1 has to ship two weeks before the rest. The project forbids subagents. Which model and effort for each phase, and what can I launch at once?",
+      "expected_output": "A launch sheet with one row per phase, differing models or efforts across rows, waves, and no subagent or orchestration recommendation.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "gives a model and an effort level for each of the four phases, with a one-line reason per phase",
+          "kind": "content"
+        },
+        {
+          "text": "does not put every phase on the same model and effort",
+          "kind": "content"
+        },
+        {
+          "text": "puts phase 2 or phase 3 on a larger model or higher effort than phase 4",
+          "kind": "content"
+        },
+        {
+          "text": "says which phases can or cannot launch at once and gives the reason (shared files, order, or working tree)",
+          "kind": "content"
+        },
+        {
+          "text": "does not recommend subagents or an orchestrating lead that spawns them",
+          "kind": "content"
+        },
+        {
+          "text": "says no lead session is needed, or names the condition that would make one needed",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "small-plan-stays-whole",
+      "prompt": "Plan: fix the bug where the survey card shows the wrong event name. Cause is known (a hard-coded default string), one component and its test. Which model should run it?",
+      "expected_output": "One executor session on a mid-tier model, no phase split, no lead session.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "recommends a single session rather than splitting into phases",
+          "kind": "content"
+        },
+        {
+          "text": "recommends a mid-tier model (Sonnet-class) at medium or high effort",
+          "kind": "content"
+        },
+        {
+          "text": "does not add a lead, executor-plus-phases, or orchestrator session",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "unreviewed-plan-flagged",
+      "prompt": "I wrote this plan from memory last night and nobody has checked it against the repo. It adds three migrations and rewrites the auth flow. Which model for each phase?",
+      "expected_output": "Flags that the plan should be checked against the code before a launch sheet is trusted, then still gives a provisional recommendation.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "says the plan should be reviewed against the code first, before or alongside the recommendation",
+          "kind": "content"
+        },
+        {
+          "text": "treats the auth rewrite or the migrations as high cost-of-error work (large or top model, or high effort)",
+          "kind": "content"
+        }
+      ]
+    }
+  ]
+}
