@@ -1,0 +1,142 @@
+{
+  "skill_name": "test-strategy",
+  "evals": [
+    {
+      "id": 0,
+      "name": "add-tests-to-service-with-collaborators",
+      "prompt": "Add tests for this:\n\n```ts\nexport class CheckoutService {\n  constructor(private cart: CartRepo, private pricing: Pricing, private payments: PaymentGateway, private mailer: Mailer) {}\n  async checkout(userId: string, coupon?: string) {\n    const cart = await this.cart.load(userId);\n    const total = this.pricing.total(cart.items, coupon);\n    const receipt = await this.payments.charge(userId, total);\n    await this.cart.clear(userId);\n    await this.mailer.sendReceipt(userId, receipt);\n    return receipt;\n  }\n}\n```\nWe use Vitest and Playwright. Pricing is pure.",
+      "expected_output": "A short plan: an E2E or boundary test of the checkout flow, table or property tests for the pure Pricing, mock or fake only for the payment gateway and mailer where the call is the behaviour, no test asserting call order of internal collaborators, and a step that proves each test can fail.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "does not write a test that mocks CartRepo and Pricing and asserts they were called, or asserts the order of collaborator calls",
+          "kind": "constraint"
+        },
+        {
+          "text": "proposes an end-to-end or real-boundary test of the checkout flow (Playwright or a request through the real service)",
+          "kind": "content"
+        },
+        {
+          "text": "tests Pricing directly with table-driven cases or a property (for example the total never goes below zero, or a coupon never raises the price)",
+          "kind": "content"
+        },
+        {
+          "text": "allows a fake or mock for PaymentGateway or Mailer and says it is because the charge or email is itself the behaviour",
+          "kind": "content"
+        },
+        {
+          "text": "says to break the code on purpose and confirm the test goes red, or otherwise shows the test can fail",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "audit-brittle-suite",
+      "prompt": "Our Jest suite has about 900 tests, takes 14 minutes, and almost every refactor breaks 30+ tests even when nothing user-facing changed. Most tests use jest.mock on every import and check toHaveBeenCalledWith. We still had two checkout outages last quarter. What should we do?",
+      "expected_output": "Diagnoses change-detector tests, gives a keep/rewrite/delete triage with the 'pinning shape or behaviour' question, recommends a small E2E set for the money flows that broke, moves slow tests out of the inner loop, and asks for owner sign-off before bulk deletes.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "names the pattern as change-detector tests (or tests that restate the implementation) and explains why they catch no defects",
+          "kind": "content"
+        },
+        {
+          "text": "gives a keep / rewrite / delete triage or equivalent classification",
+          "kind": "structural"
+        },
+        {
+          "text": "recommends end-to-end coverage of the checkout flow that had outages",
+          "kind": "content"
+        },
+        {
+          "text": "addresses the 14-minute run time by tiering (fast checks in the inner loop, heavy ones before commit or in CI)",
+          "kind": "content"
+        },
+        {
+          "text": "does not recommend raising coverage or adding more mocked unit tests as the fix",
+          "kind": "constraint"
+        },
+        {
+          "text": "proposes bulk deletes for the owner to approve rather than deleting hundreds of tests unilaterally",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "migration-differential",
+      "prompt": "We're porting our invoice-total calculator from a 9-year-old PHP service to a new Go service. There's no spec and the PHP has a lot of special cases nobody remembers. How do we test the Go version?",
+      "expected_output": "Differential testing with the PHP service as the oracle, inputs from sampled production data or generation, normalisation of irrelevant differences, an approved-differences list, plus properties (equivalence, totals equal sum of lines).",
+      "files": [],
+      "assertions": [
+        {
+          "text": "recommends running the PHP and Go versions on the same inputs and diffing outputs (differential testing)",
+          "kind": "content"
+        },
+        {
+          "text": "sources inputs from sampled production data or random generation rather than only hand-written fixtures",
+          "kind": "content"
+        },
+        {
+          "text": "mentions normalising irrelevant differences (whitespace, rounding, ordering, timestamps) before comparing",
+          "kind": "content"
+        },
+        {
+          "text": "mentions a list of approved or intended differences",
+          "kind": "content"
+        },
+        {
+          "text": "does not propose writing expected values by reading the Go code",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "flaky-test-retry-request",
+      "prompt": "The 'uploads avatar' Playwright test fails about 1 run in 8 in CI. Just add retries: 3 to it so the pipeline stops going red.",
+      "expected_output": "Declines to paper over it with retries, investigates root cause (waits on network/animation, shared state, race on upload completion), and if the cause can't be found, deletes the test with a written reason instead of retrying.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "does not add retries, sleeps or a skip as the fix",
+          "kind": "constraint"
+        },
+        {
+          "text": "explains that retrying a flaky test trains people and agents to rerun instead of fix",
+          "kind": "content"
+        },
+        {
+          "text": "proposes concrete root-cause candidates such as waiting on the upload response instead of a timeout, or shared test state",
+          "kind": "content"
+        },
+        {
+          "text": "says that if no root cause is found the test should be deleted with the reason written down",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "trivial-change-no-new-test",
+      "prompt": "I changed the footer copyright year from 2025 to 2026. What tests do I need?",
+      "expected_output": "None new. Build or load the page once to confirm, and say so.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "says no new test is needed",
+          "kind": "content"
+        },
+        {
+          "text": "suggests a quick smoke check such as building or loading the page once",
+          "kind": "content"
+        },
+        {
+          "text": "does not propose a snapshot or unit test for the year string",
+          "kind": "constraint"
+        }
+      ]
+    }
+  ]
+}
