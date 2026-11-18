@@ -121,7 +121,7 @@ The skill protects against under-investigation; it doesn't mandate over-investig
 ## What "investigate before mutate" is NOT
 
 - Not a license to widen scope. The investigation locates the *smallest* change that solves the problem; it doesn't justify drive-by refactors.
-- Not a substitute for running the code. After the change lands, run the test or the app — reading deeply doesn't prove the change works.
+- Not a substitute for running the code. After the change lands, run the test or the app — reading deeply doesn't prove the change works. The `test-strategy` skill says which checks prove it and which tests not to write.
 - Not a checklist to satisfy. If 4 files of reading is enough for high confidence, don't pad to 18 because the budget allows.
 - Not bureaucracy. The point is fewer hours spent rewriting after review, not more hours spent reading before writing.
 

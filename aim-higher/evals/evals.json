@@ -1,0 +1,155 @@
+{
+  "skill_name": "aim-higher",
+  "evals": [
+    {
+      "id": 0,
+      "name": "crash-fixing-altitude",
+      "prompt": "I've been asking Claude to fix crashes in our Electron app one stack trace at a time. Here's today's (TypeError in renderer/preload.js on macOS 15, app v4.2.1). How do I get more out of this?",
+      "expected_output": "A brief that climbs from fixing this crash to keeping the app crash-free, names the instruments (crash report access, version→commit map, machines per OS to reproduce), the judge (reproduce before, gone after), the limits, and a first proof; the user picks the rung.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "proposes an outcome-level ask such as keeping the app crash-free, not only fixing this crash",
+          "kind": "content"
+        },
+        {
+          "text": "lists instruments the agent needs: access to crash reports, a map from app version to git commit, and macOS, Windows or Linux machines to reproduce on",
+          "kind": "content"
+        },
+        {
+          "text": "names an outside judge, such as reproducing the crash before the fix and confirming it is gone after",
+          "kind": "content"
+        },
+        {
+          "text": "names decisions that need a person or a stop rule",
+          "kind": "content"
+        },
+        {
+          "text": "does not start building the crash-free system in this turn without the user choosing it",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "churn-depth",
+      "prompt": "Make me a slide explaining why customers churned last quarter. I've attached the export from our summary dashboard.",
+      "expected_output": "A depth rewrite: start from raw event and billing data rather than the dashboard export, use a database and survival or cohort analysis, test the team's existing belief against the raw data, check any new signal on a held-out period, and give a rewritten prompt.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "asks for rawer material than the dashboard export, such as event logs, billing records or support tickets",
+          "kind": "content"
+        },
+        {
+          "text": "names expert methods, such as cohort or survival analysis in a database or notebook, not a markdown table",
+          "kind": "content"
+        },
+        {
+          "text": "proposes testing an existing belief about churn against the raw data",
+          "kind": "content"
+        },
+        {
+          "text": "names a judge outside the model, such as predicting churn on a period the analysis didn't see",
+          "kind": "content"
+        },
+        {
+          "text": "includes a rewritten prompt the user can hand over",
+          "kind": "structural"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "launch-announcement-range",
+      "prompt": "Write the launch announcement for our new offline mode. Make it really good.",
+      "expected_output": "Restates the job in verbs, assembles a crew by method (for example a journalist's reporting, an editor's cut, a support lead's top questions), avoids role-play, and names an outside check such as a read-through by real users.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "restates the task as verbs (what the announcement must get readers to understand or do)",
+          "kind": "content"
+        },
+        {
+          "text": "borrows at least two other fields and says what each would do, as methods",
+          "kind": "content"
+        },
+        {
+          "text": "does not ask the model to 'write like' or role-play a profession",
+          "kind": "constraint"
+        },
+        {
+          "text": "names a judge outside the model, such as real users reading a draft or a measurable reader action",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "qbr-ladder",
+      "prompt": "Turn this spreadsheet into our quarterly business review deck using last quarter's template.",
+      "expected_output": "Rungs from filling the template, to 'what changed, why, what to do', to 'the three most urgent decisions with for and against', to 'a better way than a quarterly deck to catch problems early, backtested on our own history and run beside the deck for a quarter'.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "offers a rung that asks what changed this quarter, why, and what to do about it",
+          "kind": "content"
+        },
+        {
+          "text": "offers a rung that names the most urgent decisions with arguments for and against",
+          "kind": "content"
+        },
+        {
+          "text": "offers a system rung that replaces or supplements the quarterly deck, checked against the company's own history",
+          "kind": "content"
+        },
+        {
+          "text": "recommends one rung with a reason and a first step",
+          "kind": "structural"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "durable-daily-digest",
+      "prompt": "Set me up an agent that runs every morning and posts what changed in our GitHub PRs and #eng Slack channel to me.",
+      "expected_output": "Altitude is already the system; applies the durable-loop patterns: bookmarks per source, a failed read named in the post, confirm the post before recording, re-check items before posting, dates in the user's time zone, read-only tokens and a spend cap.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "uses a bookmark per source instead of a fixed 'last 24 hours' window",
+          "kind": "content"
+        },
+        {
+          "text": "says a failed source must be named in the post rather than treated as nothing new",
+          "kind": "content"
+        },
+        {
+          "text": "confirms the post landed before updating state, or guards against posting twice",
+          "kind": "content"
+        },
+        {
+          "text": "uses read-only credentials for sources and a spending cap or budget",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "scoped-task-just-do-it",
+      "prompt": "Rename the variable usr to user in src/auth.ts.",
+      "expected_output": "Just does the rename; no brief.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "does not produce an ambition brief or rungs",
+          "kind": "constraint"
+        },
+        {
+          "text": "performs or describes the rename directly",
+          "kind": "content"
+        }
+      ]
+    }
+  ]
+}

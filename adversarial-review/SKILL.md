@@ -193,3 +193,8 @@ This skill runs *in this session* — Claude executes the roles directly. Each r
 `references/one-shot-prompt.md` is not an execution path for this skill; it is a paste-ready prompt for an external chat UI where the user drives the review manually.
 
 For a worked example of a full run, read the one matching your target — `examples/architecture-review-example.md`, `examples/code-review-example.md`, or `examples/decision-review-example.md` — when you need to see the expected shape of intermediate or final outputs; skip them otherwise.
+
+## Composition
+
+- `test-strategy`: for the report's **Tests or Validation Steps** section — the checks that would prove a fix (an end-to-end run, a property, a differential run), and which tests not to add.
+- `aim-higher`: before, when the thing under review is a plan whose goal may be set too low.

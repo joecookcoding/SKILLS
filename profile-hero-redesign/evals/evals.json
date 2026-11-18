@@ -1,0 +1,68 @@
+{
+  "skill_name": "profile-hero-redesign",
+  "evals": [
+    {
+      "id": 0,
+      "name": "generic-hero-diagnosis-first",
+      "prompt": "My coaching site hero feels generic. Headline: 'Welcome to my website'. Centered stock photo, a small grey 'Learn more' link. Make it better.",
+      "expected_output": "Starts with step 1 diagnosis (weak, working, preserve, change) before rewriting or redesigning, asks for a screenshot at desktop and mobile if none.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "starts with a diagnosis of what is weak, what works and what to keep",
+          "kind": "content"
+        },
+        {
+          "text": "names the vague headline and the low-visibility CTA as problems",
+          "kind": "content"
+        },
+        {
+          "text": "asks for or uses a rendered screenshot at desktop and mobile widths",
+          "kind": "content"
+        },
+        {
+          "text": "does not jump straight to new code or a new palette",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "headline-only",
+      "prompt": "Just rewrite my hero headline. I'm a grief counselor for parents; current headline: 'Helping you heal'.",
+      "expected_output": "Jumps to Message Hierarchy: specific headline options naming the audience and outcome, one emphasised word.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "goes directly to the message hierarchy step without a full diagnosis",
+          "kind": "content"
+        },
+        {
+          "text": "offers headlines that name the audience (grieving parents) and an outcome",
+          "kind": "content"
+        },
+        {
+          "text": "does not invent testimonials or credentials",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "keep-design-system",
+      "prompt": "Redesign my hero. We use Tailwind with our own brand tokens and shadcn; screenshot attached.",
+      "expected_output": "Keeps the existing tokens and components, changes hierarchy and composition only.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "states it will keep the project's existing fonts, colours and components",
+          "kind": "content"
+        },
+        {
+          "text": "does not propose a new colour palette",
+          "kind": "constraint"
+        }
+      ]
+    }
+  ]
+}

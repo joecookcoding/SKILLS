@@ -1,0 +1,64 @@
+{
+  "skill_name": "publix-clip-all",
+  "evals": [
+    {
+      "id": 0,
+      "name": "clip-all",
+      "prompt": "Clip all my Publix digital coupons.",
+      "expected_output": "Gives publix-clip-all.js unchanged in a js block with the DevTools steps; never asks for credentials.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "gives the bundled publix-clip-all.js in a js code block",
+          "kind": "content"
+        },
+        {
+          "text": "lists the steps: open the coupons page, sign in, open DevTools Console, paste, wait for DONE",
+          "kind": "content"
+        },
+        {
+          "text": "does not ask for the Publix username or password",
+          "kind": "constraint"
+        },
+        {
+          "text": "does not call or reverse-engineer private Publix APIs",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "load-more-broken",
+      "prompt": "The script clips the first page but Load more never loads anything now.",
+      "expected_output": "Gives the inspect snippet for the button and says to update the selector in publix-clip-all.js.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "gives a console snippet to inspect the current Load more button",
+          "kind": "content"
+        },
+        {
+          "text": "says to update the selector in publix-clip-all.js (and the copy quoted under Troubleshooting)",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "too-many-failures",
+      "prompt": "Lots of coupons fail to clip when I run it.",
+      "expected_output": "Lower BATCH_SIZE to 5 or raise BATCH_DELAY_MS to 2000–2500.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "recommends reducing BATCH_SIZE or increasing BATCH_DELAY_MS",
+          "kind": "content"
+        },
+        {
+          "text": "does not suggest firing every coupon at once",
+          "kind": "constraint"
+        }
+      ]
+    }
+  ]
+}

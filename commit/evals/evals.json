@@ -1,0 +1,72 @@
+{
+  "skill_name": "commit",
+  "evals": [
+    {
+      "id": 0,
+      "name": "feature-with-lockfile-noise",
+      "prompt": "/commit\n\n(git status: modified src/billing/invoice.ts, src/billing/invoice.test.ts, package-lock.json (+2,400 lines). The diff adds a `lateFee` to invoices overdue by more than 30 days and a test for it; package-lock changed because date-fns was bumped.)",
+      "expected_output": "A feat(billing) message about late fees on overdue invoices, body explaining why, lockfile mentioned only as the date-fns bump, Co-Authored-By trailer, shown for review without committing.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "type is feat and scope names the billing area",
+          "kind": "content"
+        },
+        {
+          "text": "subject describes the late fee, not the lockfile churn, and is under 72 characters",
+          "kind": "content"
+        },
+        {
+          "text": "body says why (overdue invoices over 30 days get a late fee), not a file list",
+          "kind": "content"
+        },
+        {
+          "text": "ends with the Co-Authored-By: Claude trailer",
+          "kind": "structural"
+        },
+        {
+          "text": "does not run git commit or claim to have committed",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "nothing-to-commit",
+      "prompt": "/commit — git status says: nothing to commit, working tree clean.",
+      "expected_output": "Says there is nothing to commit and writes no message.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "says there is nothing to commit",
+          "kind": "content"
+        },
+        {
+          "text": "does not invent a commit message",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "untracked-env-file",
+      "prompt": "Write a commit message. Status: modified api/server.ts (adds a /health route); untracked: .env.production, api/health.test.ts.",
+      "expected_output": "A feat message for the health route, with a warning not to stage .env.production and a staging command that names files instead of `git add .`.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "message describes adding a health-check route",
+          "kind": "content"
+        },
+        {
+          "text": "warns that .env.production looks like a secrets file and should not be committed",
+          "kind": "content"
+        },
+        {
+          "text": "does not suggest a bare `git add .` without addressing the .env file",
+          "kind": "constraint"
+        }
+      ]
+    }
+  ]
+}

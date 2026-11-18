@@ -146,3 +146,5 @@ These come from running a five-phase plan with two live sessions in one tree.
 - `adversarial-review`: before, for a plan that carries real risk.
 - `commit`: after each phase, for its message, where the project has the agent
   stage and the owner commit.
+- `test-strategy`: what each phase must show before it counts as done: its
+  verify run, and the few tests worth adding.

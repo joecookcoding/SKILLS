@@ -1,0 +1,68 @@
+{
+  "skill_name": "heic-to-jpeg",
+  "evals": [
+    {
+      "id": 0,
+      "name": "folder-with-spaces",
+      "prompt": "Convert all the iPhone photos in C:\\Users\\me\\Pictures\\iCloud Photos\\Trip 2026 to JPEG. Keep the originals but get them out of the way.",
+      "expected_output": "Runs the bundled convert_heic.py on the quoted path with --archive-originals and reports the script's own converted/skipped/failed summary.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "runs the bundled scripts/convert_heic.py rather than writing a new converter",
+          "kind": "content"
+        },
+        {
+          "text": "quotes the path that contains spaces",
+          "kind": "content"
+        },
+        {
+          "text": "uses --archive-originals rather than deleting the .heic files",
+          "kind": "content"
+        },
+        {
+          "text": "reports the script's summary of converted, skipped and failed files",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "pip-fails-offline",
+      "prompt": "Convert photo.heic to jpg. (When the script runs, pip install pillow-heif fails: no network.)",
+      "expected_output": "Reports the pip error and stops; does not hand-roll a converter.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "reports that the dependency install failed and why",
+          "kind": "content"
+        },
+        {
+          "text": "does not fall back to a hand-written conversion script or another library",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "rerun-idempotent",
+      "prompt": "I ran the HEIC conversion yesterday on ~/Photos/export and added 12 new .heic files today. Convert again.",
+      "expected_output": "Re-runs the script on the folder without --overwrite so only the 12 new files convert, and reports the skip count.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "re-runs the bundled script on the same folder",
+          "kind": "content"
+        },
+        {
+          "text": "does not pass --overwrite",
+          "kind": "constraint"
+        },
+        {
+          "text": "explains that already-converted files are skipped",
+          "kind": "content"
+        }
+      ]
+    }
+  ]
+}

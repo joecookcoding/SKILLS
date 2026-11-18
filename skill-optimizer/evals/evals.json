@@ -1,0 +1,68 @@
+{
+  "skill_name": "skill-optimizer",
+  "evals": [
+    {
+      "id": 0,
+      "name": "audit-repo-skills",
+      "prompt": "Audit the skills in C:\\src\\my-skills and tell me what to fix. Don't change anything yet.",
+      "expected_output": "Runs audit-skills.ps1 with -Root, reads the log, scores flagged skills A–L, writes the report, and makes no edits.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "runs scripts/audit-skills.ps1 against the given root rather than counting by eye",
+          "kind": "content"
+        },
+        {
+          "text": "scores skills against the rubric criteria by letter",
+          "kind": "content"
+        },
+        {
+          "text": "orders proposed changes with description trims first",
+          "kind": "content"
+        },
+        {
+          "text": "does not edit any skill",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "trim-description-keep-triggers",
+      "prompt": "The heic-to-jpeg description is 726 characters. Trim it.",
+      "expected_output": "Cuts workflow narration, keeps every trigger phrase, and says a trigger eval should confirm no regression.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "keeps every trigger phrase the user might type (convert HEIC, iPhone photos, HEIF to JPG, .heic files)",
+          "kind": "constraint"
+        },
+        {
+          "text": "removes narration such as how the script works",
+          "kind": "content"
+        },
+        {
+          "text": "says to verify triggering with a should-trigger and near-miss eval set",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "new-skill-is-skill-creator",
+      "prompt": "Create a new skill that formats SQL files.",
+      "expected_output": "Says creating skills is skill-creator's job; offers a rubric pass after.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "routes skill creation to skill-creator",
+          "kind": "content"
+        },
+        {
+          "text": "does not start an audit of existing skills",
+          "kind": "constraint"
+        }
+      ]
+    }
+  ]
+}
