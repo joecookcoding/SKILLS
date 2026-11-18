@@ -77,6 +77,14 @@ Score each criterion **pass / gap / n-a** with one line of evidence (quote or li
 
 - **Pass test (fleet-level, not per-skill):** usage is observable — the built-in `/skill-doctor` report, or a PreToolUse hook logging skill invocations — so undertriggering is detected with data, not vibes. See `measuring-usage.md`.
 
+## L — Verified by an outside judge
+
+> "Do not ask the model to judge itself." (Rieseberg, Oct 2026). "If a change can modify the check that judges it, the check is broken." (claude.dev, "How the Claude Code team thinks about verification", Nov 2026)
+
+- **Pass test:** the skill ships `evals/evals.json` with cases drawn from real use, each with assertions a second reader could check (content, structural, constraint), including at least one near-miss or "do less" case, plus a fixture for any eval that needs files, committed beside it. When the skill's own output can be checked by a tool (a script's exit code, a rendered page, a schema), the skill tells the model to run that check rather than rate its own work.
+- **Gap signs:** no evals; evals that only restate the SKILL.md wording ("follows the workflow"); every case a happy path; assertions no grader could fail; fixtures that live outside the repo, so a clone can't run them; a workflow whose last step is "review your output" with no outside check.
+- **Fix:** add three or more cases from transcripts where the skill helped or misfired. Write each assertion so a wrong answer fails it. Commit fixtures under `evals/files/`. The repo's `.github/scripts/validate-skills.mjs` fails CI on a missing or malformed `evals.json`; running the cases is `skill-creator`'s job.
+
 ---
 
 ## Category weighting
@@ -86,7 +94,7 @@ Classify the skill into the blog's nine types; weight criteria accordingly:
 | Category | Weighs heaviest |
 |---|---|
 | Library/API reference | A, B, E (fetch failures), C |
-| Product verification | H (assertions, recordings), D — blog: verification skills had "the most measurable impact on output quality" |
+| Product verification | H (assertions, recordings), L, D — blog: verification skills had "the most measurable impact on output quality" |
 | Data fetching & analysis | H (helper composition), E (credentials/IDs) |
 | Business process automation | G (run-to-run memory), E (setup) |
 | Scaffolding & templates | C (assets/), A |

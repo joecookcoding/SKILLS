@@ -1,0 +1,76 @@
+{
+  "skill_name": "legal-draft",
+  "evals": [
+    {
+      "id": 0,
+      "name": "upload-notice",
+      "prompt": "Add a notice under the photo upload button on our church site saying people shouldn't upload copyrighted images. Our terms are at /terms and clause 7 is 'Your content'.",
+      "expected_output": "One or two plain sentences that say what to do, linked to /terms#clause-7 opening in a new tab, no checkbox, plus owner decisions.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "writes one or two plain sentences framed as what to do (upload only what you own or have permission to share)",
+          "kind": "content"
+        },
+        {
+          "text": "links the existing clause 7 (for example /terms#clause-7)",
+          "kind": "content"
+        },
+        {
+          "text": "does not add a checkbox to the upload",
+          "kind": "constraint"
+        },
+        {
+          "text": "does not renumber or rewrite clause 7",
+          "kind": "constraint"
+        },
+        {
+          "text": "ends with the decisions that belong to the owner or a lawyer",
+          "kind": "structural"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "privacy-policy-from-code",
+      "prompt": "Write a privacy policy for our Next.js app. We use Supabase for auth and Stripe for payments.",
+      "expected_output": "Starts from the bundled US privacy template, reads providers and cookies from the code, cuts template text the product doesn't do, lists governing law and other choices as owner decisions.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "uses the bundled privacy-policy template rather than writing from scratch",
+          "kind": "content"
+        },
+        {
+          "text": "says it will read or has read the providers, cookies and data collected from the code or config, naming files",
+          "kind": "content"
+        },
+        {
+          "text": "does not pick governing law, venue or arbitration on the owner's behalf",
+          "kind": "constraint"
+        },
+        {
+          "text": "states that this is not legal advice and names what a lawyer should review",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "new-clause-appended",
+      "prompt": "Our terms already have clauses 1-12 published. Add a rule that users can't use the service to train AI models.",
+      "expected_output": "Appends a new clause 13 with an anchor, never renumbers.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "adds the rule as a new clause at the end (13) or a sub-clause, with an anchor",
+          "kind": "content"
+        },
+        {
+          "text": "does not renumber existing clauses",
+          "kind": "constraint"
+        }
+      ]
+    }
+  ]
+}

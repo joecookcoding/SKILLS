@@ -36,6 +36,7 @@
 | I On-demand hooks | | |
 | J Composition | | |
 | K Measurable | | |
+| L Outside judge (evals) | | |
 
 **Top actions (impact-ordered):**
 1. {specific enough to implement as written}

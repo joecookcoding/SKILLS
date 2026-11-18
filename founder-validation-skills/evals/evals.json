@@ -1,0 +1,68 @@
+{
+  "skill_name": "founder-validation-skills",
+  "evals": [
+    {
+      "id": 0,
+      "name": "idea-without-pain-evidence",
+      "prompt": "I want to build a SaaS that helps small churches schedule volunteers. Write my landing page copy.",
+      "expected_output": "Stops before copy: pain is not validated; runs or asks for step 1 research with real quotes.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "says the customer pain has not been validated and starts at step 1 (research) or asks for evidence",
+          "kind": "content"
+        },
+        {
+          "text": "does not write landing page copy in this turn",
+          "kind": "constraint"
+        },
+        {
+          "text": "does not invent customer quotes",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "enter-at-step-2-with-inputs",
+      "prompt": "Here are three validated pains with real quotes from r/churchtech and Capterra reviews: [quotes pasted]. Give me lead magnet ideas.",
+      "expected_output": "Jumps to the Strategist step: five ranked lead-magnet ideas and a pick, rooted in the quotes.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "proposes five lead-magnet ideas ranked, and picks one",
+          "kind": "content"
+        },
+        {
+          "text": "ties ideas to the pasted customer language",
+          "kind": "content"
+        },
+        {
+          "text": "does not restart at research",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "no-web-access",
+      "prompt": "Validate demand for a meal-prep app for shift nurses. (The session has no web access.)",
+      "expected_output": "Says it can't search, asks the user to paste threads, reviews or interview notes.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "says it has no web access for research",
+          "kind": "content"
+        },
+        {
+          "text": "asks the user to paste real sources such as threads, reviews or interview notes",
+          "kind": "content"
+        },
+        {
+          "text": "does not fabricate Reddit or review quotes",
+          "kind": "constraint"
+        }
+      ]
+    }
+  ]
+}

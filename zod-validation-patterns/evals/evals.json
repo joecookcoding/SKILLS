@@ -1,0 +1,68 @@
+{
+  "skill_name": "zod-validation-patterns",
+  "evals": [
+    {
+      "id": 0,
+      "name": "lock-to-generated-type",
+      "prompt": "Make a Zod schema for this OpenAPI-generated type: type CreateUser = { email: string; name?: string | null; age?: number | null }. I want custom error messages.",
+      "expected_output": "A hand-written z.object with { error } messages, locked with `satisfies z.ZodType<CreateUser>`.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "writes the schema by hand and adds `satisfies z.ZodType<CreateUser>`",
+          "kind": "content"
+        },
+        {
+          "text": "uses Zod v4 `{ error: '...' }` for custom messages",
+          "kind": "content"
+        },
+        {
+          "text": "does not claim Zod can derive a schema from the TypeScript type",
+          "kind": "constraint"
+        },
+        {
+          "text": "does not use v3 required_error or invalid_type_error",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "password-confirmation",
+      "prompt": "Validate that password and confirmPassword match in my signup form (react-hook-form + zodResolver).",
+      "expected_output": "A .refine (or superRefine) on the object with path ['confirmPassword'], plus the resolver version note.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "uses .refine or .superRefine on the object schema",
+          "kind": "content"
+        },
+        {
+          "text": "sets path to ['confirmPassword'] so the error shows on that field",
+          "kind": "content"
+        },
+        {
+          "text": "notes zodResolver with Zod v4 needs @hookform/resolvers 5 or later, or checks the installed version",
+          "kind": "content"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "v3-merge-error",
+      "prompt": "After upgrading to zod 4, `.merge is not a function` and my required_error messages disappeared. Fix it.",
+      "expected_output": "Replaces .merge with .extend(other.shape) or spread, swaps required_error for the error key.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "replaces .merge with .extend(...shape) or an object spread of shapes",
+          "kind": "content"
+        },
+        {
+          "text": "explains required_error was removed and replaces it with the `error` parameter",
+          "kind": "content"
+        }
+      ]
+    }
+  ]
+}

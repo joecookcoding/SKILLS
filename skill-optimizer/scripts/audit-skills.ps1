@@ -173,6 +173,7 @@ foreach ($dir in (Get-SkillDirs $Root)) {
   if ($bodyLines -gt 400) { $flags += 'BODY>400L' }
   if ($bodyTokens -gt 5000) { $flags += 'BODY>5kTOK' }
   if (-not $hasGotchas) { $flags += 'NO-GOTCHAS' }
+  if (-not (Test-Path (Join-Path $dir.FullName 'evals/evals.json'))) { $flags += 'NO-EVALS' }
   if ($orphans.Count -gt 0) { $flags += "ORPHANS:$($orphans.Count)" }
   if ($dangling.Count -gt 0) { $flags += "DANGLING:$($dangling.Count)" }
   if ($external.Count -gt 0) { $flags += "EXTERNAL?:$($external.Count)" }

@@ -1,0 +1,68 @@
+{
+  "skill_name": "pull-request",
+  "evals": [
+    {
+      "id": 0,
+      "name": "multi-theme-branch",
+      "prompt": "/pull-request\n\n(Branch fe-refinements is 9 commits ahead of main: 4 commits polish the meeting review screen, 3 add a budget catalog integration, 2 fix typos in docs.)",
+      "expected_output": "One code block: a conventional title under 70 characters, a summary, What's-in-this-PR grouped by theme with ### subheadings, and a specific test plan checklist.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "outputs a single code block with a title and the Summary, What's in this PR and Test plan sections",
+          "kind": "structural"
+        },
+        {
+          "text": "groups changes by theme (review polish, budget catalog, docs) rather than by commit order",
+          "kind": "content"
+        },
+        {
+          "text": "title is under 70 characters with no emoji",
+          "kind": "content"
+        },
+        {
+          "text": "test plan items are specific (routes, buttons, inputs, expected results) as - [ ] checkboxes",
+          "kind": "content"
+        },
+        {
+          "text": "does not push or open the PR",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "no-commits-ahead",
+      "prompt": "/pull-request — the branch has 0 commits ahead of main.",
+      "expected_output": "Says there is nothing to PR.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "says the branch has no commits ahead of the base, so there is nothing to describe",
+          "kind": "content"
+        },
+        {
+          "text": "does not invent a PR message",
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "explicit-base",
+      "prompt": "/pull-request develop",
+      "expected_output": "Uses develop as the base for every range instead of auto-detecting.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "uses develop as the base branch in the git log and diff ranges",
+          "kind": "content"
+        },
+        {
+          "text": "does not fall back to main",
+          "kind": "constraint"
+        }
+      ]
+    }
+  ]
+}
