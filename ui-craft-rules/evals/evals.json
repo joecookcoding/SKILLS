@@ -322,6 +322,43 @@
           "kind": "content"
         }
       ]
+    },
+    {
+      "id": 10,
+      "name": "ai-travel-search-form",
+      "prompt": "An AI tool built our flight search card: tabs 'Flights', 'Package Holidays', 'Cars' (the third is cut off on mobile), each with an orange icon. Four stacked fields, each with an orange floating label, an orange leading icon, an orange border and a clear ×: From, To, When (shows '08/09/2026 15/09/2026'), Who ('2 adults, 1 infant'). Then two full-width orange buttons, 'Show flights' and 'Show holidays'. It works, but it feels off. Fix it.",
+      "expected_output": "Keeps one submit per form and moves holidays into a tab, fits 3–5 short tabs, takes the orange back to the submit button and selected tab, groups the fields into where/when/who with From and To joined and a swap button, drops per-field decoration while keeping accessible names, adds a trip-type segmented control, and shows the dates as a readable range.",
+      "files": [],
+      "assertions": [
+        {
+          "text": "removes the second submit button and turns holidays into its own tab or form (CMP-10, CMP-6)",
+          "kind": "content"
+        },
+        {
+          "text": "makes the tabs fit with short labels and no cut-off tab (CMP-10)",
+          "kind": "content"
+        },
+        {
+          "text": "limits the orange to the submit button and the selected tab; labels, icons and borders go neutral (VIS-6)",
+          "kind": "content"
+        },
+        {
+          "text": "joins From and To into one control, ideally with a swap button, and groups the rest by question with a label per group (HIE-10)",
+          "kind": "content"
+        },
+        {
+          "text": "shows the date range as something like \"8–15 Sep\" rather than two numeric dates (INT-8)",
+          "kind": "content"
+        },
+        {
+          "text": "adds or asks about a Return / One-way / Multi-city choice (CMP-10)",
+          "kind": "content"
+        },
+        {
+          "text": "keeps an accessible name on every field after dropping per-field labels (INT-5)",
+          "kind": "constraint"
+        }
+      ]
     }
   ]
 }

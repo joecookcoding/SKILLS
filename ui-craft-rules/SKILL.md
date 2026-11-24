@@ -1,11 +1,11 @@
 ---
 name: ui-craft-rules
-description: UI/UX craft rules for building or reviewing web and mobile screens in code or Figma. Use for a page, card, form, modal, menu, tab bar, button, or empty state; animation, press feedback, or loading states; tap targets; UX laws (Fitts, Hick, Jakob) or animation principles; design tokens or dark mode; or making a UI look less AI-generated. Includes a 31-point review list of AI UI tells.
+description: UI/UX craft rules for building or reviewing web and mobile screens in code or Figma. Use for a page, card, form, modal, menu, tab bar, button, or empty state; animation, press feedback, or loading states; tap targets; UX laws (Fitts, Hick, Jakob) or animation principles; design tokens or dark mode; or making a UI look less AI-generated. Includes a 34-point review list of AI UI tells.
 ---
 
 # UI Craft Rules
 
-58 rules for interface craft, each written as something you can check and each opening with a
+61 rules for interface craft, each written as something you can check and each opening with a
 **When** line that says when it applies, plus a review list of the fingerprints AI-generated
 UI leaves behind. The 12 principles of animation and the named usability laws (Fitts, Hick,
 Miller, Doherty, Postel, Jakob) are in here, translated into checks; find them by name in
@@ -80,6 +80,9 @@ rules supply the "when".
 | 29 | An error shown only by a red border or a shake | Text and an icon by the field, focus moved there, announced | MOT-8 |
 | 30 | `type="number"` or a strict regex on phone, card, or postcode fields | Text input with `inputmode`, formatting stripped, one stored format | INT-6 |
 | 31 | Icons sized by eye: heavier or smaller than the label beside them, a different size on each row | Icon box = the label's line height (20 beside 14px text on a 20px line), centred on it, 8px gap, one keyline | VIS-9 |
+| 32 | A form with a submit button per job ("Show flights", "Show holidays"); a tab row cut off at the edge | One job and one submit per form; the other job a tab; 3–5 tabs that fit; modes as a segmented control above the fields | CMP-10 |
+| 33 | Every field dressed the same (floating label, leading icon, clear ×) at equal gaps; a From/To pair as two unrelated fields | One label per question above its group, the pair joined with a swap button, decoration dropped, more space between groups | HIE-10 |
+| 34 | Values shown as stored: `08/09/2026 15/09/2026` | Said the way people say them: `8–15 May`, shared parts once, this year left out, locale-aware | INT-8 |
 
 ## Find a rule by principle
 
@@ -106,7 +109,7 @@ was already covered, the existing rule carries it.
 | 15 | Hick's Law | HIE-7 | One level of a screen offers more than five choices |
 | 16 | Miller's Law | INT-5 | Long forms, multi-step flows, codes and IDs to copy |
 | 17 | Doherty Threshold | INT-4 | Anything that waits on the network or on computation |
-| 18 | Postel's Law | INT-6 | Phone, card, date, amount, email, and code fields |
+| 18 | Postel's Law | INT-6, INT-8 | Phone, card, date, amount, email, and code fields; dates and counts shown back |
 | 19 | Jakob's Law | INT-3 | Navigation, links, auth, search, cart; any custom control |
 | 20 | Frequency of use | INT-7 | Deciding what is one click away and what goes in Settings |
 | + | Reduced motion | MOT-6 | Every animation |
@@ -129,6 +132,7 @@ then focus, choices, and memory (MOT-3, HIE-7, INT-5); then response, input, and
 - HIE-7 Show 3–5 choices with the most important first; group the rest (Hick's Law).
 - HIE-8 Design for the scroll, not a fixed phone frame.
 - HIE-9 Lead every option row with a distinct visual anchor.
+- HIE-10 Lay out a form by its questions: one label per group, pairs joined, no per-field decoration.
 
 **Component choice**, in `references/components.md`
 - CMP-1 The tab bar is navigation only; no action button in it.
@@ -140,6 +144,7 @@ then focus, choices, and memory (MOT-3, HIE-7, INT-5); then response, input, and
 - CMP-7 Empty states: situation, invitation, one CTA, then an illustration.
 - CMP-8 Button labels: verb + object; verb + product + value for sign-up CTAs.
 - CMP-9 One card with a variant picker, not a card per variant.
+- CMP-10 A form does one job: one submit, sibling jobs as tabs, modes as a segmented control above the fields.
 
 **Interaction & usability**, in `references/interaction.md`
 - INT-1 Make important targets big and close; keep destructive ones apart (Fitts's Law).
@@ -149,6 +154,7 @@ then focus, choices, and memory (MOT-3, HIE-7, INT-5); then response, input, and
 - INT-5 Don't make users remember: visible labels, kept input, chunks (Miller's Law).
 - INT-6 Accept input in the shapes people type; store one format (Postel's Law).
 - INT-7 The more often an action is used, the closer it sits (frequency of use).
+- INT-8 Show values the way people say them: `8–15 May`, not `08/09/2026 15/09/2026`.
 
 **Visual craft**, in `references/visual.md`
 - VIS-1 Nested corner radius: outer = inner + padding.
@@ -195,7 +201,7 @@ then focus, choices, and memory (MOT-3, HIE-7, INT-5); then response, input, and
 
 - Nested radius: `outer = inner + padding` (12 + 8 = 20, 24 + 16 = 40).
 - Contrast for buttons and links: ≥ 4.5:1.
-- Radio buttons for 2–7 options; 3–5 visible choices in a launcher; 3–5 tabs.
+- Radio buttons for 2–7 options; 3–5 visible choices in a launcher; 3–5 tabs, none cut off; one submit button per form.
 - Gradient stops: light source 0%, hold ~40%, falloff ~65%, anchor 100%, all at one hue.
 - Token name: `color-{bg|bg-surface|bg-fill|text|border|icon}-{primary|secondary|tertiary}-{default|hover|active|disabled}`.
 - Component name: `Button / Secondary / Large / Default`. Props: `variant` (emphasis), `tone` (intent), `size` (sm | md | lg).
@@ -217,6 +223,10 @@ then focus, choices, and memory (MOT-3, HIE-7, INT-5); then response, input, and
   lists. These don't conflict. Navigation menus are scanned by label; comparison lists (ride
   types, plans, payment methods) are scanned by shape. In both cases the rule is all rows or
   none.
+- **Group labels and INT-5.** HIE-10 lifts labels from each field to its group, and the reel's
+  final form shows From and To with no visible label. That is fine only where the order is a
+  convention people know (origin before destination, start before end) and each field keeps an
+  accessible name. In a long or unfamiliar form INT-5 wins: every field keeps a visible label.
 - **Centre alignment** is allowed for one short block: an empty state or a hero headline.
   Everything multi-line is left-aligned.
 - **Brand colour** still belongs in the product (illustration, accents, a header surface tint).

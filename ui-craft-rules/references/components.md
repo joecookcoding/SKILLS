@@ -59,3 +59,13 @@ Check: labels start with a verb and name what they act on (`Delete file`, `Order
 When: a product comes in variants (colour, size, model, trim).
 Why: duplicate cards for each colour or model make users compare near-identical blocks.
 Check: product variants (colour, size, trim) are a swatch or segmented picker inside one card that updates the image and details in place.
+
+**CMP-10 A form does one job: one submit, sibling jobs as tabs, modes above the fields.**
+When: a form or search panel serves more than one product or task (flights and holidays, buy and rent), or ends in more than one submit button.
+Why: left alone, AI tools cram every job into one form and end it with a button per job. The user has to work out which fields belong to which button.
+Check:
+- One submit button per form, named for its job (CMP-8). A second job ("Show holidays") becomes its own tab with its own form, not a second button.
+- Tabs fit the width: 3–5 of them, short labels ("Packages", not "Package Holidays"), the icon over the label when space is narrow, and none cut off at the edge. The selected tab is the only one in the accent colour (VIS-6).
+- A mode that changes which fields apply (Return / One-way / Multi-city) is a segmented control above the fields it changes (CMP-2), with the most common mode selected.
+- Check the job for modes the generated form left out: the trip type was missing from the AI's version altogether.
+Watch: [Memorisely, 2026-11-23](https://www.facebook.com/reel/1149022317721443): "Show holidays" moved into a Packages tab, and a trip-type control added.

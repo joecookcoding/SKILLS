@@ -36,6 +36,7 @@ Check: within a card, list, form, or menu, title, body, meta, and CTA share one 
 When: spacing any group of elements; laying out product cards; placing fine print.
 Why: distance is the strongest grouping signal.
 Check: spacing inside a group is smaller than spacing between groups. Product card order: heading + image (a carousel if there are several images), then price + CTA together. Fine print is trimmed, not wedged between the title and the CTA. Tighten spacing until each group reads as one unit.
+Watch: [Memorisely, 2026-11-23](https://www.facebook.com/reel/1149022317721443): a form's fields grouped into where, when, and who, with more space between the groups (HIE-10).
 
 **HIE-7 Show 3–5 choices with the most important first (Hick's Law).**
 When: launchers, menus, home screens, settings pages, pricing tiers, and any level of a screen that offers more than five choices.
@@ -51,3 +52,14 @@ Check: mobile screens are auto-height or flowing layouts. Check the first viewpo
 When: a list of comparable options the user picks between (ride types, plans, payment methods, categories).
 Why: users recognise shape before they read text. Strip the vehicle images from Uber's ride list and people have to read every block to compare options; with them, they scan vertically and decide faster.
 Check: in a list of comparable options (ride types, plans, payment methods, categories), every row starts with an icon or image in the same position and size, and each one is distinct. All rows or none: a partial set breaks the alignment anchor (see CMP-4).
+
+**HIE-10 Lay out a form by the questions it asks.**
+When: a form or search panel with three or more fields, and any form an AI tool laid out as one even stack of identical fields.
+Why: people fill a form one question at a time ("where", "when", "who"), not one input at a time. Twelve equal parts read as a wall; three groups read as three questions.
+Check:
+- Find the questions first: draw a box around the fields that answer each one. Those boxes are the groups.
+- Fields answered together are one control: a From/To pair shares one border with a divider between, and a swap button (⇅) when the two can trade places.
+- One short label per question, above its group, in the product's word for it ("Passengers", not "Who"). Each field still has its own accessible name, and a visible one wherever the order isn't obvious (INT-5).
+- Decoration earns its place: drop the leading icon, the floating label, and the clear × from every field unless that one field needs them.
+- More space between groups than inside them (HIE-6); a light tint behind each group is optional, a border round it is not (HIE-4).
+Watch: [Memorisely, 2026-11-23](https://www.facebook.com/reel/1149022317721443): an AI travel-search form regrouped into where, when, and who, with From and To joined.

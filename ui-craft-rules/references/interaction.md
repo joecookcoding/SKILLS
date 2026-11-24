@@ -4,7 +4,8 @@ Rules for how fast and how surely people can reach, read, type into, and repeat 
 offers. Most come from named usability laws; Hick's Law lives in `hierarchy.md` as HIE-7.
 
 Each rule: **When** to apply it, **Why** it matters, then **Check**, what to verify in a design
-or in code.
+or in code. Where a reel teaches the rule, a **Watch** line links it (Facebook may ask you to
+sign in).
 
 | You are building or reviewing | Rules |
 |---|---|
@@ -90,3 +91,14 @@ Check:
 - The product remembers last-used filters, sort order, view, and form values, and uses them as defaults.
 - An action repeated over many items has a bulk version.
 - Frequent, reversible actions have no confirmation dialog; they offer Undo. CMP-3's dialog is for rare, destructive ones.
+
+**INT-8 Show values the way people say them.**
+When: displaying a date, date range, time, duration, count, or amount the user picked or will read back: field values, summaries, confirmations, lists.
+Why: `08/09/2026 15/09/2026` is how a database stores a trip, not how anyone says one. It makes the reader parse, and it is ambiguous: 8 September or 9 August (INT-6). INT-6 is the input half of Postel's Law; this is the output half.
+Check:
+- Ranges say shared parts once: `8–15 May`, `28 May – 4 Jun`, `9:00–10:30`. Use an en dash, not a hyphen and not two separate values.
+- Leave out what the reader already knows: the year when it is this year, or next year in a booking flow that only goes forward; seconds on times.
+- Month names, not month numbers. Add the weekday where it matters for a plan (`Fri 8 May`).
+- Format for the user's locale: `Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' }).formatRange(start, end)` in JavaScript. Store ISO 8601 underneath (INT-6).
+- Counts read as phrases: `2 adults, 1 infant`, not `A2 I1` or `3 pax`.
+Watch: [Memorisely, 2026-11-23](https://www.facebook.com/reel/1149022317721443): `08/09/2026 15/09/2026` rewritten as `8 - 15 May`.

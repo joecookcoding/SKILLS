@@ -1,9 +1,10 @@
 # ui-craft-rules
 
-An Agent Skill that gives an AI assistant 58 checkable UI/UX rules and a 31-point review list
+An Agent Skill that gives an AI assistant 61 checkable UI/UX rules and a 34-point review list
 of the tells AI-generated interfaces leave behind: tab bars with action buttons, dropdowns for
 three options, "Are you sure?" dialogs, light cards in dark mode, muddy gradients, mismatched
-corner radii, raw hex values, icons sized by eye, tiny icon buttons, `transition: all`, placeholder-only labels,
+corner radii, raw hex values, icons sized by eye, forms with a button per job, dates shown as stored, tiny icon buttons,
+`transition: all`, placeholder-only labels,
 and more.
 
 Every rule opens with a **When** line saying when it applies. The 12 principles of animation
@@ -21,9 +22,9 @@ design tokens and component naming.
 ui-craft-rules/
 ├── SKILL.md              # how to apply, the review list, a principle finder, and a one-line rule index
 ├── references/
-│   ├── hierarchy.md      # HIE-1–9: hierarchy, alignment, grouping, choice count (Hick's Law)
-│   ├── components.md     # CMP-1–9: tab bars, dropdowns, dialogs, menus, buttons, empty states
-│   ├── interaction.md    # INT-1–7: Fitts, hit areas, Jakob, Doherty, Miller, Postel, frequency of use
+│   ├── hierarchy.md      # HIE-1–10: hierarchy, alignment, grouping, choice count (Hick's Law), form layout
+│   ├── components.md     # CMP-1–10: tab bars, dropdowns, dialogs, menus, buttons, empty states, one-job forms
+│   ├── interaction.md    # INT-1–8: Fitts, hit areas, Jakob, Doherty, Miller, Postel, frequency of use, display formats
 │   ├── visual.md         # VIS-1–9: radius, contrast, gradients, type, colour, dark mode, depth, icon size
 │   ├── motion.md         # MOT-1–13: the animation principles: transitions, timing, easing, feedback, reduced motion
 │   ├── tokens.md         # TOK-1–5: token tiers, token names, modes, component names, props

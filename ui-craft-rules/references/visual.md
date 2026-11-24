@@ -41,6 +41,8 @@ Check:
 - Category chips do not each get their own colour.
 - The primary colour's *fill* is for actions and for state (selected, in progress). A label, a step number, or a bullet filled with it competes with the button: nine accent chips on a page make its one accent button the least noticeable thing there. Use a neutral surface or the text colour for those.
 - The top bar and the tab bar are in the same mode (both light or both dark).
+- To fix a screen that has accent everywhere, list every place the accent appears, make them all neutral, then give it back only to the primary action and the selected state. A second button turns grey (CMP-6); labels, icons, and field borders go to the text and border colours.
+Watch: [Memorisely, 2026-11-23](https://www.facebook.com/reel/1149022317721443): a form's orange labels, icons, borders, and second button all turned neutral, leaving the orange on one button and the selected tab.
 
 **VIS-7 Dark mode: one mode per screen, elevation by lighter dark.**
 When: building or reviewing a dark theme.

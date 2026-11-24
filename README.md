@@ -54,7 +54,7 @@ Each skill here follows a consistent layout:
 
 | Skill | What it does |
 |-------|--------------|
-| **[ui-craft-rules](ui-craft-rules/)** | 58 checkable UI/UX rules, each with a *when* line (hierarchy, component choice, button copy, hit areas, loading feedback, forgiving input, radius, colour, dark mode, depth, icon size, the 12 animation principles, the usability laws from Fitts to Jakob, tokens, AI-ready design systems) plus a 31-point review list of the tells AI-generated UI leaves: action buttons in tab bars, dropdowns for three options, "Are you sure?" dialogs, light cards in dark mode. Works in code or in Figma. Download the ready-to-upload zip: **[dist/ui-craft-rules.zip](dist/ui-craft-rules.zip)**. |
+| **[ui-craft-rules](ui-craft-rules/)** | 61 checkable UI/UX rules, each with a *when* line (hierarchy, component choice, button copy, hit areas, loading feedback, forgiving input, radius, colour, dark mode, depth, icon size, form layout, readable dates, the 12 animation principles, the usability laws from Fitts to Jakob, tokens, AI-ready design systems) plus a 34-point review list of the tells AI-generated UI leaves: action buttons in tab bars, dropdowns for three options, "Are you sure?" dialogs, light cards in dark mode. Works in code or in Figma. Download the ready-to-upload zip: **[dist/ui-craft-rules.zip](dist/ui-craft-rules.zip)**. |
 
 ### ⚖️ Legal text
 
